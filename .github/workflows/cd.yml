@@ -23,7 +23,7 @@ jobs:
       shell: bash
       run: |
         # Copy all project files to the EC2 instance
-        scp -o StrictHostKeyChecking=no -i ~/voi-start-key.pem -r ./myapp/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/voi_start/
+        scp -o StrictHostKeyChecking=no -i ~/voi-start-key.pem -r ./voi_start/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/voi_start/
         
         # SSH into the EC2 instance and deploy
         ssh -o StrictHostKeyChecking=no -i ~/voi-start-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
