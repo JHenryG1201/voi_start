@@ -9,3 +9,5 @@ services:
       - .:/app
     environment:
       - DEBUG=True
+    env_file:
+      - .env
