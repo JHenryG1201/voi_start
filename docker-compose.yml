@@ -5,10 +5,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    environment:
-      - DEBUG=True
     env_file:
-      - .env
+      - .env.development
     depends_on:
       db:
         condition: service_healthy
@@ -16,18 +14,19 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: voi-start-database
-      POSTGRES_USER: henry
-      POSTGRES_PASSWORD: kaungsithu
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_development_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U henry"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
 
 volumes:
-  postgres_data:
+  postgres_development_data:
+  postgres_production_data:
