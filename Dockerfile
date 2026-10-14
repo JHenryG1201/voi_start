@@ -11,6 +11,9 @@ RUN pip install -r requirements.txt
 # Copy the entire project into the container
 COPY . .
 
+# Collect static assets for production serving by WhiteNoise
+RUN python manage.py collectstatic --noinput
+
 # Expose port 8000 for the Django development server
 EXPOSE 8000
 
