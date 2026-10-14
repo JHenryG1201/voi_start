@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}分析記録詳細{% endblock %}
+
+{% block content %}
+
+    <h1>分析記録詳細</h1>
+
+        <h2>測定日時</h2>
+        <p>{{ record.date }}</p>
+
+        <h2>音域</h2>
+        <p>{{ record.range }}</p>
+
+        <h2>声質</h2>
+        <p>{{ record.voice }}</p>
+
+        <h2>おすすめの曲</h2>
+        <p>{{ record.songs }}</p>
+
+        <h2>おすすめトレーニング</h2>
+        <p>{{ record.training }}</p>
+        
+    <p>
+        <a href="/analysis_record">分析記録に戻る</a>
+    </p>
+
+{% endblock %}

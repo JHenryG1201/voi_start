@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}分析記録{% endblock %}
+
+{% block content %}
+
+    <h1>分析記録</h1>
+
+        <ul>
+            <li>
+                <a href="/analysis_record_detail/1">
+                    2026/10/07 10:30　音域：mid1G～hiC
+                </a>
+            </li>
+
+            <li>
+                <a href="/analysis_record_detail/2">
+                    2026/09/20 15:10　音域：mid1F～hiB
+                </a>
+            </li>
+
+            <li>
+                <a href="/analysis_record_detail/3">
+                    2026/09/05 11:20　音域：mid1E～hiB
+                </a>
+            </li>
+        </ul>
+        
+    <p>
+        <a href="/ai_analysis">AI分析に戻る</a>
+    </p>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}空き枠削除{% endblock %}
+
+{% block content %}
+
+    <h1>空き枠削除</h1>
+
+    <p>この予約枠を削除しますか？</p>
+
+    <p>
+        <a href="/available_slot_delete_done">
+            <button type="button">削除する</button>
+        </a>
+    </p>
+
+    <p>
+        <a href="/available_slots">キャンセル</a>
+    </p>
+
+{% endblock %}

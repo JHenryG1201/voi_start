@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}練習履歴{% endblock %}
+
+{% block content %}
+
+    <h1>練習履歴</h1>
+
+    <ul>
+        <li>
+            <a href="/singing_practice_record_detail/1">
+                2026/10/08 09:30　曲名：曲名A
+            </a>
+        </li>
+
+        <li>
+            <a href="/singing_practice_record_detail/2">
+                2026/10/07 14:20　曲名：曲名C
+            </a>
+        </li>
+
+        <li>
+            <a href="/singing_practice_record_detail/3">
+                2026/10/05 16:10　曲名：曲名B
+            </a>
+        </li>
+    </ul>
+
+    <p>
+        <a href="/singing_practice">歌唱曲選択に戻る</a>
+    </p>
+
+{% endblock %}

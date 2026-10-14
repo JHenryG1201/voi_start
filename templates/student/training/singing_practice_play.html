@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}歌唱練習{% endblock %}
+
+{% block content %}
+
+    <h1>歌唱練習</h1>
+
+    <h2>曲名：{{ song_name }}</h2>
+
+<p id="singingStatus">歌唱待機中</p>
+
+<!-- 歌唱開始 -->
+    <div>
+        <button type="button" id="startButton">歌唱開始</button>
+    </div>
+
+    <h3>歌詞</h3>
+
+    <div>
+        {% for line in lyrics %}
+            <p>{{ line }}</p>
+        {% endfor %}
+    </div>
+
+    <div>
+        <button type="button" id="stopButton" disabled>歌唱終了</button>
+    </div>
+    <!-- 歌唱終了 -->
+
+    <h3>録音した音声</h3>
+
+    <button type="button" id="playButton" disabled>再生</button>
+
+    <p>
+        <button type="button" id="analysisButton" disabled>AI分析</button>
+    </p>
+
+    <p id="analysisStatus"></p>
+
+    <p>
+        <a href="/singing_practice">曲選択に戻る</a>
+    </p>
+
+    <script>
+        const startButton = document.getElementById("startButton");
+        const stopButton = document.getElementById("stopButton");
+        const playButton = document.getElementById("playButton");
+        const analysisButton = document.getElementById("analysisButton");
+        const singingStatus = document.getElementById("singingStatus");
+        const analysisStatus = document.getElementById("analysisStatus");
+
+        // 歌唱開始
+        startButton.addEventListener("click", function () {
+
+            startButton.disabled = true;
+            stopButton.disabled = false;
+
+            singingStatus.textContent = "歌唱中です";
+        });
+
+        // 歌唱終了
+        stopButton.addEventListener("click", function () {
+
+            stopButton.disabled = true;
+            playButton.disabled = false;
+            analysisButton.disabled = false;
+
+            singingStatus.textContent = "歌唱が終了しました";
+        });
+
+        // 録音した音声を再生
+        playButton.addEventListener("click", function () {
+
+            singingStatus.textContent = "録音した音声を再生しています";
+        });
+
+        // AI分析
+        analysisButton.addEventListener("click", function () {
+
+            analysisButton.disabled = true;
+            playButton.disabled = true;
+            startButton.disabled = true;
+
+            analysisStatus.textContent = "AIが歌唱を分析しています";
+
+            setTimeout(function () {
+                window.location.href = "/singing_analysis_result";
+            }, 2000);
+        });    </script>
+
+{% endblock %}

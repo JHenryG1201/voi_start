@@ -1,0 +1,50 @@
+/* スタートページ: 中央にロゴ・見出し・2つのボタン */
+.start{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;text-align:center;
+  padding:12px 4px;
+}
+
+/* ロゴの丸いビジュアル */
+.start-visual{
+  position:relative;
+  width:104px;height:104px;border-radius:32px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:var(--on-brand);
+  margin-bottom:12px;
+  box-shadow:0 12px 28px rgba(47,75,255,.28);
+}
+.start-visual::before{
+  content:"";position:absolute;inset:-12px;border-radius:40px;
+  border:2px solid var(--brand);opacity:.18;
+}
+.start-visual svg{width:52px;height:52px}
+
+.start h1{margin:0;font-size:30px;font-weight:700;letter-spacing:.04em}
+.start-lead{margin:0 0 20px;font-size:14px;color:var(--muted);line-height:1.6}
+
+/* ボタン */
+.start-actions{width:100%;display:flex;flex-direction:column;gap:12px}
+.start-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:56px;padding:0 20px;border-radius:18px;
+  font-size:16px;font-weight:700;text-decoration:none;
+  transition:transform .12s ease;
+}
+.start-btn svg{width:20px;height:20px}
+.start-btn:active{transform:scale(.97)}
+.start-btn:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+.start-btn.primary{
+  color:var(--on-brand);
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+}
+.start-btn.secondary{
+  color:var(--brand);
+  background:var(--surface);
+  border:2px solid var(--brand);
+}
+
+@media (prefers-reduced-motion:reduce){.start-btn{transition:none}}

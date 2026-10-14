@@ -1,0 +1,92 @@
+:root{
+  --bg:#EEF1F7; --surface:#FFFFFF; --ink:#16203A; --muted:#5B6685; --line:#D9DEEA;
+  --brand:#2F4BFF; --brand-2:#6A4DFF; --on-brand:#FFFFFF;
+  --member:#F6F0FF; --member-line:#D9C8F5; --member-accent:#6B3FD4;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1426; --surface:#182038; --ink:#EAEEFB; --muted:#9AA4C4; --line:#2A3556;
+    --brand:#4A63F0; --brand-2:#6A45C9; --member:#1F1A36; --member-line:#3B2F66; --member-accent:#B79BFF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1426; --surface:#182038; --ink:#EAEEFB; --muted:#9AA4C4; --line:#2A3556;
+  --brand:#4A63F0; --brand-2:#6A45C9; --member:#1F1A36; --member-line:#3B2F66; --member-accent:#B79BFF;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;min-height:100%;margin:0 auto;display:flex;flex-direction:column}
+
+/* header: solid brand bar */
+header{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:10;
+  display:flex;align-items:center;gap:8px;padding:10px 12px 10px 16px;
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));color:var(--on-brand);
+}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:20px;margin-right:auto;min-width:0}
+.logo svg{width:24px;height:24px;flex:none}
+.logo .role{font-size:11.5px;font-weight:700;background:rgba(255,255,255,.22);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.user{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;background:rgba(255,255,255,.16);border-radius:999px;padding:4px 12px 4px 4px;min-width:0}
+.user .avatar{width:24px;height:24px;border-radius:50%;background:#fff;color:var(--brand);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.user .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px}
+.burger{width:44px;height:44px;border:0;background:transparent;color:inherit;border-radius:12px;display:grid;place-items:center;cursor:pointer}
+.burger svg{width:24px;height:24px}
+.burger:focus-visible,.hero:focus-visible,.tile:focus-visible,.drawer a:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+header .burger:focus-visible{outline-color:#fff}
+
+/* body */
+main{flex:1;padding:20px 16px 28px;display:flex;flex-direction:column;gap:26px}
+.label{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:15px;font-weight:700}
+.label::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--brand)}
+.label .badge{font-size:11.5px;color:var(--member-accent);background:var(--member);border:1px solid var(--member-line);border-radius:999px;padding:2px 10px}
+.member .label::before{background:var(--member-accent)}
+
+/* free: large hero cards */
+.heroes{display:flex;flex-direction:column;gap:12px}
+.hero{
+  position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;
+  min-height:104px;padding:18px 18px 18px 20px;border-radius:22px;text-decoration:none;color:var(--on-brand);
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+  transition:transform .12s ease;
+}
+.hero.alt{background:linear-gradient(120deg,var(--brand-2),#9B5CFF)}
+.hero:active{transform:scale(.98)}
+.hero::after{content:"";position:absolute;right:-30px;top:-40px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.14)}
+.hero .text{flex:1;display:flex;flex-direction:column;gap:4px;position:relative;z-index:1}
+.hero .title{font-size:22px;font-weight:700}
+.hero .desc{font-size:13px;opacity:.9}
+.hero .icon{width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.2);display:grid;place-items:center;position:relative;z-index:1;flex:none}
+.hero .icon svg{width:30px;height:30px}
+
+/* member: 3-column tiles in a panel */
+.panel{background:var(--member);border:1px solid var(--member-line);border-radius:22px;padding:14px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--member-line);border-radius:16px;padding:18px 4px 14px;font-size:12.5px;font-weight:700;
+  transition:transform .12s ease;
+}
+.tile:active{transform:scale(.96)}
+.tile .icon{width:44px;height:44px;border-radius:14px;background:var(--member);color:var(--member-accent);display:grid;place-items:center}
+.tile .icon svg{width:24px;height:24px}
+.tile .lock{position:absolute;top:7px;right:7px;width:14px;height:14px;color:var(--member-accent)}
+.note{margin:10px 2px 0;font-size:12px;color:var(--muted);text-align:center}
+
+/* footer (empty) */
+footer{min-height:84px;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 55%,#9B5CFF 100%);border-radius:24px 24px 0 0;position:relative;overflow:hidden}
+footer::before,footer::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.14)}
+footer::before{width:140px;height:140px;left:-40px;top:-70px}
+footer::after{width:110px;height:110px;right:-30px;bottom:-60px}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,14,28,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(78%,320px);background:var(--surface);z-index:30;transform:translateX(100%);transition:transform .22s ease;padding:calc(env(safe-area-inset-top,0px) + 16px) 12px 24px;display:flex;flex-direction:column;gap:2px}
+.drawer a{padding:14px 12px;border-radius:12px;color:var(--ink);text-decoration:none;font-size:15px;font-weight:500}
+.drawer a:active{background:var(--bg)}
+body.open .scrim{opacity:1;pointer-events:auto}
+body.open .drawer{transform:none}
+@media (prefers-reduced-motion:reduce){.hero,.tile,.scrim,.drawer{transition:none}}

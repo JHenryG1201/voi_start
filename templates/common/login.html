@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ログイン{% endblock %}
+{% block styles %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+  <header class="hero">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/>
+      </svg>
+      <span>アプリ名</span>
+    </div>
+    <p>学習・トレーニングをサポート</p>
+  </header>
+
+  <div class="card">
+    <h1>ログイン</h1>
+
+    <form action="/login" method="post">
+      {% csrf_token %}
+
+      <fieldset class="roles field">
+        <legend class="label">利用者を選択してください</legend>
+
+        <label class="role">
+          <input type="radio" name="user_type" value="student" required>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>
+            </svg>
+            生徒
+          </span>
+        </label>
+
+        <label class="role">
+          <input type="radio" name="user_type" value="trainer">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+            </svg>
+            トレーナー
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="field">
+        <label class="label" for="user_id">ユーザーID</label>
+        <div class="input-wrap">
+          <input class="input" type="text" id="user_id" name="user_id"
+                 placeholder="ユーザーIDを入力" autocomplete="username" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="password">パスワード</label>
+        <div class="input-wrap">
+          <input class="input pw" type="password" id="password" name="password"
+                 placeholder="パスワードを入力" autocomplete="current-password" required>
+          <button type="button" class="eye" id="togglePw" aria-label="パスワードを表示">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login">ログイン</button>
+    </form>
+
+    <a class="btn-forgot" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+      スタート画面に戻る
+    </a>
+  </main>
+
+
+
+<script>
+  const pw = document.getElementById('password');
+  document.getElementById('togglePw').addEventListener('click', () => {
+    const show = pw.type === 'password';
+    pw.type = show ? 'text' : 'password';
+    document.getElementById('togglePw').setAttribute('aria-label', show ? 'パスワードを隠す' : 'パスワードを表示');
+  });
+</script>
+{% endblock %}

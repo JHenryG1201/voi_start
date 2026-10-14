@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}スタートページ{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="start">
+  <div class="start-visual" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13v6M10.5 8v16M16 4v24M21.5 9v14M27 13v6"/></svg>
+  </div>
+
+  <h1>ボイスタート</h1>
+  <p class="start-lead">ご利用方法を選択してください。</p>
+
+  <div class="start-actions">
+    <a class="start-btn primary" href="/accounts/register">
+      新規登録
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+    <a class="start-btn secondary" href="/login">ログイン</a>
+  </div>
+</section>
+{% endblock %}

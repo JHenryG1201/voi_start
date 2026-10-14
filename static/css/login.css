@@ -1,0 +1,91 @@
+:root{
+  --bg:#EEF1F7; --surface:#FFFFFF; --ink:#16203A; --muted:#5B6685; --line:#D9DEEA;
+  --brand:#2F4BFF; --brand-2:#6A4DFF; --on-brand:#FFFFFF; --soft:#E6EAFF; --glow:rgba(47,75,255,.18);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1426; --surface:#182038; --ink:#EAEEFB; --muted:#9AA4C4; --line:#2A3556;
+    --brand:#6C82FF; --brand-2:#8F6CFF; --on-brand:#0F1426; --soft:#243060; --glow:rgba(108,130,255,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1426; --surface:#182038; --ink:#EAEEFB; --muted:#9AA4C4; --line:#2A3556;
+  --brand:#6C82FF; --brand-2:#8F6CFF; --on-brand:#0F1426; --soft:#243060; --glow:rgba(108,130,255,.28);
+}
+html{height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;min-height:100vh;margin:0 auto;display:flex;flex-direction:column}
+
+/* top brand area */
+.hero{
+  position:relative;overflow:hidden;padding:44px 24px 72px;text-align:center;color:#fff;
+  background:linear-gradient(135deg,#2F4BFF 0%,#6A4DFF 60%,#9B5CFF 100%);
+  border-radius:0 0 32px 32px;
+}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.14)}
+.hero::before{width:160px;height:160px;left:-50px;top:-70px}
+.hero::after{width:120px;height:120px;right:-30px;bottom:-50px}
+.logo{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;font-size:30px;font-weight:700;letter-spacing:.01em}
+.logo svg{width:34px;height:34px}
+.hero p{position:relative;z-index:1;margin:8px 0 0;font-size:13px;opacity:.9}
+
+/* card */
+.card{
+  position:relative;z-index:1;margin:-44px 16px 24px;padding:24px 20px 22px;
+  background:var(--surface);border-radius:24px;box-shadow:0 12px 32px rgba(22,32,58,.14);
+}
+.card h1{margin:0 0 20px;font-size:20px;font-weight:700;text-align:center}
+.field{margin-bottom:18px}
+.label{display:block;margin:0 0 8px;font-size:13px;font-weight:700;color:var(--muted)}
+
+/* role buttons */
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:0;padding:0;margin:0}
+.roles legend{padding:0}
+.role input{position:absolute;opacity:0;pointer-events:none}
+.role span{
+  display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:14px;
+  border:2px solid var(--line);background:var(--surface);color:var(--ink);font-size:15px;font-weight:700;cursor:pointer;
+  transition:border-color .15s,background .15s,color .15s;
+}
+.role span svg{width:22px;height:22px;flex:none}
+.role input:checked + span{border-color:transparent;color:var(--on-brand);background:linear-gradient(135deg,var(--brand),var(--brand-2))}
+.role input:focus-visible + span{outline:3px solid var(--brand);outline-offset:2px}
+
+/* inputs */
+.input-wrap{position:relative}
+.input{
+  width:100%;height:52px;padding:0 16px;border:2px solid var(--line);border-radius:14px;
+  background:var(--surface);color:var(--ink);font:inherit;font-size:16px;transition:border-color .2s,box-shadow .2s;
+}
+.input::placeholder{color:var(--muted);opacity:.7}
+.input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px var(--glow)}
+.input.pw{padding-right:52px}
+.eye{
+  position:absolute;right:4px;top:4px;width:44px;height:44px;border:0;background:transparent;color:var(--muted);
+  border-radius:10px;display:grid;place-items:center;cursor:pointer
+}
+.eye svg{width:22px;height:22px}
+.eye:focus-visible{outline:3px solid var(--brand)}
+
+/* buttons */
+.btn-login{
+  width:100%;height:54px;margin-top:6px;border:0;border-radius:14px;cursor:pointer;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));color:var(--on-brand);
+  font:inherit;font-size:17px;font-weight:700;letter-spacing:.06em;
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-login:active{transform:scale(.98)}
+.btn-login:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.btn-forgot{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;margin-top:14px;
+  border:2px solid var(--line);border-radius:14px;background:transparent;color:var(--brand);
+  font:inherit;font-size:14px;font-weight:700;text-decoration:none;cursor:pointer
+}
+.btn-forgot svg{width:18px;height:18px}
+.btn-forgot:active{background:var(--soft)}
+.btn-forgot:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.btn-login,.role span,.input{transition:none}}

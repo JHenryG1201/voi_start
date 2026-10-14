@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}予約枠作成{% endblock %}
+
+{% block content %}
+
+    <h1>予約枠作成</h1>
+
+    <p>
+        <label>
+            日付
+            <input type="date">
+        </label>
+    </p>
+
+    <p>
+        <label>
+            開始時刻
+            <input type="time">
+        </label>
+    </p>
+
+    <p>
+        <label>
+            終了時刻
+            <input type="time">
+        </label>
+    </p>
+
+    <p>
+        レッスン形式
+    </p>
+
+    <p>
+        <label>
+            <input type="radio" name="lesson_type" value="online">
+            オンライン
+        </label>
+    </p>
+
+    <p>
+        <label>
+            <input type="radio" name="lesson_type" value="offline">
+            オフライン
+        </label>
+    </p>
+
+        </p>
+
+    <p>
+        <label>
+            <input type="radio" name="lesson_type" value="online">
+            どちらも対応可能
+        </label>
+    </p>
+
+
+    <p>
+        <a href="/reservation_slot_create_done">
+            <button type="button">予約枠を作成</button>
+        </a>
+    </p>
+
+    <p>
+        <a href="/reservation_management">予約管理に戻る</a>
+    </p>
+
+{% endblock %}

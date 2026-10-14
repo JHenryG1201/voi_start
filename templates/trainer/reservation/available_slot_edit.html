@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}空き枠変更{% endblock %}
+
+{% block content %}
+
+    <h1>空き枠変更</h1>
+
+    <p>
+        <label>
+            日付
+            <input type="date" value="{{ slot.date }}">
+        </label>
+    </p>
+
+    <p>
+        <label>
+            開始時刻
+            <input type="time" value="{{ slot.start }}">
+        </label>
+    </p>
+
+    <p>
+        <label>
+            終了時刻
+            <input type="time" value="{{ slot.end }}">
+        </label>
+    </p>
+
+    <p>
+        レッスン形式
+    </p>
+
+    <p>
+        <label>
+            <input type="radio" name="lesson_type" value="online"
+            {% if slot.type == "online" %}checked{% endif %}>
+            オンライン
+        </label>
+    </p>
+
+    <p>
+        <label>
+            <input type="radio" name="lesson_type" value="offline"
+            {% if slot.type == "offline" %}checked{% endif %}>
+            オフライン
+        </label>
+    </p>
+
+    <p>
+        <label>
+            <input type="radio" name="lesson_type" value="both"
+            {% if slot.type == "both" %}checked{% endif %}>
+            どちらでも可
+        </label>
+    </p>
+
+    <p>
+        <a href="/available_slot_edit_done">
+            <button type="button">変更を保存</button>
+        </a>
+    </p>
+
+    <p>
+        <a href="/available_slots">空き枠一覧に戻る</a>
+    </p>
+
+{% endblock %}

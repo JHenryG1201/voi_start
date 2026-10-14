@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}練習履歴詳細{% endblock %}
+
+{% block content %}
+
+    <h1>練習履歴詳細</h1>
+
+    <h2>練習日時</h2>
+    <p>{{ record.date }}</p>
+
+    <h2>曲名</h2>
+    <p>{{ record.song }}</p>
+
+    <h2>歌唱評価</h2>
+    <p>{{ record.evaluation }}</p>
+
+    <h2>良かった点</h2>
+    <p>{{ record.good }}</p>
+
+    <h2>改善ポイント</h2>
+    <p>{{ record.improvement }}</p>
+
+    <h2>AIからのアドバイス</h2>
+    <p>{{ record.advice }}</p>
+
+    <p>
+        <a href="/singing_practice_record">練習履歴に戻る</a>
+    </p>
+
+{% endblock %}
