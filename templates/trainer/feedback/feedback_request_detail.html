@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}フィードバック依頼{% endblock %}
+
+{% block content %}
+
+    <h1>フィードバック依頼</h1>
+
+    <h2>生徒情報</h2>
+    <p>生徒名：{{ request_data.student }}</p>
+    <p>依頼日時：{{ request_data.date }}</p>
+
+    <h2>音声ファイル</h2>
+    <p>{{ request_data.file }}</p>
+
+    <audio controls>
+        <source src="" type="audio/mpeg">
+        お使いのブラウザでは音声を再生できません。
+    </audio>
+
+    <h2>フィードバック</h2>
+
+    <textarea rows="8" cols="50"
+        placeholder="フィードバックを入力してください"></textarea>
+
+    <p>
+        <a href="/feedback_sent">
+            <button type="button">送信</button>
+        </a>
+    </p>
+    
+    <p>
+        <a href="/feedback_requests">依頼一覧に戻る</a>
+    </p>
+
+{% endblock %}

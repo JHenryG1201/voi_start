@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}歌唱曲選択{% endblock %}
+
+{% block content %}
+
+    <h1>歌唱曲選択</h1>
+
+    <h2>おすすめ曲</h2>
+
+        <ul>
+            <li><a href="/singing_practice_play/1">曲名A</a></li>
+            <li><a href="/singing_practice_play/2">曲名B</a></li>
+            <li><a href="/singing_practice_play/3">曲名C</a></li>
+        </ul>
+
+    <h2>曲を検索</h2>
+
+    <div>
+        <input type="text" id="searchInput" placeholder="曲名を入力してください">
+        <button type="button" id="searchButton">検索</button>
+    </div>
+
+    <h3>検索結果</h3>
+
+    <ul id="searchResults"></ul>
+
+    <h2>練習履歴</h2>
+
+    <p>
+        <a href="/singing_practice_record">練習履歴を見る</a>
+    </p>
+
+    <p>
+        <a href="/training">トレーニングに戻る</a>
+    </p>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const searchButton = document.getElementById("searchButton");
+        const searchResults = document.getElementById("searchResults");
+
+        // 仮の曲データ
+        const songs = [
+            "曲名A",
+            "曲名B",
+            "曲名C",
+            "曲名D",
+            "曲名E"
+        ];
+
+        searchButton.addEventListener("click", function () {
+
+            const keyword = searchInput.value;
+            searchResults.innerHTML = "";
+
+            const results = songs.filter(function (song) {
+                return song.includes(keyword);
+            });
+
+            results.forEach(function (song) {
+
+                const li = document.createElement("li");
+
+                const link = document.createElement("a");
+
+                const songId = songs.indexOf(song) + 1;
+
+                link.href = "/singing_practice_play/" + songId;
+                link.textContent = song;
+
+                li.appendChild(link);
+                searchResults.appendChild(li);
+            });
+        });
+    </script>
+
+{% endblock %}

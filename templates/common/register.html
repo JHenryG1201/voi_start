@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}新規登録{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="register">
+  <h1>新規登録</h1>
+  <p class="register-lead">利用者の種類とログイン情報を入力してください。</p>
+
+  <form class="register-form" method="post">
+    {% csrf_token %}
+
+    <fieldset class="register-roles">
+      <legend class="register-label">利用者を選択してください</legend>
+
+      <label class="register-role">
+        <input type="radio" name="user_type" value="student"
+               {% if form.user_type.value == "student" %}checked{% endif %} required>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+          生徒
+        </span>
+      </label>
+
+      <label class="register-role">
+        <input type="radio" name="user_type" value="trainer"
+               {% if form.user_type.value == "trainer" %}checked{% endif %}>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          トレーナー
+        </span>
+      </label>
+    </fieldset>
+    {% for error in form.user_type.errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    <div class="register-field">
+      <label class="register-label" for="user_id">ユーザーID</label>
+      <input class="register-input" type="text" id="user_id" name="username"
+             value="{{ form.username.value|default:'' }}"
+             placeholder="ユーザーIDを入力" autocomplete="username" required>
+    </div>
+    {% for error in form.username.errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    <div class="register-field">
+      <label class="register-label" for="password">パスワード</label>
+      <input class="register-input" type="password" id="password" name="password1"
+             placeholder="パスワードを入力" autocomplete="new-password" required>
+    </div>
+    {% for error in form.password1.errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    <div class="register-field">
+      <label class="register-label" for="password_confirm">パスワード（確認）</label>
+      <input class="register-input" type="password" id="password_confirm" name="password2"
+             placeholder="もう一度入力" autocomplete="new-password" required>
+    </div>
+    {% for error in form.password2.errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    {% for error in form.non_field_errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    <button type="submit" class="register-submit">登録</button>
+  </form>
+
+  <a class="register-back" href="/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    スタート画面に戻る
+  </a>
+</section>
+{% endblock %}

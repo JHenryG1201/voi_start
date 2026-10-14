@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}測定{% endblock %}
+
+{% block content %}
+
+    <h1>測定</h1>
+
+    <h2>録音について</h2>
+
+    <p>
+        音域を測定するため、音を聞きながら声を出してください。
+    </p>
+
+    <p>
+        無理に高い声や低い声を出さず、出せる範囲で声を出してください。
+    </p>
+
+    <div>
+        <button type="button" id="startButton">録音開始</button>
+        <button type="button" id="stopButton" disabled>録音停止</button>
+    </div>
+
+    <p id="recordingStatus">録音待機中</p>
+
+    <div>
+        <button type="button" id="playButton" disabled>再生</button>
+    </div>
+
+    <div>
+        <button type="button" id="analysisButton" disabled>分析開始</button>
+    </div>
+
+    <p id="analysisStatus"></p>
+
+    <p>
+        <a href="/ai_analysis">AI分析に戻る</a>
+    </p>
+
+    <script>
+        const startButton = document.getElementById("startButton");
+        const stopButton = document.getElementById("stopButton");
+        const playButton = document.getElementById("playButton");
+        const analysisButton = document.getElementById("analysisButton");
+        const recordingStatus = document.getElementById("recordingStatus");
+        const analysisStatus = document.getElementById("analysisStatus");
+
+        startButton.addEventListener("click", function () {
+            startButton.disabled = true;
+            stopButton.disabled = false;
+
+            recordingStatus.textContent = "録音中です";
+        });
+
+        stopButton.addEventListener("click", function () {
+            stopButton.disabled = true;
+            playButton.disabled = false;
+            analysisButton.disabled = false;
+
+            recordingStatus.textContent = "録音が完了しました";
+        });
+
+        playButton.addEventListener("click", function () {
+            recordingStatus.textContent = "録音した音声を再生しています";
+        });
+
+        analysisButton.addEventListener("click", function () {
+            analysisButton.disabled = true;
+            playButton.disabled = true;
+            startButton.disabled = true;
+
+            analysisStatus.textContent = "AIが音声を分析しています";
+
+            setTimeout(function () {
+                window.location.href = "/analysis_result";
+            }, 2000);
+        });
+    </script>
+
+{% endblock %}

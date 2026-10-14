@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}トレーニング詳細{% endblock %}
+
+{% block content %}
+
+    <h1>トレーニング詳細</h1>
+
+    <h2>{{ training.name }}</h2>
+
+    <h3>目的</h3>
+    <p>{{ training.purpose }}</p>
+
+    <h3>やり方</h3>
+
+    <ol>
+        {% for step in training.how_to %}
+            <li>{{ step }}</li>
+        {% endfor %}
+    </ol>
+
+    <h3>注意点</h3>
+    <p>{{ training.caution }}</p>
+
+    <p>
+        <a href="/recommended_training">AIおすすめトレーニングに戻る</a>
+    </p>
+
+    <p>
+        <a href="/training">トレーニングに戻る</a>
+    </p>
+
+{% endblock %}

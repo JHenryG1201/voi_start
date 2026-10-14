@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}空き枠一覧{% endblock %}
+
+{% block content %}
+
+    <h1>空き枠一覧</h1>
+
+    <ul>
+        <li>
+            2026/10/20 14:00～15:00
+            <br>
+            オンライン
+            <br>
+            <a href="/available_slot_edit/1">変更</a>
+            <a href="/available_slot_delete/1">削除</a>
+        </li>
+
+        <li>
+            2026/10/22 13:00～14:00
+            <br>
+            オフライン
+            <br>
+            <a href="/available_slot_edit/2">変更</a>
+            <a href="/available_slot_delete/2">削除</a>
+        </li>
+
+        <li>
+            2026/10/25 16:00～17:00
+            <br>
+            どちらでも可
+            <br>
+            <a href="/available_slot_edit/3">変更</a>
+            <a href="/available_slot_delete/3">削除</a>
+        </li>
+    </ul>
+
+    <p>
+        <a href="/reservation_management">予約管理に戻る</a>
+    </p>
+
+{% endblock %}
