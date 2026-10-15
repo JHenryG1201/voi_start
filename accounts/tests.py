@@ -105,8 +105,7 @@ class AccountRegistrationTests(TestCase):
         response = self.client.post(
             '/accounts/register',
             {
-                'username': 'new-trainer',
-                'email': 'shared@example.com',
+                'username': 'new-trainer@example.com',
                 'password1': 'a-strong-password',
                 'password2': 'a-strong-password',
                 'user_type': AccountType.TRAINER,
@@ -119,41 +118,9 @@ class AccountRegistrationTests(TestCase):
             AccountType.TRAINER,
         )
 
-    def test_different_account_types_can_use_the_same_email(self):
-        common_data = {
-            'email': 'shared@example.com',
-            'password1': 'a-strong-password',
-            'password2': 'a-strong-password',
-        }
-
-        student_response = self.client.post(
-            '/accounts/register',
-            {
-                **common_data,
-                'username': 'shared-student',
-                'user_type': AccountType.STUDENT,
-            },
-        )
-        trainer_response = self.client.post(
-            '/accounts/register',
-            {
-                **common_data,
-                'username': 'shared-trainer',
-                'user_type': AccountType.TRAINER,
-            },
-        )
-
-        self.assertRedirects(student_response, '/accounts/register_scuccess')
-        self.assertRedirects(trainer_response, '/accounts/register_scuccess')
-        self.assertEqual(
-            Account.objects.filter(email='shared@example.com').count(),
-            2,
-        )
-
     def test_different_account_types_can_use_the_same_username(self):
         common_data = {
-            'username': 'shared-user',
-            'email': 'different@example.com',
+            'username': 'shared@example.com',
             'password1': 'a-strong-password',
             'password2': 'a-strong-password',
         }
@@ -169,7 +136,6 @@ class AccountRegistrationTests(TestCase):
             '/accounts/register',
             {
                 **common_data,
-                'email': 'another@example.com',
                 'user_type': AccountType.TRAINER,
             },
         )
@@ -177,14 +143,13 @@ class AccountRegistrationTests(TestCase):
         self.assertRedirects(student_response, '/accounts/register_scuccess')
         self.assertRedirects(trainer_response, '/accounts/register_scuccess')
         self.assertEqual(
-            Account.objects.filter(username='shared-user').count(),
+            Account.objects.filter(username='shared@example.com').count(),
             2,
         )
 
     def test_same_username_and_account_type_cannot_be_registered_twice(self):
         registration_data = {
-            'username': 'duplicate-student',
-            'email': 'student@example.com',
+            'username': 'duplicate-student@example.com',
             'password1': 'a-strong-password',
             'password2': 'a-strong-password',
             'user_type': AccountType.STUDENT,
@@ -198,7 +163,6 @@ class AccountRegistrationTests(TestCase):
             '/accounts/register',
             {
                 **registration_data,
-                'email': 'student-2@example.com',
             },
         )
 

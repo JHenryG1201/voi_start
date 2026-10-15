@@ -16,7 +16,26 @@ class AccountCreationForm(UserCreationForm):
     )
     class Meta:
         model = Account
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'password1', 'password2')
+
+    def clean_username(self):
+        return self.cleaned_data['username']
+
+    def validate_unique(self):
+        username = self.cleaned_data.get('username')
+        account_type = self.cleaned_data.get('user_type')
+        if (
+            username
+            and account_type
+            and Account.objects.filter(
+                username=username,
+                account_type=account_type,
+            ).exclude(pk=self.instance.pk).exists()
+        ):
+            self.add_error(
+                'username',
+                'A user with that username already exists.',
+            )
 
     def clean_username(self):
         return self.cleaned_data.get('username')
