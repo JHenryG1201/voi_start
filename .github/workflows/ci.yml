@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DJANGO_SECRET_KEY: ci-test-secret-key
+      DEBUG: "True"
     services:
       postgres:
         image: postgres:16
