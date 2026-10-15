@@ -6,6 +6,7 @@ from .models import Account
 
 
 class AccountCreationForm(UserCreationForm):
+    
     user_type = forms.ChoiceField(
         label="利用者を選択してください",
         choices=(
@@ -63,7 +64,6 @@ class AccountCreationForm(UserCreationForm):
 
 
 class AccountAuthenticationForm(AuthenticationForm):
-
     error_messages = {
         "invalid_login": (
             "ユーザー名、パスワード、または利用者の種類が正しくありません。"
@@ -94,7 +94,7 @@ class AccountAuthenticationForm(AuthenticationForm):
             None,
         )
         if matching_user and matching_user.account_type != selected_type:
-            raise ValidationError("ユーザー名、パスワード、または利用者の種類が正しくありません。")
+            raise ValidationError('ユーザー名、パスワード、または利用者の種類が正しくありません。')
         user = (
             Account.objects
             .filter(username=username, account_type=selected_type)
@@ -110,3 +110,20 @@ class AccountAuthenticationForm(AuthenticationForm):
         self.confirm_login_allowed(user)
         self.user_cache = user
         return cleaned_data
+
+
+class AccountDeletionForm(forms.Form):
+    password = forms.CharField(
+        label='現在のパスワード',
+        widget=forms.PasswordInput,
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if not self.user.check_password(password):
+            raise forms.ValidationError('パスワードが正しくありません。')
+        return password

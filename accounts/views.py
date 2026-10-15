@@ -1,8 +1,14 @@
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, FormView, TemplateView
 
-from .forms import AccountAuthenticationForm, AccountCreationForm
+from .forms import (
+    AccountAuthenticationForm,
+    AccountCreationForm,
+    AccountDeletionForm,
+)
 from .models import AccountType
 
 # Create your views here.
@@ -24,3 +30,23 @@ class AccountLoginView(LoginView):
 
 class RegisterSuccessView(TemplateView):
     template_name = 'common/register_success.html'
+
+
+class AccountDeletionView(LoginRequiredMixin, FormView):
+    template_name = 'common/account_delete.html'
+    form_class = AccountDeletionForm
+    success_url = reverse_lazy('account_delete_success')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        account = self.request.user
+        logout(self.request)
+        account.delete()
+        return super().form_valid(form)
+
+class AccountDeletionSuccessView(TemplateView):
+    template_name = 'common/account_delete_success.html'

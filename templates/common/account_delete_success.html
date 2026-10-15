@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}アカウント削除完了{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/register_done.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="done">
+  <div class="done-visual" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+  </div>
+
+  <h1>アカウント削除完了</h1>
+  <p class="done-lead">
+    アカウント削除が完了しました。<br>
+  </p>
+
+  <a class="done-btn" href="{% url 'homepage' %}">
+    ホームページ
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+  </a>
+</section>
+{% endblock %}

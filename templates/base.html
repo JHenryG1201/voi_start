@@ -63,8 +63,7 @@
     {% csrf_token %}
     <button type="submit" class="drawer-link">ログアウト</button>
   </form>
-  <form action="{% url 'logout' %}" method="post" onsubmit="return confirm('ログアウトしてもよろしいでしょうか');">
-  <a href="/withdraw">退会</a>
+  <a href="{% url 'account_delete' %}">退会</a>
 </nav>
 
 <script>

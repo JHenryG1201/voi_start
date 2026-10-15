@@ -1,0 +1,194 @@
+.withdraw {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 0 8px;
+}
+
+/* Page title */
+.withdraw h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+/* Warning description */
+.withdraw-lead {
+    margin: 8px 0 14px;
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+/* Form card */
+.withdraw-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+    padding: 20px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+}
+
+/* Password field */
+.withdraw-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.withdraw-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.withdraw-label::before {
+    content: "";
+    width: 4px;
+    height: 14px;
+    flex: 0 0 4px;
+    border-radius: 2px;
+    background: var(--brand);
+}
+
+/* Input */
+.withdraw-input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 16px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.withdraw-input::placeholder {
+    color: var(--muted);
+    opacity: .7;
+}
+
+.withdraw-input:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--glow);
+}
+
+/* Django validation errors */
+.withdraw .errorlist {
+    margin: 7px 0 0;
+    padding-left: 18px;
+    color: #dc3545;
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+.withdraw-errors {
+    padding: 12px 14px;
+    border: 1px solid #f2b8bd;
+    border-radius: 14px;
+    background: #fff0f1;
+    color: #b42332;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.withdraw-errors ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+/* Delete account button */
+.withdraw-submit {
+    width: 100%;
+    min-height: 56px;
+    margin-top: 2px;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 18px;
+    background: linear-gradient(
+        120deg,
+        var(--brand),
+        var(--brand-2)
+    );
+    color: var(--on-brand);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.withdraw-submit:hover {
+    box-shadow: 0 6px 18px var(--glow);
+}
+
+.withdraw-submit:active {
+    transform: scale(.97);
+}
+
+.withdraw-submit:focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 3px;
+}
+
+/* Cancel link */
+.withdraw-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.withdraw-back:hover {
+    color: var(--brand);
+    background: var(--soft);
+}
+
+.withdraw-back:focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 2px;
+}
+
+/* Mobile */
+@media (max-width: 360px) {
+    .withdraw h1 {
+        font-size: 24px;
+    }
+
+    .withdraw-form {
+        padding: 18px 14px;
+    }
+
+    .withdraw-submit {
+        font-size: 15px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .withdraw-input,
+    .withdraw-submit {
+        transition: none;
+    }
+}
