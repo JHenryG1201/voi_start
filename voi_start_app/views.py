@@ -8,6 +8,13 @@ from accounts.models import AccountType
 class HomePageView(TemplateView):
     template_name = 'common/index.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if request.user.account_type == AccountType.TRAINER:
+                return redirect('trainer_home')
+            return redirect('student_home')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class AccountHomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
