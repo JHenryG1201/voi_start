@@ -26,14 +26,15 @@
   <div class="card">
     <h1>ログイン</h1>
 
-    <form action="/login" method="post">
+    <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
 
       <fieldset class="roles field">
         <legend class="label">利用者を選択してください</legend>
 
         <label class="role">
-          <input type="radio" name="user_type" value="student" required>
+          <input type="radio" name="user_type" value="student"
+                 {% if form.user_type.value == "student" %}checked{% endif %} required>
           <span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>
@@ -43,7 +44,8 @@
         </label>
 
         <label class="role">
-          <input type="radio" name="user_type" value="trainer">
+          <input type="radio" name="user_type" value="trainer"
+                 {% if form.user_type.value == "trainer" %}checked{% endif %}>
           <span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
@@ -56,7 +58,8 @@
       <div class="field">
         <label class="label" for="user_id">ユーザーID</label>
         <div class="input-wrap">
-          <input class="input" type="text" id="user_id" name="user_id"
+          <input class="input" type="text" id="user_id" name="username"
+                 value="{{ form.username.value|default:'' }}"
                  placeholder="ユーザーIDを入力" autocomplete="username" required>
         </div>
       </div>
@@ -76,6 +79,13 @@
 
       <button type="submit" class="btn-login">ログイン</button>
     </form>
+
+    {% for error in form.user_type.errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
 
     <a class="btn-forgot" href="/">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

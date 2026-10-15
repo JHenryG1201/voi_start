@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from accounts.views import AccountLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('voi_start_app.urls'),),
     path('accounts/', include('accounts.urls')),
+    path('login', AccountLoginView.as_view(), name='login'),
 ]
