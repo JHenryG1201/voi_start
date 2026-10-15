@@ -34,7 +34,7 @@ class AccountCreationForm(UserCreationForm):
         ):
             self.add_error(
                 'username',
-                'A user with that username already exists.',
+                'アカウントが既に作成されています。',
             )
 
     def clean_username(self):
@@ -49,7 +49,7 @@ class AccountCreationForm(UserCreationForm):
             account_type=account_type,
         ).exists():
             raise forms.ValidationError(
-                'A user with that username already exists.',
+                'アカウントが既に作成されています。',
             )
         return cleaned_data
 
