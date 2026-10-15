@@ -114,7 +114,7 @@ class AccountRegistrationTests(TestCase):
 
         self.assertRedirects(response, '/accounts/register_scuccess')
         self.assertEqual(
-            Account.objects.get(username='new-trainer').account_type,
+            Account.objects.get(username='new-trainer@example.com').account_type,
             AccountType.TRAINER,
         )
 
