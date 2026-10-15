@@ -59,7 +59,7 @@
   <a href="/profile">プロフィール</a>
   <a href="/settings">設定</a>
   <a href="/notifications">お知らせ</a>
-  <form action="{% url 'logout' %}" method="post" onsubmit="return confirm('ログアウトしてもよろしいでしょうか');">
+  <form action="{% url 'logout' %}" method="post">
     {% csrf_token %}
     <button type="submit" class="drawer-link">ログアウト</button>
   </form>
