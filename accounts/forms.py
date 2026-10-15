@@ -18,6 +18,9 @@ class AccountCreationForm(UserCreationForm):
         model = Account
         fields = ('username', 'password1', 'password2')
 
+    def validate_unique(self):
+        forms.ModelForm.validate_unique(self)
+
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
