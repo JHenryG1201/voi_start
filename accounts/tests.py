@@ -22,7 +22,7 @@ class AccountAuthenticationTests(TestCase):
 
     def test_student_login_redirects_to_student_home(self):
         response = self.client.post(
-            '/login',
+            '/accounts/login',
             {
                 'username': 'student1',
                 'password': 'correct-password',
@@ -35,7 +35,7 @@ class AccountAuthenticationTests(TestCase):
 
     def test_logged_in_user_is_available_on_follow_up_request(self):
         self.client.post(
-            '/login',
+            '/accounts/login',
             {
                 'username': 'student1',
                 'password': 'correct-password',
@@ -51,7 +51,7 @@ class AccountAuthenticationTests(TestCase):
     def test_logout_clears_logged_in_user_and_redirects_to_index(self):
         self.client.force_login(self.student)
 
-        response = self.client.post('/logout')
+        response = self.client.post('/accounts/logout')
 
         self.assertRedirects(response, '/')
         self.assertNotIn('_auth_user_id', self.client.session)
@@ -63,7 +63,7 @@ class AccountAuthenticationTests(TestCase):
 
     def test_trainer_login_redirects_to_trainer_home(self):
         response = self.client.post(
-            '/login',
+            '/accounts/login',
             {
                 'username': 'trainer1',
                 'password': 'correct-password',
@@ -75,7 +75,7 @@ class AccountAuthenticationTests(TestCase):
 
     def test_login_rejects_matching_credentials_with_wrong_account_type(self):
         response = self.client.post(
-            '/login',
+            '/accounts/login',
             {
                 'username': 'student1',
                 'password': 'correct-password',
@@ -103,7 +103,7 @@ class AccountAuthenticationTests(TestCase):
         )
 
         response = self.client.post(
-            '/login',
+            '/accounts/login',
             {
                 'username': 'shared-user',
                 'password': 'trainer-password',
@@ -116,7 +116,7 @@ class AccountAuthenticationTests(TestCase):
 
         self.client.logout()
         response = self.client.post(
-            '/login',
+            '/accounts/login',
             {
                 'username': 'shared-user',
                 'password': 'student-password',
