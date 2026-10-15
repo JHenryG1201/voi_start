@@ -10,9 +10,9 @@ class AccountType(models.TextChoices):
 class Account(AbstractUser):
     username = models.CharField(
         error_messages={
-            'unique': 'アカウントが既に作成されています。',
+            'unique': 'A user with that username already exists.',
         },
-        help_text='必要・150文字以下・文字/数字/@/./+/-/_だけ.',
+        help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
         max_length=150,
         unique=False,
         validators=[UnicodeUsernameValidator()],
