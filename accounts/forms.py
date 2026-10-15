@@ -18,8 +18,24 @@ class AccountCreationForm(UserCreationForm):
         model = Account
         fields = ('username', 'password1', 'password2')
 
+    def clean_username(self):
+        return self.cleaned_data['username']
+
     def validate_unique(self):
-        forms.ModelForm.validate_unique(self)
+        username = self.cleaned_data.get('username')
+        account_type = self.cleaned_data.get('user_type')
+        if (
+            username
+            and account_type
+            and Account.objects.filter(
+                username=username,
+                account_type=account_type,
+            ).exclude(pk=self.instance.pk).exists()
+        ):
+            self.add_error(
+                'username',
+                'A user with that username already exists.',
+            )
 
     def clean(self):
         cleaned_data = super().clean()
