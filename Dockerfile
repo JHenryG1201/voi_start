@@ -17,5 +17,5 @@ RUN python manage.py collectstatic --noinput
 # Expose port 8000 for the Django development server
 EXPOSE 8000
 
-# Default command to run the Django server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Apply database migrations before starting Django.
+CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"]
