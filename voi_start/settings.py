@@ -45,6 +45,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.Account'
+# Account login is resolved by (username, account_type) in AccountAuthenticationForm.
+SILENCED_SYSTEM_CHECKS = ['auth.E003']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

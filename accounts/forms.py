@@ -16,7 +16,20 @@ class AccountCreationForm(UserCreationForm):
     )
     class Meta:
         model = Account
-        fields = ('username', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        account_type = cleaned_data.get('user_type')
+        if Account.objects.filter(
+            username=username,
+            account_type=account_type,
+        ).exists():
+            raise forms.ValidationError(
+                'A user with that username already exists.',
+            )
+        return cleaned_data
 
     def save(self, commit=True):
         account = super().save(commit=False)
@@ -38,14 +51,22 @@ class AccountAuthenticationForm(AuthenticationForm):
     )
 
     def clean(self):
-        cleaned_data = super().clean()
-        user = self.get_user()
+        cleaned_data = self.cleaned_data
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
         selected_type = cleaned_data.get('user_type')
+        user = (
+            Account.objects
+            .filter(username=username, account_type=selected_type)
+            .first()
+        )
 
-        if user is not None and selected_type != user.account_type:
+        if user is None or not user.check_password(password):
             raise ValidationError(
-                "選択した利用者の種類とアカウントが一致しません。",
+                self.error_messages['invalid_login'],
                 code='invalid_login',
             )
 
+        self.confirm_login_allowed(user)
+        self.user_cache = user
         return cleaned_data
