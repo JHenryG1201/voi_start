@@ -48,6 +48,19 @@ class AccountAuthenticationTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.wsgi_request.user, self.student)
 
+    def test_logout_clears_logged_in_user_and_redirects_to_index(self):
+        self.client.force_login(self.student)
+
+        response = self.client.post('/logout')
+
+        self.assertRedirects(response, '/')
+        self.assertNotIn('_auth_user_id', self.client.session)
+        self.assertFalse(response.wsgi_request.user.is_authenticated)
+
+        homepage_response = self.client.get('/')
+        self.assertEqual(homepage_response.status_code, 200)
+        self.assertTemplateUsed(homepage_response, 'common/index.html')
+
     def test_trainer_login_redirects_to_trainer_home(self):
         response = self.client.post(
             '/login',
