@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LogoutView
+
 from accounts.views import AccountLoginView
 
 urlpatterns = [
@@ -23,4 +25,5 @@ urlpatterns = [
     path('', include('voi_start_app.urls'),),
     path('accounts/', include('accounts.urls')),
     path('login', AccountLoginView.as_view(), name='login'),
+    path('logout', LogoutView.as_view(next_page='homepage'), name='logout'),
 ]

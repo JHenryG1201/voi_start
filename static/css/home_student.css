@@ -35,7 +35,7 @@ header{
 .user .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px}
 .burger{width:44px;height:44px;border:0;background:transparent;color:inherit;border-radius:12px;display:grid;place-items:center;cursor:pointer}
 .burger svg{width:24px;height:24px}
-.burger:focus-visible,.hero:focus-visible,.tile:focus-visible,.drawer a:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.burger:focus-visible,.hero:focus-visible,.tile:focus-visible,.drawer a:focus-visible,.drawer-link:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 header .burger:focus-visible{outline-color:#fff}
 
 /* body */
@@ -85,8 +85,10 @@ footer::after{width:110px;height:110px;right:-30px;bottom:-60px}
 /* drawer */
 .scrim{position:fixed;inset:0;background:rgba(10,14,28,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(78%,320px);background:var(--surface);z-index:30;transform:translateX(100%);transition:transform .22s ease;padding:calc(env(safe-area-inset-top,0px) + 16px) 12px 24px;display:flex;flex-direction:column;gap:2px}
-.drawer a{padding:14px 12px;border-radius:12px;color:var(--ink);text-decoration:none;font-size:15px;font-weight:500}
+.drawer a,.drawer-link{padding:14px 12px;border-radius:12px;color:var(--ink);text-decoration:none;font-size:15px;font-weight:500}
+.drawer-link{background:none;border:0;font-family:inherit;text-align:left;width:100%;cursor:pointer}
 .drawer a:active{background:var(--bg)}
+.drawer-link:active{background:var(--bg)}
 body.open .scrim{opacity:1;pointer-events:auto}
 body.open .drawer{transform:none}
 @media (prefers-reduced-motion:reduce){.hero,.tile,.scrim,.drawer{transition:none}}
