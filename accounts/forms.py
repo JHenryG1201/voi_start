@@ -63,6 +63,14 @@ class AccountCreationForm(UserCreationForm):
 
 
 class AccountAuthenticationForm(AuthenticationForm):
+
+    error_messages = {
+        "invalid_login": (
+            "ユーザー名、パスワード、または利用者の種類が正しくありません。"
+        ),
+        "inactive": "このアカウントは無効になっています。",
+    }
+
     user_type = forms.ChoiceField(
         label="利用者を選択してください",
         choices=(
@@ -86,7 +94,7 @@ class AccountAuthenticationForm(AuthenticationForm):
             None,
         )
         if matching_user and matching_user.account_type != selected_type:
-            raise ValidationError('選択した利用者の種類とアカウントが一致しません。')
+            raise ValidationError("ユーザー名、パスワード、または利用者の種類が正しくありません。")
         user = (
             Account.objects
             .filter(username=username, account_type=selected_type)
