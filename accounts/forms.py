@@ -37,6 +37,9 @@ class AccountCreationForm(UserCreationForm):
                 'A user with that username already exists.',
             )
 
+    def clean_username(self):
+        return self.cleaned_data.get('username')
+
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
@@ -74,6 +77,16 @@ class AccountAuthenticationForm(AuthenticationForm):
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
         selected_type = cleaned_data.get('user_type')
+        matching_user = next(
+            (
+                account
+                for account in Account.objects.filter(username=username)
+                if account.check_password(password)
+            ),
+            None,
+        )
+        if matching_user and matching_user.account_type != selected_type:
+            raise ValidationError('選択した利用者の種類とアカウントが一致しません。')
         user = (
             Account.objects
             .filter(username=username, account_type=selected_type)
