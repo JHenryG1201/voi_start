@@ -33,6 +33,21 @@ class AccountAuthenticationTests(TestCase):
         self.assertRedirects(response, '/home_student')
         self.assertEqual(int(self.client.session['_auth_user_id']), self.student.pk)
 
+    def test_logged_in_user_is_available_on_follow_up_request(self):
+        self.client.post(
+            '/login',
+            {
+                'username': 'student1',
+                'password': 'correct-password',
+                'user_type': AccountType.STUDENT,
+            },
+        )
+
+        response = self.client.get('/home_student')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.wsgi_request.user, self.student)
+
     def test_trainer_login_redirects_to_trainer_home(self):
         response = self.client.post(
             '/login',
