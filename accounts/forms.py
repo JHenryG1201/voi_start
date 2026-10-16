@@ -6,6 +6,9 @@ from .models import Account
 
 
 class AccountCreationForm(UserCreationForm):
+    error_messages = {
+        'password_mismatch': "パスワードが一致していません",
+    }
     
     user_type = forms.ChoiceField(
         label="利用者を選択してください",
@@ -18,6 +21,7 @@ class AccountCreationForm(UserCreationForm):
     class Meta:
         model = Account
         fields = ('username', 'password1', 'password2')
+        
 
     def clean_username(self):
         return self.cleaned_data['username']
@@ -35,24 +39,21 @@ class AccountCreationForm(UserCreationForm):
         ):
             self.add_error(
                 'username',
-                'A user with that username already exists.',
+                'このメールアドレスでアカウントが既に作成されています。',
             )
 
-    def clean_username(self):
-        return self.cleaned_data.get('username')
-
-    def clean(self):
-        cleaned_data = super().clean()
-        username = cleaned_data.get('username')
-        account_type = cleaned_data.get('user_type')
-        if Account.objects.filter(
-            username=username,
-            account_type=account_type,
-        ).exists():
-            raise forms.ValidationError(
-                'A user with that username already exists.',
-            )
-        return cleaned_data
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     username = cleaned_data.get('username')
+    #     account_type = cleaned_data.get('user_type')
+    #     if Account.objects.filter(
+    #         username=username,
+    #         account_type=account_type,
+    #     ).exists():
+    #         raise forms.ValidationError(
+    #             'このメールアドレスでアカウントが既に作成されています。',
+    #         )
+    #     return cleaned_data
 
     def save(self, commit=True):
         account = super().save(commit=False)
