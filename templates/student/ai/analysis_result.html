@@ -6,17 +6,35 @@
 
     <h1>分析結果</h1>
 
+    {% if recode %}
+    
+    <p>{{ record.created_at|date:"Y/m/d H:i" }}</p>
+
     <h2>音域</h2>
-    <p>ここに測定した音域を表示します。</p>
+    <p>{{ record.low_note }}〜{{ record.high_note }}</p>
 
     <h2>声質</h2>
-    <p>ここに分析した声質を表示します。</p>
+    <p>{{ record.tone_quality }}</p>
 
     <h2>おすすめの曲</h2>
-    <p>ここに音域に合った曲を表示します。</p>
+    <ul>
+        {% for song in record.recommended_songs %}
+        <li>{{ song }}</li>
+        {% endfor %}
+    </ul>
 
     <h2>おすすめトレーニング</h2>
-    <p>ここにおすすめのトレーニングを表示します。</p>
+    <ul>
+        {% for training in record.recommended_trainings %}
+        <li>{{ training }}</li>
+        {% endfor %}
+    </ul>
+
+    {% else %}
+
+    <p>分析結果がありません。録音して分析を開始してください。</p> 
+
+    {% endif %}
 
     <p><a href="/measurement">もう一度測定する</a></p>
     <p><a href="/analysis_record">分析記録を見る</a></p>
