@@ -6,7 +6,7 @@
 
     <h1>分析結果</h1>
 
-    {% if recode %}
+    {% if record %}
     
     <p>{{ record.created_at|date:"Y/m/d H:i" }}</p>
 
@@ -24,11 +24,12 @@
     </ul>
 
     <h2>おすすめトレーニング</h2>
-    <ul>
+    {% comment %} <ul>
         {% for training in record.recommended_trainings %}
         <li>{{ training }}</li>
         {% endfor %}
-    </ul>
+    </ul> {% endcomment %}
+    <p>{{ record.recommended_trainings }}</p>
 
     {% else %}
 
