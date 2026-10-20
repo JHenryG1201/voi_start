@@ -7,23 +7,15 @@
     <h1>分析記録</h1>
 
         <ul>
+            {% for record in records %}
             <li>
-                <a href="/analysis_record_detail/1">
-                    2026/10/07 10:30　音域：mid1G～hiC
+                <a href="{% url 'analysis_record_detail' record.id %}">
+                    {{ record.created_at|date:"Y/m/d H:i" }}　音域：{{ record.low_note }}～{{ record.high_note }}
                 </a>
             </li>
-
-            <li>
-                <a href="/analysis_record_detail/2">
-                    2026/09/20 15:10　音域：mid1F～hiB
-                </a>
-            </li>
-
-            <li>
-                <a href="/analysis_record_detail/3">
-                    2026/09/05 11:20　音域：mid1E～hiB
-                </a>
-            </li>
+            {% empty %}
+            <li>分析記録はまだありません。</li>
+            {% endfor %}
         </ul>
         
     <p>

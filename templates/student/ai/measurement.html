@@ -5,11 +5,12 @@
 {% block content %}
 
     <h1>測定</h1>
+    <span id="csrfToken" hidden>{% csrf_token %}</span>
 
     <h2>録音について</h2>
 
     <p>
-        音域を測定するため、音を聞きながら声を出してください。
+        音域を測定するため、声を出してください。
     </p>
 
     <p>
@@ -20,6 +21,13 @@
         <button type="button" id="startButton">録音開始</button>
         <button type="button" id="stopButton" disabled>録音停止</button>
     </div>
+    
+    {% comment %}     
+    <p>
+        録音開始時に画面共有を許可すると、共有したタブやシステム音声も録音できます。
+        許可しない場合はマイク音声だけを録音します。
+    </p> 
+    {% endcomment %}
 
     <p id="recordingStatus">録音待機中</p>
 
@@ -44,36 +52,154 @@
         const analysisButton = document.getElementById("analysisButton");
         const recordingStatus = document.getElementById("recordingStatus");
         const analysisStatus = document.getElementById("analysisStatus");
+        let recorder;
+        let chunks = [];
+        let recordingBlob;
 
-        startButton.addEventListener("click", function () {
-            startButton.disabled = true;
-            stopButton.disabled = false;
+        function csrfToken() {
+            return document.querySelector("#csrfToken input[name=csrfmiddlewaretoken]").value;
+        }
 
-            recordingStatus.textContent = "録音中です";
+        /*
+        startButton.addEventListener("click", async function () {
+            try {
+                const microphone = await navigator.mediaDevices.getUserMedia({audio: true});
+                
+                let displayStream;
+
+                if (navigator.mediaDevices.getDisplayMedia) {
+                    try {
+                        displayStream = await navigator.mediaDevices.getDisplayMedia({
+                            video: true,
+                            audio: true,
+                        });
+                        displayStream.getVideoTracks().forEach((track) => track.stop());
+                    } catch (error) {
+
+                    }
+                }
+                
+                const audioContext = new AudioContext();
+                const destination = audioContext.createMediaStreamDestination();
+                audioContext.createMediaStreamSource(microphone).connect(destination);
+                if (displayStream && displayStream.getAudioTracks().length > 0) {
+                    audioContext.createMediaStreamSource(displayStream).connect(destination);
+                }
+
+                const stream = destination.stream;
+                recorder = new MediaRecorder(stream);
+                chunks = [];
+                recorder.addEventListener("dataavailable", (event) => {
+                    if (event.data.size > 0) chunks.push(event.data);
+                });
+                recorder.addEventListener("stop", () => {
+                    recordingBlob = new Blob(chunks, {
+                        type: recorder.mimeType || "audio/webm",
+                    });
+                    microphone.getTracks().forEach((track) => track.stop());
+                    displayStream?.getTracks().forEach((track) => track.stop());
+                    audioContext.close();
+                    playButton.disabled = false;
+                    analysisButton.disabled = false;
+                    recordingStatus.textContent = "録音が完了しました";
+                });
+                recorder.start();
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                recordingStatus.textContent = "録音中です";
+            } catch (error) {
+                recordingStatus.textContent = "マイクを利用できません。ブラウザの権限を確認してください。";
+            }
         });
 
         stopButton.addEventListener("click", function () {
+            recorder.stop();
             stopButton.disabled = true;
-            playButton.disabled = false;
-            analysisButton.disabled = false;
+        });
+        */
 
-            recordingStatus.textContent = "録音が完了しました";
+        startButton.addEventListener("click", async function () {
+            let microphone;
+
+            try {
+                microphone = await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                });
+
+                recorder = new MediaRecorder(microphone);
+                chunks = [];
+
+                recorder.addEventListener("dataavailable", (event) => {
+                    if (event.data.size > 0) {
+                        chunks.push(event.data);
+                    }
+                });
+
+                recorder.addEventListener("stop", () => {
+                    recordingBlob = new Blob(chunks, {
+                        type: recorder.mimeType || "audio/webm"
+                    });
+
+                    microphone.getTracks().forEach(track => track.stop());
+
+                    playButton.disabled = false;
+                    analysisButton.disabled = false;
+                    startButton.disabled = false;
+                    stopButton.disabled = true;
+
+                    recordingStatus.textContent = "録音が完了しました";
+                });
+
+                recorder.start();
+
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                recordingStatus.textContent = "録音中です";
+
+            } catch (error) {
+                microphone?.getTracks().forEach(track => track.stop());
+
+                recordingStatus.textContent =
+                    "マイクを利用できません。ブラウザの権限を確認してください。";
+            }
+        });
+
+        stopButton.addEventListener("click", function () {
+            if (recorder && recorder.state === "recording") {
+                recorder.stop();
+                stopButton.disabled = true;
+            }
         });
 
         playButton.addEventListener("click", function () {
+            const audio = new Audio(URL.createObjectURL(recordingBlob));
+            audio.play();
             recordingStatus.textContent = "録音した音声を再生しています";
         });
 
-        analysisButton.addEventListener("click", function () {
+        analysisButton.addEventListener("click", async function () {
             analysisButton.disabled = true;
             playButton.disabled = true;
             startButton.disabled = true;
 
             analysisStatus.textContent = "AIが音声を分析しています";
+            const formData = new FormData();
+            formData.append("audio", recordingBlob, "voice-recording.webm");
 
-            setTimeout(function () {
-                window.location.href = "/analysis_result";
-            }, 2000);
+            try {
+                const response = await fetch("{% url 'analyze_voice' %}", {
+                    method: "POST",
+                    headers: { "X-CSRFToken": csrfToken() },
+                    body: formData,
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error);
+                window.location.href = result.redirect_url;
+            } catch (error) {
+                analysisStatus.textContent = error.message || "音声分析に失敗しました。";
+                analysisButton.disabled = false;
+                playButton.disabled = false;
+            }
         });
     </script>
 

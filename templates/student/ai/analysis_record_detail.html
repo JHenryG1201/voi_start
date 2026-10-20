@@ -10,16 +10,24 @@
         <p>{{ record.date }}</p>
 
         <h2>音域</h2>
-        <p>{{ record.range }}</p>
+        <p>{{ record.low_note }}〜{{ record.high_note }}</p>
 
         <h2>声質</h2>
-        <p>{{ record.voice }}</p>
+        <p>{{ record.tone_quality }}</p>
 
         <h2>おすすめの曲</h2>
-        <p>{{ record.songs }}</p>
+        <ul>
+            {% for song in record.recommended_songs %}
+            <li>{{ song }}</li>
+            {% endfor %}
+        </ul>
 
         <h2>おすすめトレーニング</h2>
-        <p>{{ record.training }}</p>
+        <ul>
+            {% for training in record.recommended_trainings %}
+            <li>{{ training }}</li>
+            {% endfor %}
+        </ul>
         
     <p>
         <a href="/analysis_record">分析記録に戻る</a>
