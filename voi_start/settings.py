@@ -34,9 +34,17 @@ CSRF_TRUSTED_ORIGINS = os.getenv(
 ).split(",")
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = (
+    os.getenv("DJANGO_SECURE_SSL_REDIRECT", "False").lower() == "true"
+)
+
+SESSION_COOKIE_SECURE = (
+    os.getenv("DJANGO_SESSION_COOKIE_SECURE", "False").lower() == "true"
+)
+
+CSRF_COOKIE_SECURE = (
+    os.getenv("DJANGO_CSRF_COOKIE_SECURE", "False").lower() == "true"
+)
 
 # Application definition
 
