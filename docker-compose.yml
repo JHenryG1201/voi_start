@@ -6,7 +6,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - SUBDOMAINS=voistart.duckdns.org
+      - SUBDOMAINS=voistart
       - TOKEN=6f0ce93a-483d-49c3-ab64-1f2107bf3379
     volumes:
       - ./duckdns/config:/config # Optional for persistence
