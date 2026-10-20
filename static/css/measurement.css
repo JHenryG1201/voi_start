@@ -1,0 +1,62 @@
+.meas{display:flex;flex-direction:column;gap:16px}
+.meas h1{
+  margin:0;display:flex;align-items:center;gap:10px;
+  font-size:22px;font-weight:700;
+}
+.meas h1::before{content:"";width:4px;height:20px;border-radius:2px;background:var(--brand)}
+
+/* 中央のステージ */
+.meas-stage{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  padding:28px 16px 20px;text-align:center;
+  border-radius:24px;background:var(--surface);border:1px solid var(--line);
+}
+.meas-mic{
+  position:relative;width:96px;height:96px;border-radius:50%;
+  display:grid;place-items:center;color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  box-shadow:0 12px 28px rgba(47,75,255,.28);
+}
+.meas-mic::before{
+  content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:2px solid var(--brand);opacity:.18;
+}
+.meas-mic svg{width:46px;height:46px}
+
+.meas-status{
+  margin:0;padding:6px 16px;border-radius:999px;
+  font-size:14px;font-weight:700;color:var(--brand);background:var(--soft);
+}
+.meas-hint{margin:0;font-size:12.5px;color:var(--muted);line-height:1.7}
+
+.meas-row{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.meas-sub{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.meas-btn{
+  min-height:52px;padding:0 16px;border-radius:16px;cursor:pointer;
+  font-family:inherit;font-size:15px;font-weight:700;
+  color:var(--brand);background:var(--surface);border:2px solid var(--brand);
+  transition:transform .12s ease;
+}
+.meas-btn.primary{
+  color:var(--on-brand);border-color:transparent;
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+}
+.meas-btn:active:not(:disabled){transform:scale(.97)}
+.meas-btn:disabled{
+  cursor:not-allowed;opacity:.4;
+  color:var(--muted);border-color:var(--line);background:var(--bg);
+}
+.meas-btn:focus-visible,.meas-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+.meas-note{margin:0;text-align:center;font-size:13.5px;font-weight:700;color:var(--brand-2)}
+.meas-note:empty{display:none}
+
+.meas-back{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  padding:12px;border-radius:12px;
+  font-size:14px;color:var(--muted);text-decoration:none;
+}
+.meas-back svg{width:18px;height:18px}
+
+@media (prefers-reduced-motion:reduce){.meas-btn{transition:none}}

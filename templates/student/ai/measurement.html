@@ -1,10 +1,15 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}測定{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/measurement.css' %}">
+{% endblock %}
+
 {% block content %}
 
-    <h1>測定</h1>
+    {% comment %} <h1>測定</h1>
     <span id="csrfToken" hidden>{% csrf_token %}</span>
 
     <h2>録音について</h2>
@@ -20,7 +25,7 @@
     <div>
         <button type="button" id="startButton">録音開始</button>
         <button type="button" id="stopButton" disabled>録音停止</button>
-    </div>
+    </div> {% endcomment %}
     
     {% comment %}     
     <p>
@@ -29,7 +34,7 @@
     </p> 
     {% endcomment %}
 
-    <p id="recordingStatus">録音待機中</p>
+    {% comment %} <p id="recordingStatus">録音待機中</p>
 
     <div>
         <button type="button" id="playButton" disabled>再生</button>
@@ -43,7 +48,37 @@
 
     <p>
         <a href="/ai_analysis">AI分析に戻る</a>
-    </p>
+    </p> {% endcomment %}
+
+    <section class="meas">
+        <h1>測定</h1>
+
+        <span id="csrfToken" hidden>{% csrf_token %}</span>
+
+        <div class="meas-stage">
+            <div class="meas-mic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+            </div>
+            <p id="recordingStatus" class="meas-status" aria-live="polite">録音待機中</p>
+            <p class="meas-hint">音を聞きながら、出せる範囲で声を出してください。<br>無理に高い声や低い声は出さなくて大丈夫です。</p>
+
+            <div class="meas-row">
+            <button type="button" id="startButton" class="meas-btn primary">録音開始</button>
+            <button type="button" id="stopButton" class="meas-btn" disabled>録音停止</button>
+            </div>
+        </div>
+
+        <div class="meas-sub">
+            <button type="button" id="playButton" class="meas-btn" disabled>再生</button>
+            <button type="button" id="analysisButton" class="meas-btn primary" disabled>分析開始</button>
+        </div>
+        <p id="analysisStatus" class="meas-note" aria-live="polite"></p>
+
+        <a class="meas-back" href="/ai_analysis">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            AI分析に戻る
+        </a>
+        </section>
 
     <script>
         const startButton = document.getElementById("startButton");
