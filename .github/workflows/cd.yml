@@ -1,3 +1,4 @@
+
 name: CD Pipeline
 
 on:
@@ -5,27 +6,61 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set Up SSH Key
-      shell: bash
-      run: |
-        echo "${{ secrets.EC2_KEY }}" > ~/voi-start-key.pem
-        chmod 400 ~/voi-start-key.pem
+      - name: Set Up SSH Key
+        shell: bash
+        env:
+          EC2_KEY: ${{ secrets.EC2_KEY }}
+          EC2_KNOWN_HOSTS: ${{ secrets.EC2_KNOWN_HOSTS }}
+        run: |
+          set -e
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
 
-    - name: Deploy Code
-      shell: bash
-      run: |
-        # SSH into the EC2 instance and deploy
-        ssh -o StrictHostKeyChecking=no -i ~/voi-start-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
-          cd /home/${{ secrets.EC2_USER }}/voi_start
-          git pull
-          docker compose pull
-          docker compose --env-file .env up -d --build --force-recreate
-        "
+          printf '%s\n' "$EC2_KEY" > "$HOME/.ssh/voi-start-key.pem"
+          chmod 600 "$HOME/.ssh/voi-start-key.pem"
+
+          printf '%s\n' "$EC2_KNOWN_HOSTS" >> "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+      - name: Deploy to EC2
+        shell: bash
+        env:
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+        run: |
+          set -euo pipefail
+
+          ssh \
+            -o StrictHostKeyChecking=yes \
+            -i "$HOME/.ssh/voi-start-key.pem" \
+            "$EC2_USER@$EC2_HOST" 'bash -se' <<'REMOTE'
+          set -euo pipefail
+
+          cd "$HOME/voi_start"
+
+          echo "Pulling latest code..."
+          git pull --ff-only origin main
+
+          echo "Building and updating Docker services..."
+          docker compose --env-file .env up -d --build --remove-orphans
+
+          echo "Checking running containers..."
+          docker compose ps
+
+          echo "Deployment completed."
+          REMOTE
