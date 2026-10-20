@@ -6,8 +6,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - SUBDOMAINS=voistart
-      - TOKEN=6f0ce93a-483d-49c3-ab64-1f2107bf3379
+      - SUBDOMAINS=${DUCKDNS_SUBDOMAINS}
+      - TOKEN=${DUCKDNS_TOKEN}
+      - UPDATE_IP=${DUCKDNS_UPDATE_IP:-}
     volumes:
       - ./duckdns/config:/config # Optional for persistence
     restart: unless-stopped
