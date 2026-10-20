@@ -14,5 +14,6 @@ urlpatterns = [
         'analysis_record_detail/<int:record_id>',
         views.AnalysisRecordDetailView.as_view(),
         name='analysis_record_detail',
-    )
+    ),
+    path('ai_question', views.ai_question),    
 ]

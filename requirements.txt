@@ -8,3 +8,4 @@ librosa
 soundfile
 numpy
 pydub
+requests

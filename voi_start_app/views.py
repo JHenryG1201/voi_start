@@ -11,6 +11,10 @@ from django.conf import settings
 from accounts.models import AccountType
 from .models import VoiceAnalysisRecord
 
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_protect
+import requests
+
 import json
 import logging
 logger = logging.getLogger(__name__)
@@ -302,3 +306,31 @@ def analyze_voice(request):
         "record_id": record.pk,
         "redirect_url": f"/analysis_result?record={record.pk}",
     })
+
+from .ai_service import ask_ai
+
+
+@login_required
+@require_POST
+@csrf_protect
+def ai_question(request):
+    try:
+        data = json.loads(request.body)
+        question = str(data.get("question", "")).strip()
+
+        if not question or len(question) > 2000:
+            return JsonResponse(
+                {"error": "質問を入力してください（2000文字以内）。"},
+                status=400,
+            )
+
+        result = ask_ai(question)
+        return JsonResponse(result)
+
+    except requests.RequestException:
+        return JsonResponse(
+            {"error": "AIまたは検索サービスに接続できません。"},
+            status=503,
+        )
+    except (json.JSONDecodeError, ValueError):
+        return JsonResponse({"error": "リクエストが不正です。"}, status=400)

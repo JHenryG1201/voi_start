@@ -46,6 +46,13 @@ CSRF_COOKIE_SECURE = (
     os.getenv("DJANGO_CSRF_COOKIE_SECURE", "False").lower() == "true"
 )
 
+OLLAMA_BASE_URL = os.getenv(
+    "OLLAMA_BASE_URL",
+    "http://host.docker.internal:11434",
+)
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
+SEARXNG_URL = os.getenv("SEARXNG_URL", "http://searxng:8080")
+
 # Application definition
 
 INSTALLED_APPS = [
