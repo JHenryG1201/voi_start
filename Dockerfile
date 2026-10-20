@@ -5,21 +5,21 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the requirements file and install dependencies
+# Install Python dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire project into the container
+# Copy the Django project
 COPY . .
 
-# Collect static assets for production serving by WhiteNoise
+# Collect static assets
 RUN python manage.py collectstatic --noinput
 
-# Expose port 8000 for the Django development server
+# Expose the application port
 EXPOSE 8000
 
-# Apply database migrations before starting Django.
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"]
+# Apply migrations, then start Gunicorn
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn voi_start.wsgi:application --bind 0.0.0.0:8000 --timeout 180"]
