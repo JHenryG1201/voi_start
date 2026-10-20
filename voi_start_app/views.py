@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.db import transaction
 from django.core.exceptions import ValidationError
 from .audio_analysis import analyze_audio
+from .voice_coach import generate_voice_coaching_report
 
 from django.conf import settings
 from accounts.models import AccountType
@@ -280,12 +281,19 @@ def analyze_voice(request):
             audio_features = analyze_audio(record.audio.path)
             pitch = audio_features["pitch"]
 
+
+            report = generate_voice_coaching_report(
+                audio_features,
+                preferred_language="Japanese",
+            )
+
             record.low_note = pitch["low_note"] or ""
             record.high_note = pitch["high_note"] or ""
             record.tone_quality = build_tone_summary(audio_features)
             record.recommended_songs = recommend_songs(audio_features)
             # record.recommended_training = recommend_training(audio_features)
-            record.recommended_trainings = json.dumps(audio_features)
+            # record.recommended_trainings = json.dumps(audio_features)
+            record.recommended_trainings = report
             record.save()
 
     except Exception as exc:
