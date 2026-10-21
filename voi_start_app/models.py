@@ -4,6 +4,7 @@ from django.conf import settings
 # Create your models here.
 class VoiceAnalysisRecord(models.Model):
     STATUS_CHOICES = [
+        ("pending", "Pending"),
         ("complete", "Complete"),
         ("failed", "Failed"),
     ]
@@ -14,10 +15,10 @@ class VoiceAnalysisRecord(models.Model):
         related_name="voice_analysis_records",
     )
 
-    audio = models.FileField("voice-recordings/%Y/%m/%d/")
+    audio = models.FileField(upload_to="voice-recordings/%Y/%m/%d/")
     song_name = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="complete")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     low_note = models.CharField(max_length=32, blank=True)
     high_note = models.CharField(max_length=32, blank=True)
     tone_quality = models.TextField(blank=True)

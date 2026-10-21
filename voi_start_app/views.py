@@ -8,6 +8,9 @@ from django.core.exceptions import ValidationError
 from .audio_analysis import analyze_audio
 from .voice_coach import generate_voice_coaching_report
 
+from django.urls import reverse
+from celery.result import AsyncResult
+from .tasks import run_voice_analysis
 from django.conf import settings
 from accounts.models import AccountType
 from .models import VoiceAnalysisRecord
@@ -73,7 +76,9 @@ class AnalysisRecordListView(AccountHomeView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["records"] = VoiceAnalysisRecord.objects.filter(user=self.request.user)
+        context["records"] = VoiceAnalysisRecord.objects.filter(
+            user=self.request.user, status="complete"
+        )
         return context
 
 class AnalysisRecordDetailView(AccountHomeView):
@@ -271,55 +276,35 @@ def analyze_voice(request):
             status=415,
         )
 
-    try:
-        with transaction.atomic():
-            record = VoiceAnalysisRecord.objects.create(
-                user=request.user,
-                audio=audio,
-                song_name=request.POST.get("song_name", "")[:255],
-            )
+    record = VoiceAnalysisRecord.objects.create(
+        user=request.user,
+        audio=audio,
+        song_name=request.POST.get("song_name", "")[:255],
+        status="pending",
+    )
+    transaction.on_commit(lambda: run_voice_analysis.delay(record.pk))
 
-            audio_features = analyze_audio(record.audio.path)
-            pitch = audio_features["pitch"]
-
-
-            report = generate_voice_coaching_report(
-                audio_features,
-                preferred_language="Japanese",
-            )
-
-            record.low_note = pitch["low_note"] or ""
-            record.high_note = pitch["high_note"] or ""
-            # record.tone_quality = build_tone_summary(audio_features)
-            record.tone_quality = report["tone_quality"]["observations"][0]
-            # record.recommended_songs = recommend_songs(audio_features)
-            # record.recommended_training = recommend_training(audio_features)
-            # record.recommended_trainings = json.dumps(audio_features)
-            record.recommended_songs = report["song_recommendations"]
-            record.recommended_trainings = report["training_plan"]
-            record.save()
-
-    except Exception as exc:
-        logger.exception("Voice analysis failed")
-
-        # Show diagnostic details during development only.
-        message = str(exc) if settings.DEBUG else "音声分析に失敗しました。"
-
-        return JsonResponse(
-            {
-                "error": "音声分析に失敗しました。",
-                "detail": message,
-            },
-            status=422,
-        )
-
-    return JsonResponse({
-        "record_id": record.pk,
-        "redirect_url": f"/analysis_result?record={record.pk}",
-    })
+    return JsonResponse(
+        {
+            "record_id": record.pk,
+            "status_url": reverse("analysis_status", args=[record.pk]),
+        },
+        status=202,
+    )
 
 from .ai_service import ask_ai
 
+@login_required
+def analysis_status(request, record_id):
+    record = get_object_or_404(VoiceAnalysisRecord, pk=record_id, user=request.user)
+    if record.status == "failed":
+        return JsonResponse({"state": "failed", "error": "音声分析に失敗しました。"})
+    if record.status == "complete":
+        return JsonResponse({
+            "state": "done",
+            "redirect_url": f"/analysis_result?record={record.pk}",
+        })
+    return JsonResponse({"state": "pending"})
 
 @login_required
 @require_POST

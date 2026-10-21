@@ -10,3 +10,5 @@ numpy
 pydub
 requests
 gunicorn
+celery
+redis

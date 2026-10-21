@@ -53,7 +53,11 @@ OLLAMA_BASE_URL = os.getenv(
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 SEARXNG_URL = os.getenv("SEARXNG_URL", "http://searxng:8080")
 
-# Application definition
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+CELERY_RESULT_EXPIRES = 3600        # keep results for 1 hour
+CELERY_TASK_SOFT_TIME_LIMIT = 420
+CELERY_TASK_TIME_LIMIT = 450
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -169,6 +173,7 @@ STORAGES = {
 
 if "test" in sys.argv:
     STORAGES["staticfiles"]["BACKEND"] = "django.contrib.staticfiles.storage.StaticFilesStorage"
+    CELERY_TASK_ALWAYS_EAGER = True
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

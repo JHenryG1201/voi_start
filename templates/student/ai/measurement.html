@@ -95,6 +95,19 @@
             return document.querySelector("#csrfToken input[name=csrfmiddlewaretoken]").value;
         }
 
+        async function pollStatus(url, { intervalMs = 1500, timeoutMs = 430000 } = {}) {
+            const started = Date.now();
+            while (Date.now() - started < timeoutMs) {
+                await new Promise((resolve) => setTimeout(resolve, intervalMs));
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("状態の取得に失敗しました。");
+                const s = await res.json();
+                if (s.state === "done") return s;
+                if (s.state === "failed") throw new Error(s.error || "音声分析に失敗しました。");
+            }
+            throw new Error("分析に時間がかかっています。しばらくしてから分析履歴をご確認ください。");
+        }
+
         /*
         startButton.addEventListener("click", async function () {
             try {
@@ -229,11 +242,14 @@
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error);
-                window.location.href = result.redirect_url;
+
+                const done = await pollStatus(result.status_url);
+                window.location.href = done.redirect_url;
             } catch (error) {
                 analysisStatus.textContent = error.message || "音声分析に失敗しました。";
                 analysisButton.disabled = false;
                 playButton.disabled = false;
+                startButton.disabled = false;
             }
         });
     </script>
