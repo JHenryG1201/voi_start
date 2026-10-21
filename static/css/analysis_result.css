@@ -1,0 +1,58 @@
+.res{display:flex;flex-direction:column;gap:16px}
+.res h1{
+  margin:0;display:flex;align-items:center;gap:10px;
+  font-size:22px;font-weight:700;
+}
+.res h1::before{content:"";width:4px;height:20px;border-radius:2px;background:var(--brand)}
+
+/* 音域のヒーローカード */
+.res-hero{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:8px;
+  padding:24px 20px;border-radius:24px;color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.res-hero::after{
+  content:"";position:absolute;right:-40px;top:-50px;
+  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.14);
+}
+.res-hero-label{
+  position:relative;z-index:1;align-self:flex-start;
+  font-size:12px;font-weight:700;padding:3px 12px;border-radius:999px;
+  background:rgba(255,255,255,.22);
+}
+.res-hero-value{
+  position:relative;z-index:1;margin:0;
+  font-size:22px;font-weight:700;line-height:1.5;
+}
+
+/* 残りの項目は1枚のパネルに */
+.res-panel{
+  padding:6px 18px;border-radius:22px;
+  background:var(--surface);border:1px solid var(--line);
+}
+.res-item{padding:16px 0}
+.res-item + .res-item{border-top:1px solid var(--line)}
+.res-title{
+  display:flex;align-items:center;gap:8px;margin:0 0 8px;
+  font-size:15px;font-weight:700;
+}
+.res-title::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--brand-2)}
+.res-body{margin:0;font-size:14px;line-height:1.8}
+
+.res-actions{display:flex;flex-direction:column;gap:10px}
+.res-btn{
+  display:flex;align-items:center;justify-content:center;
+  min-height:54px;padding:0 20px;border-radius:18px;
+  font-size:16px;font-weight:700;text-decoration:none;
+  color:var(--brand);background:var(--surface);border:2px solid var(--brand);
+  transition:transform .12s ease;
+}
+.res-btn.primary{
+  color:var(--on-brand);border-color:transparent;
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+}
+.res-btn:active{transform:scale(.97)}
+.res-btn:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){.res-btn{transition:none}}

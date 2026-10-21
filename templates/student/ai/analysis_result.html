@@ -1,43 +1,82 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}分析結果{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/analysis_result.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="res">
 
     <h1>分析結果</h1>
 
     {% if record %}
-    
-    <p>{{ record.created_at|date:"Y/m/d H:i" }}</p>
 
-    <h2>音域</h2>
-    <p>{{ record.low_note }}〜{{ record.high_note }}</p>
+        <div class="res-hero">
+            <span class="res-hero-label">あなたの音域</span>
+            {% comment %} <p>{{ record.created_at|date:"Y/m/d H:i" }}</p> {% endcomment %}
 
-    <h2>声質</h2>
-    <p>{{ record.tone_quality }}</p>
+            {% comment %} <h2>音域</h2> {% endcomment %}
+            <p class="res-hero-value">{{ record.low_note }}〜{{ record.high_note }}</p>
+        </div>
 
-    <h2>おすすめの曲</h2>
-    <ul>
-        {% for song in record.recommended_songs %}
-        <li>{{ song }}</li>
-        {% endfor %}
-    </ul>
+        <div class="res-panel">
+            <section class="res-item">
+                <h2 class="res-title">声質</h2>
+                <p class="res-body">{{ record.tone_quality }}</p>
+            </section>
 
-    <h2>おすすめトレーニング</h2>
-    {% comment %} <ul>
-        {% for training in record.recommended_trainings %}
-        <li>{{ training }}</li>
-        {% endfor %}
-    </ul> {% endcomment %}
-    <p>{{ record.recommended_trainings }}</p>
+            <section class="res-item">
+                <h2 class="res-title">おすすめの曲</h2>
+                <p class="res-body">
+                    <ul>
+                        {% for song in record.recommended_songs %}
+                            <li>
+                                <div>
+                                    <p>曲名 : {{ song.title }}</p>
+                                    <p>歌手 : {{ song.artist }}</p>
+                                    <p>理由 : {{ song.reason }}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </section>
+
+            <section class="res-item">
+                <h2 class="res-title">おすすめトレーニング</h2>
+                <p class="res-body">
+                    <ul>
+                        {% for training in record.recommended_trainings %}
+                            <li>
+                                <div>
+                                    <strong>{{ training.exercise }}</strong>
+                                    <p>目的 : {{ training.purpose }}</p>
+                                    <p>方法 : 
+                                        {% for step in training.instructions %}
+                                            <p>{{ step }}</p>
+                                        {% endfor %}
+                                    </p>
+                                    <p>程度 : {{ training.duration_minutes }} 分</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </section>
+        </div>
 
     {% else %}
 
-    <p>分析結果がありません。録音して分析を開始してください。</p> 
+        <p>分析結果がありません。録音して分析を開始してください。</p> 
 
     {% endif %}
 
-    <p><a href="/measurement">もう一度測定する</a></p>
-    <p><a href="/analysis_record">分析記録を見る</a></p>
-
+    <div class="res-actions">
+        <a class="res-btn primary" href="/measurement">もう一度測定する</a>
+        <a class="res-btn" href="/analysis_record">分析記録を見る</a>
+    </div>
+</sectoin>
 {% endblock %}

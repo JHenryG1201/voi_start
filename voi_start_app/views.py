@@ -289,11 +289,13 @@ def analyze_voice(request):
 
             record.low_note = pitch["low_note"] or ""
             record.high_note = pitch["high_note"] or ""
-            record.tone_quality = build_tone_summary(audio_features)
-            record.recommended_songs = recommend_songs(audio_features)
+            # record.tone_quality = build_tone_summary(audio_features)
+            record.tone_quality = report["tone_quality"]["observations"]
+            # record.recommended_songs = recommend_songs(audio_features)
             # record.recommended_training = recommend_training(audio_features)
             # record.recommended_trainings = json.dumps(audio_features)
-            record.recommended_trainings = report
+            record.recommended_songs = report["song_recommendations"]
+            record.recommended_trainings = report["training_plan"]
             record.save()
 
     except Exception as exc:
