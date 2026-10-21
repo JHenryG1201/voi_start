@@ -1,0 +1,52 @@
+.det{display:flex;flex-direction:column;gap:16px}
+.det h1{
+  margin:0;display:flex;align-items:center;gap:10px;
+  font-size:22px;font-weight:700;
+}
+.det h1::before{content:"";width:4px;height:20px;border-radius:2px;background:var(--brand)}
+
+/* 日時と音域のヒーローカード */
+.det-hero{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:6px;
+  padding:22px 20px;border-radius:24px;color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.det-hero::after{
+  content:"";position:absolute;right:-40px;top:-50px;
+  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.14);
+}
+.det-hero > *{position:relative;z-index:1}
+.det-hero-label{
+  align-self:flex-start;
+  font-size:12px;font-weight:700;padding:3px 12px;border-radius:999px;
+  background:rgba(255,255,255,.22);
+}
+.det-hero-date{margin:0 0 10px;font-size:15px;font-weight:500;opacity:.95}
+.det-hero-range{
+  display:flex;flex-direction:column;gap:6px;
+  padding-top:14px;border-top:1px solid rgba(255,255,255,.3);
+}
+.det-hero-value{margin:0;font-size:24px;font-weight:700;line-height:1.4}
+
+/* 残りの項目は1枚のパネルに */
+.det-panel{
+  padding:6px 18px;border-radius:22px;
+  background:var(--surface);border:1px solid var(--line);
+}
+.det-item{padding:16px 0}
+.det-item + .det-item{border-top:1px solid var(--line)}
+.det-title{
+  display:flex;align-items:center;gap:8px;margin:0 0 8px;
+  font-size:15px;font-weight:700;
+}
+.det-title::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--brand-2)}
+.det-body{margin:0;font-size:14px;line-height:1.8}
+
+.det-back{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  padding:12px;border-radius:12px;
+  font-size:14px;color:var(--muted);text-decoration:none;
+}
+.det-back svg{width:18px;height:18px}
+.det-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}

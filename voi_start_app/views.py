@@ -15,6 +15,7 @@ from .models import VoiceAnalysisRecord
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 import requests
+import datetime
 
 import json
 import logging
@@ -290,7 +291,7 @@ def analyze_voice(request):
             record.low_note = pitch["low_note"] or ""
             record.high_note = pitch["high_note"] or ""
             # record.tone_quality = build_tone_summary(audio_features)
-            record.tone_quality = report["tone_quality"]["observations"]
+            record.tone_quality = report["tone_quality"]["observations"][0]
             # record.recommended_songs = recommend_songs(audio_features)
             # record.recommended_training = recommend_training(audio_features)
             # record.recommended_trainings = json.dumps(audio_features)

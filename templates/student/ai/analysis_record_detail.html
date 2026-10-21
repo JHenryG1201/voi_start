@@ -1,36 +1,73 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}分析記録詳細{% endblock %}
 
-{% block content %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/analysis_record_detail.css' %}">
+{% endblock %}
 
+{% block content %}
+<section class="det">
     <h1>分析記録詳細</h1>
 
-        <h2>測定日時</h2>
-        <p>{{ record.date }}</p>
+    <div class="det-hero">
+        <span class="det-hero-label">測定日時</span>
+        <p class="det-hero-date">{{ record.created_at|date:"Y年n月j日 H:i" }}</p>
+        <div class="det-hero-range">
+            <span class="det-hero-label">音域</span>
+            <p class="det-hero-value">{{ record.low_note }}〜{{ record.high_note }}</p>
+        </div>
+    </div>
 
-        <h2>音域</h2>
-        <p>{{ record.low_note }}〜{{ record.high_note }}</p>
+    <div class="det-panel">
+        <section class="det-item">
+            <h2 class="det-title">声質</h2>
+            <p class="det-body">{{ record.tone_quality }}</p>
+        </section>
+        <section class="det-item">
+            <h2 class="det-title">おすすめの曲</h2>
+            <p class="det-body">
+                <ul>
+                    {% for song in record.recommended_songs %}
+                        <li>
+                            <div>
+                                <p>曲名 : {{ song.title }}</p>
+                                <p>歌手 : {{ song.artist }}</p>
+                                <p>理由 : {{ song.reason }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </section>
+        <section class="det-item">
+            <h2 class="det-title">おすすめトレーニング</h2>
+            <p class="det-body">
+                <ul>
+                    {% for training in record.recommended_trainings %}
+                        <li>
+                            <div>
+                                <strong>{{ training.exercise }}</strong>
+                                <p>目的 : {{ training.purpose }}</p>
+                                <p>方法 : 
+                                    {% for step in training.instructions %}
+                                        <p>{{ step }}</p>
+                                    {% endfor %}
+                                </p>
+                                <p>程度 : {{ training.duration_minutes }} 分</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </section>
+    </div>
 
-        <h2>声質</h2>
-        <p>{{ record.tone_quality }}</p>
-
-        <h2>おすすめの曲</h2>
-        <ul>
-            {% for song in record.recommended_songs %}
-            <li>{{ song }}</li>
-            {% endfor %}
-        </ul>
-
-        <h2>おすすめトレーニング</h2>
-        <ul>
-            {% for training in record.recommended_trainings %}
-            <li>{{ training }}</li>
-            {% endfor %}
-        </ul>
-        
-    <p>
-        <a href="/analysis_record">分析記録に戻る</a>
-    </p>
+    <a class="det-back" href="/analysis_record">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        分析記録に戻る
+    </a>
+</section>
 
 {% endblock %}
