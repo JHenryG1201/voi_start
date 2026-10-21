@@ -27,6 +27,9 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
+TIME_ZONE = "Asia/Tokyo"
+USE_TZ = True
+
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "voistart.duckdns.org,localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
@@ -58,6 +61,7 @@ CELERY_RESULT_BACKEND = "redis://redis:6379/1"
 CELERY_RESULT_EXPIRES = 3600        # keep results for 1 hour
 CELERY_TASK_SOFT_TIME_LIMIT = 420
 CELERY_TASK_TIME_LIMIT = 450
+CELERY_TIMEZONE = TIME_ZONE
 
 INSTALLED_APPS = [
     'django.contrib.admin',
