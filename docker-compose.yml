@@ -3,6 +3,7 @@ x-django-common: &django-common
   env_file:
     - .env
   environment:
+    TZ: Asia/Tokyo
     OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
     OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2:3b}
     SEARXNG_URL: ${SEARXNG_URL:-http://searxng:8080}
