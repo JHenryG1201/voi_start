@@ -3,7 +3,7 @@ from celery import shared_task
 
 from .audio_analysis import analyze_audio
 from .voice_coach import generate_voice_coaching_report
-from .models import VoiceAnalysisRecord
+from student.models import VoiceAnalysisRecord
 
 logger = logging.getLogger(__name__)
 

@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'voi_start_app',
     'accounts',
+    'student',
 ]
 
 AUTH_USER_MODEL = 'accounts.Account'
