@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'voi_start_app',
     'accounts',
     'student',
+    'trainer',
 ]
 
 AUTH_USER_MODEL = 'accounts.Account'

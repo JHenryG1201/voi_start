@@ -8,6 +8,7 @@ class AccountType(models.TextChoices):
     TRAINER = 'trainer'
 
 class Account(AbstractUser):
+    # ドメインモデルではメールアドレス
     username = models.CharField(
         error_messages={
             'unique': 'A user with that username already exists.',
