@@ -7,7 +7,7 @@ class TrainerInfoForm(forms.ModelForm):
         fields = ("name", "age", "sex", "area", "contacts", "career", "speciality_genre", "comment", "feedback_fee", "lesson_fee",)
         widgets = {
             "name": forms.TextInput(attrs={"class": "pe-input", "placeholder": "名前を入力"}),
-            "age": forms.NumberInput(attrs={"class": "pe-input", "placeholder": "年齢を入力"}),
+            "age": forms.NumberInput(attrs={"class": "pe-input", "min": 0, "placeholder": "年齢を入力"}),
             "sex": forms.Select(attrs={"class": "pe-input"}),
             "area": forms.TextInput(attrs={"class": "pe-input", "placeholder": "活動地を入力"}),
             "contacts": forms.TextInput(attrs={"class": "pe-input", "placeholder": "問い合わせ先を入力"}),
