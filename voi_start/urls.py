@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('voi_start_app.urls'),),
     path('accounts/', include('accounts.urls')),
     path('student/', include('student.urls')),
+    path('trainer/', include('trainer.urls')),
 ]

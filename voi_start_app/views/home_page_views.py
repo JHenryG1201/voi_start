@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.models import AccountType
+from trainer.models import TrainerInfo
 
 class HomePageView(TemplateView):
     template_name = 'common/index.html'
@@ -42,4 +43,6 @@ class TrainerHomeView(AccountHomeView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.account_type != AccountType.TRAINER:
             return redirect('student_home')
+        if request.user.is_authenticated and not TrainerInfo.objects.filter(user=request.user).exists():
+            return redirect('trainer_profile_create')
         return super().dispatch(request, *args, **kwargs)

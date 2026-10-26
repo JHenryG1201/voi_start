@@ -9,7 +9,7 @@ class TrainerInfo(models.Model):
         ("none", "回答しない"),
     ]
 
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="trainer_profile",
@@ -17,7 +17,7 @@ class TrainerInfo(models.Model):
     
     name = models.TextField(max_length=30)
     age = models.IntegerField()
-    sex = models.CharField(choices=GENDER, default="回答しない")
+    sex = models.CharField(max_length=6, choices=GENDER, default="none")
     speciality_genre = models.TextField()
     career = models.TextField()
     area = models.TextField()

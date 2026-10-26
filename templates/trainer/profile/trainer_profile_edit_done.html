@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}プロフィール編集完了{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile_trainer_edit_done.css') }}">
+<link rel="stylesheet" href="{% static 'css/trainer_profile_edit_done.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -15,7 +16,7 @@
   <h1>プロフィール編集完了</h1>
   <p class="pd-lead">プロフィールの編集が完了しました。</p>
 
-  <a class="pd-btn" href="{{ url_for('profile_trainer') }}">
+  <a class="pd-btn" href="{% url 'trainer_profile' %}">
     プロフィールに戻る
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
   </a>

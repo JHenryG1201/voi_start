@@ -56,7 +56,7 @@
   {% else %}
   <a href="/home_trainer">ホーム</a>
   {% endif %}
-  <a href="/profile">プロフィール</a>
+  <a href="{% if user_role == 'trainer' %}{% url 'trainer_profile' %}{% else %}/profile{% endif %}">プロフィール</a>
   <a href="/settings">設定</a>
   <a href="/notifications">お知らせ</a>
   <form action="{% url 'logout' %}" method="post" onsubmit="return confirm('ログアウトしてもよろしいでしょうか');">
