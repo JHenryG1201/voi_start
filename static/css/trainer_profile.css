@@ -1,0 +1,73 @@
+.pf{display:flex;flex-direction:column;gap:14px}
+.pf h1{margin:0;font-size:26px;font-weight:700}
+
+/* 名前のヒーローカード */
+.pf-hero{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:26px 20px;border-radius:24px;text-align:center;color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.pf-hero::after{
+  content:"";position:absolute;right:-40px;top:-50px;
+  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.14);
+}
+.pf-hero > *{position:relative;z-index:1}
+.pf-avatar{
+  width:72px;height:72px;border-radius:50%;margin-bottom:6px;
+  display:grid;place-items:center;background:rgba(255,255,255,.22);
+}
+.pf-avatar svg{width:38px;height:38px}
+.pf-name{margin:0;font-size:22px;font-weight:700}
+.pf-meta{display:flex;gap:8px;margin:0;flex-wrap:wrap;justify-content:center}
+.pf-meta span{
+  font-size:12.5px;font-weight:700;padding:3px 12px;border-radius:999px;
+  background:rgba(255,255,255,.22);
+}
+
+/* 詳細情報 */
+.pf-card{
+  padding:4px 18px;border-radius:22px;
+  background:var(--surface);border:1px solid var(--line);
+}
+.pf-list{margin:0}
+.pf-item{padding:14px 0}
+.pf-item + .pf-item{border-top:1px solid var(--line)}
+.pf-item dt{margin:0 0 4px;font-size:12.5px;font-weight:700;color:var(--muted)}
+.pf-item dd{margin:0;font-size:14.5px;line-height:1.7;overflow-wrap:anywhere}
+
+/* 料金 */
+.pf-heading{
+  display:flex;align-items:center;gap:8px;margin:6px 0 -4px;
+  font-size:15px;font-weight:700;
+}
+.pf-heading::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--brand-2)}
+.pf-prices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pf-price{
+  display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;
+  padding:16px 8px;border-radius:20px;
+  background:var(--soft);border:1px solid var(--line);
+}
+.pf-price-label{font-size:12.5px;font-weight:700;color:var(--muted)}
+.pf-price-value{font-size:26px;font-weight:700;color:var(--brand)}
+.pf-price-value small{margin-left:2px;font-size:13px;font-weight:700}
+.pf-price-unit{font-size:12px;color:var(--muted)}
+
+/* ボタン */
+.pf-actions{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.pf-btn{
+  display:flex;align-items:center;justify-content:center;
+  min-height:54px;border-radius:18px;
+  font-size:16px;font-weight:700;text-decoration:none;
+  color:var(--on-brand);
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+  transition:transform .12s ease;
+}
+.pf-btn:active{transform:scale(.97)}
+.pf-btn:focus-visible,.pf-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.pf-back{
+  display:flex;justify-content:center;padding:12px;border-radius:12px;
+  font-size:14px;color:var(--muted);text-decoration:none;
+}
+
+@media (prefers-reduced-motion:reduce){.pf-btn{transition:none}}

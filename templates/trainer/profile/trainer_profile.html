@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}トレーナープロフィール{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile_trainer.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="pf">
+  <h1>プロフィール</h1>
+
+  <div class="pf-hero">
+    <div class="pf-avatar" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </div>
+    <p class="pf-name">ここに名前を表示</p>
+    <p class="pf-meta">
+      <span>ここに年齢を表示</span>
+      <span>ここに性別を表示</span>
+    </p>
+  </div>
+
+  <div class="pf-card">
+    <dl class="pf-list">
+      <div class="pf-item">
+        <dt>活動地</dt>
+        <dd>ここに活動地を表示</dd>
+      </div>
+      <div class="pf-item">
+        <dt>問い合わせ</dt>
+        <dd>ここに問い合わせ先を表示</dd>
+      </div>
+      <div class="pf-item">
+        <dt>得意ジャンル</dt>
+        <dd>ここに得意ジャンルを表示</dd>
+      </div>
+      <div class="pf-item">
+        <dt>経歴</dt>
+        <dd>ここに経歴を表示</dd>
+      </div>
+      <div class="pf-item">
+        <dt>コメント（一言）</dt>
+        <dd>ここにコメントを表示</dd>
+      </div>
+    </dl>
+  </div>
+
+  <h2 class="pf-heading">料金設定</h2>
+  <div class="pf-prices">
+    <div class="pf-price">
+      <span class="pf-price-label">フィードバック</span>
+      <span class="pf-price-value">1,000<small>円</small></span>
+      <span class="pf-price-unit">ワンコーラス</span>
+    </div>
+    <div class="pf-price">
+      <span class="pf-price-label">レッスン</span>
+      <span class="pf-price-value">5,000<small>円</small></span>
+      <span class="pf-price-unit">1回</span>
+    </div>
+  </div>
+
+  <div class="pf-actions">
+    <a class="pf-btn primary" href="{{ url_for('profile_trainer_edit') }}">編集</a>
+    <a class="pf-back" href="{{ url_for('home_trainer') }}">ホームに戻る</a>
+  </div>
+</section>
+{% endblock %}
