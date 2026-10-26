@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}プロフィール編集完了{% endblock %}
+{% block title %}
+  {% if profile %}
+    プロファイル編集完了
+  {% else %}
+    プロファイル作成完了
+  {% endif %}
+{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/trainer_profile_edit_done.css' %}">
@@ -13,12 +19,24 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
   </div>
 
-  <h1>プロフィール編集完了</h1>
-  <p class="pd-lead">プロフィールの編集が完了しました。</p>
+  {% if profile %}
+    <h1>プロフィール編集完了</h1>
+    <p class="pd-lead">プロフィールの編集が完了しました。</p>
+  {% else %}
+    <h1>プロフィール作成完了</h1>
+    <p class="pd-lead">プロフィールの作成が完了しました。</p>
+  {% endif %}
 
-  <a class="pd-btn" href="{% url 'trainer_profile' %}">
-    プロフィールに戻る
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-  </a>
+  {% if profile %}
+    <a class="pd-btn" href="{% url 'trainer_profile' %}">
+      プロフィールに戻る
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  {% else %}
+    <a class="pd-btn" href="{% url 'trainer_home' %}">
+      ホームページへ
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  {% endif %}
 </section>
 {% endblock %}

@@ -6,4 +6,5 @@ urlpatterns = [
     path("profile/create", views.TrainerInfoCreateView.as_view(), name="trainer_profile_create"),
     path("profile", views.TrainerProfileView.as_view(), name="trainer_profile"),
     path("profile/edit", views.TrainerProfileEditView.as_view(), name="trainer_profile_edit"),
+    path("profile/edit/done", views.TrainerProfileEditDoneView.as_view(), name="trainer_profile_edit_done"),
 ]

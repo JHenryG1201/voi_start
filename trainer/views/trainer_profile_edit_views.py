@@ -29,12 +29,13 @@ class TrainerInfoCreateView(TrainerOnlyMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("trainer_home")
+        return reverse("trainer_profile_edit_done")
 
 class TrainerProfileEditView(TrainerOnlyMixin, UpdateView):
     model = TrainerInfo
     form_class = TrainerInfoForm
     template_name = "trainer/profile/trainer_profile_edit.html"
+    context_object_name = "profile"
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and not hasattr(request.user, "trainer_profile"):
@@ -45,4 +46,4 @@ class TrainerProfileEditView(TrainerOnlyMixin, UpdateView):
         return self.request.user.trainer_profile
 
     def get_success_url(self):
-        return reverse("trainer_profile")
+        return reverse("trainer_profile_edit_done")
