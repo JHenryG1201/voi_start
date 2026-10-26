@@ -79,7 +79,7 @@ def analyze_voice(request):
 def analysis_status(request, record_id):
     record = get_object_or_404(VoiceAnalysisRecord, pk=record_id, user=request.user)
     if record.status == "failed":
-        return JsonResponse({"state": "failed", "error": "音声分析に失敗しました。"})
+        return JsonResponse({"state": "failed", "error": "声が確認できませんでした"})
     if record.status == "complete":
         return JsonResponse({
             "state": "done",
