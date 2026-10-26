@@ -3,6 +3,7 @@ from django.http import HttpResponseForbidden
 from django.views.generic import CreateView, UpdateView
 from django.shortcuts import redirect
 from django.urls import reverse
+from urllib.parse import urlencode
 
 from accounts.models import AccountType
 from trainer.models import TrainerInfo
@@ -29,7 +30,7 @@ class TrainerInfoCreateView(TrainerOnlyMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("trainer_profile_edit_done")
+        return f"{reverse('trainer_profile_edit_done')}?{urlencode({'mode': 'create'})}"
 
 class TrainerProfileEditView(TrainerOnlyMixin, UpdateView):
     model = TrainerInfo
@@ -46,4 +47,4 @@ class TrainerProfileEditView(TrainerOnlyMixin, UpdateView):
         return self.request.user.trainer_profile
 
     def get_success_url(self):
-        return reverse("trainer_profile_edit_done")
+        return f"{reverse('trainer_profile_edit_done')}?{urlencode({'mode': 'edit'})}"
