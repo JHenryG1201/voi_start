@@ -12,7 +12,7 @@ class TrainerInfoForm(forms.ModelForm):
             "area": forms.TextInput(attrs={"class": "pe-input", "placeholder": "活動地を入力"}),
             "contacts": forms.TextInput(attrs={"class": "pe-input", "placeholder": "問い合わせ先を入力"}),
             "career": forms.Textarea(attrs={"class": "pe-input pe-area", "placeholder": "経歴を入力"}),
-            "speciality_genre": forms.TextInput(attrs={"class": "pe-input", "placeholder": "得意ジャンルを入力"}),
+            "speciality_genre": forms.Select(attrs={"class": "pe-input"}),
             "comment": forms.Textarea(attrs={"class": "pe-input pe-area", "placeholder": "コメントを入力"}),
             "feedback_fee": forms.NumberInput(attrs={"class": "pe-input", "min": 0, "step": 1, "placeholder": "例：1000", "oninput": "validity.valid||(value='');"}),
             "lesson_fee": forms.NumberInput(attrs={"class": "pe-input", "min": 0, "step": 1, "placeholder": "例：5000", "oninput": "validity.valid||(value='');"}),

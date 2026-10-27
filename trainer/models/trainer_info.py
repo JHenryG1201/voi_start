@@ -9,6 +9,13 @@ class TrainerInfo(models.Model):
         ("none", "回答しない"),
     ]
 
+    GENRE = [
+        ("pop", "ポップス"),
+        ("rock", "ロック"),
+        ("ballad", "バラード"),
+        ("musical", "ミュージカル"),
+    ]
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -18,7 +25,7 @@ class TrainerInfo(models.Model):
     name = models.TextField(max_length=30)
     age = models.IntegerField()
     sex = models.CharField(max_length=6, choices=GENDER, default="none")
-    speciality_genre = models.TextField()
+    speciality_genre = models.CharField(max_length=7, choices=GENRE, default="pop")
     career = models.TextField()
     area = models.TextField()
     contacts = models.TextField()
