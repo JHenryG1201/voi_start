@@ -5,3 +5,5 @@ class TrainerListView(ListView):
     model = TrainerInfo
     template_name = "student/trainer_list/trainer_list.html"
     context_object_name = "trainers"
+    paginate_by = 10
+    ordering = ["names"]
