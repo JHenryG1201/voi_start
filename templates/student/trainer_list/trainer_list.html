@@ -51,7 +51,7 @@
         <span class="tl-text">
           <span class="tl-name">{{ trainer.name }}</span>
           <span class="tl-genres">
-            {% for g in trainer.genres %}<span class="tl-tag">{{ g }}</span>{% endfor %}
+            {{ trainer.get_speciality_genre_display }}
           </span>
           <span class="tl-rating">
             <span class="tl-stars" aria-hidden="true"><span class="on">★★★★</span><span class="off">☆</span></span>
