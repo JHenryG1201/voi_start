@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}トレーナープロフィール{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/trainer_detail.css') }}">
+<link rel="stylesheet" href="{% static 'css/trainer_detail.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,20 +12,19 @@
   <h1>トレーナープロフィール</h1>
 
   <div class="tp-hero">
-    <div class="tp-avatar" aria-hidden="true">{{ trainer.name[:1] }}</div>
+    <div class="tp-avatar" aria-hidden="true">{{ trainer.name|slice:":1" }}</div>
     <p class="tp-name">{{ trainer.name }}</p>
     <p class="tp-meta">
       <span>{{ trainer.age }}歳</span>
-      <span>{{ trainer.gender }}</span>
-      <span>{{ trainer.location }}</span>
+      <span>{{ trainer.get_sex_display }}</span>
     </p>
   </div>
 
   <div class="tp-card">
     <h2 class="tp-heading">基本情報</h2>
     <dl class="tp-list">
-      <div class="tp-item"><dt>活動地</dt><dd>{{ trainer.location }}</dd></div>
-      <div class="tp-item"><dt>問い合わせ先</dt><dd>{{ trainer.contact }}</dd></div>
+      <div class="tp-item"><dt>活動地</dt><dd>{{ trainer.area }}</dd></div>
+      <div class="tp-item"><dt>問い合わせ先</dt><dd>{{ trainer.contacts }}</dd></div>
     </dl>
   </div>
 
@@ -32,7 +32,7 @@
     <h2 class="tp-heading">プロフィール</h2>
     <dl class="tp-list">
       <div class="tp-item"><dt>経歴</dt><dd>{{ trainer.career }}</dd></div>
-      <div class="tp-item"><dt>得意ジャンル</dt><dd>{{ trainer.genre }}</dd></div>
+      <div class="tp-item"><dt>得意ジャンル</dt><dd>{{ trainer.get_speciality_genre_display }}</dd></div>
       <div class="tp-item"><dt>コメント</dt><dd>{{ trainer.comment }}</dd></div>
     </dl>
   </div>
@@ -41,20 +41,22 @@
   <div class="tp-prices">
     <div class="tp-price">
       <span class="tp-price-label">フィードバック依頼</span>
-      <span class="tp-price-value">1,000<small>円</small></span>
-      <span class="tp-price-unit">ワンコーラス</span>
+      <span class="tp-price-value">{{ trainer.feedback_fee }}<small>円</small></span>
+      <span class="tp-price-unit">1回</span>
     </div>
     <div class="tp-price">
       <span class="tp-price-label">レッスン</span>
-      <span class="tp-price-value">{{ trainer.lesson_price }}<small>円</small></span>
+      <span class="tp-price-value">{{ trainer.lesson_fee }}<small>円</small></span>
       <span class="tp-price-unit">1回</span>
     </div>
   </div>
 
   <div class="tp-actions">
-    <a class="tp-btn" href="{{ url_for('feedback_upload', trainer_id=1) }}">フィードバックを依頼する</a>
-    <a class="tp-sub" href="{{ url_for('reservation_select', trainer_id=1) }}">レッスン予約をする</a>
-    <a class="tp-back" href="{{ url_for('trainer_list') }}">
+    {% comment %} <a class="tp-btn" href="{{ url_for('feedback_upload', trainer_id=1) }}">フィードバックを依頼する</a> {% endcomment %}
+    <a class="tp-btn" href="">フィードバックを依頼する</a>
+    {% comment %} <a class="tp-sub" href="{{ url_for('reservation_select', trainer_id=1) }}">レッスン予約をする</a> {% endcomment %}
+    <a class="tp-sub" href="">レッスン予約をする</a>
+    <a class="tp-back" href="{% url "trainer_list" %}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
       トレーナー一覧に戻る
     </a>

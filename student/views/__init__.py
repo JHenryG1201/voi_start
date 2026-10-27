@@ -4,6 +4,7 @@ from .analysis_result_views import AnalysisResultView
 from .analysis_record_views import AnalysisRecordListView
 from .analysis_record_detail_views import AnalysisRecordDetailView
 from .trainer_list_views import TrainerListView
+from .trainer_detail_views import TrainerDetailView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -14,4 +15,5 @@ __all__ = [
     "AnalysisRecordListView",
     "AnalysisRecordDetailView",
     "TrainerListView",
+    "TrainerDetailView",
 ]

@@ -44,8 +44,7 @@
   <ul class="tl-list">
     {% for trainer in trainers %}
     <li>
-      {% comment %} <a class="tl-card" action="{% url 'trainer_detail' trainer.id %}"> {% endcomment %}
-      <a class="tl-card">
+      <a class="tl-card" href="{% url 'trainer_detail' trainer.id %}">
         <span class="tl-avatar" aria-hidden="true">{{ trainer.name|slice:":1" }}</span>
         <span class="tl-text">
           <span class="tl-name">{{ trainer.name }}</span>
