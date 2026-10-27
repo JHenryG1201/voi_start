@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}依頼内容確認{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback_confirm.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="fcf">
+  <h1>依頼内容確認</h1>
+  <p class="fcf-lead">上記の内容でフィードバックを依頼しますか？</p>
+
+  <article class="fcf-card">
+    <span class="fcf-label">トレーナー</span>
+    <p class="fcf-name">{{ trainer_name }}</p>
+  </article>
+
+  <article class="fcf-card">
+    <dl class="fcf-list">
+      <div class="fcf-item"><dt>依頼内容</dt><dd>ワンコーラスのフィードバック</dd></div>
+      <div class="fcf-item"><dt>支払い方法</dt><dd>クレジットカード</dd></div>
+    </dl>
+  </article>
+
+  <div class="fcf-price">
+    <span class="fcf-price-label">依頼料金</span>
+    <span class="fcf-price-value">1,000<small>円</small></span>
+  </div>
+
+  <div class="fcf-actions">
+    <a class="fcf-btn" href="{{ url_for('feedback_done', trainer_id=trainer_id) }}">依頼する</a>
+    <a class="fcf-back" href="{{ url_for('feedback_payment', trainer_id=trainer_id) }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      戻る
+    </a>
+  </div>
+</section>
+{% endblock %}

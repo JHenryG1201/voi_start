@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}お支払い情報入力{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="pay">
+  <h1 class="pay-page">お支払い情報入力</h1>
+
+  <div class="pay-hero">
+    <span class="pay-badge">レッスン料金</span>
+    <p class="pay-hero-price">{{ "{:,}".format(lesson_price) }}<small>円</small></p>
+    <p class="pay-hero-sub">トレーナー：{{ trainer_name }}</p>
+  </div>
+
+  <form class="pay-form" action="{{ url_for('reservation_confirm', trainer_id=trainer_id) }}" method="get">
+
+    <div class="pay-panel">
+      <h2 class="pay-title">クレジットカード情報</h2>
+
+      <div class="pay-item">
+        <label class="pay-field-label" for="card_number">カード番号</label>
+        <input class="pay-input" type="text" id="card_number" name="card_number"
+               placeholder="カード番号" inputmode="numeric" autocomplete="cc-number" required>
+      </div>
+      <div class="pay-item">
+        <label class="pay-field-label" for="expiry">有効期限</label>
+        <input class="pay-input" type="text" id="expiry" name="expiry"
+               placeholder="MM/YY" inputmode="numeric" autocomplete="cc-exp" required>
+      </div>
+      <div class="pay-item">
+        <label class="pay-field-label" for="security_code">セキュリティコード</label>
+        <input class="pay-input" type="text" id="security_code" name="security_code"
+               placeholder="セキュリティコード" inputmode="numeric" autocomplete="cc-csc" required>
+      </div>
+    </div>
+
+    <div class="pay-actions">
+      <a class="pay-cancel" href="{{ url_for('reservation_select', trainer_id=trainer_id) }}">戻る</a>
+      <button type="submit" class="pay-submit">次へ</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

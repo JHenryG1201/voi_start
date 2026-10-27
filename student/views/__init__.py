@@ -3,6 +3,7 @@ from .ai_analysis_views import AIAnalysisView, analysis_status, analyze_voice
 from .analysis_result_views import AnalysisResultView
 from .analysis_record_views import AnalysisRecordListView
 from .analysis_record_detail_views import AnalysisRecordDetailView
+from .trainer_list_views import TrainerListView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -12,4 +13,5 @@ __all__ = [
     "AnalysisResultView",
     "AnalysisRecordListView",
     "AnalysisRecordDetailView",
+    "TrainerListView",
 ]

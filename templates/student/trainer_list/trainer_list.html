@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}トレーナー一覧{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/trainer_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="tl">
+  <h1>トレーナー一覧</h1>
+
+  <!-- 名前検索 -->
+  <form class="tl-card-form" action="{% url 'trainer_list' %}" method="get">
+    <h2 class="tl-heading">トレーナーを検索</h2>
+    <input type="hidden" name="genre" value="{{ genre }}">
+    <div class="tl-search">
+      <label class="tl-sr" for="trainer_name">トレーナー名</label>
+      <input class="tl-input" type="text" id="trainer_name" name="trainer_name"
+             placeholder="トレーナー名を入力" value="{{ trainer_name }}">
+      <button type="submit" class="tl-submit">検索</button>
+    </div>
+  </form>
+
+  <!-- 得意ジャンルで絞り込み -->
+  <form class="tl-card-form" action="{% url 'trainer_list' %}" method="get">
+    <h2 class="tl-heading">得意ジャンルで絞り込み</h2>
+    <input type="hidden" name="trainer_name" value="{{ trainer_name }}">
+    <label class="tl-sr" for="genre">得意ジャンル</label>
+    <select class="tl-input" id="genre" name="genre" onchange="this.form.submit()">
+      <option value="" {% if genre == "" %}selected{% endif %}>すべて</option>
+      <option value="ポップス" {% if genre == "ポップス" %}selected{% endif %}>ポップス</option>
+      <option value="ロック" {% if genre == "ロック" %}selected{% endif %}>ロック</option>
+      <option value="バラード" {% if genre == "バラード" %}selected{% endif %}>バラード</option>
+      <option value="ミュージカル" {% if genre == "ミュージカル" %}selected{% endif %}>ミュージカル</option>
+    </select>
+  </form>
+
+  <!-- 検索結果 -->
+  <h2 class="tl-heading outside">検索結果</h2>
+
+  {% if trainers %}
+  <ul class="tl-list">
+    {% for trainer in trainers %}
+    <li>
+      {% comment %} <a class="tl-card" action="{% url 'trainer_detail' trainer.id %}"> {% endcomment %}
+      <a class="tl-card">
+        <span class="tl-avatar" aria-hidden="true">{{ trainer.name|slice:":1" }}</span>
+        <span class="tl-text">
+          <span class="tl-name">{{ trainer.name }}</span>
+          <span class="tl-genres">
+            {% for g in trainer.genres %}<span class="tl-tag">{{ g }}</span>{% endfor %}
+          </span>
+          <span class="tl-rating">
+            <span class="tl-stars" aria-hidden="true"><span class="on">★★★★</span><span class="off">☆</span></span>
+            <span class="tl-score">{{ trainer.rating }}</span>
+          </span>
+        </span>
+        <svg class="tl-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="tl-empty">該当するトレーナーはいません。</p>
+  {% endif %}
+
+  <a class="tl-back" href="{% url 'student_home' %}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    生徒ホームに戻る
+  </a>
+</section>
+{% endblock %}
