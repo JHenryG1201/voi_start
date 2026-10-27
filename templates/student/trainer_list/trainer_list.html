@@ -30,11 +30,10 @@
     <input type="hidden" name="trainer_name" value="{{ trainer_name }}">
     <label class="tl-sr" for="genre">得意ジャンル</label>
     <select class="tl-input" id="genre" name="genre" onchange="this.form.submit()">
-      <option value="" {% if genre == "" %}selected{% endif %}>すべて</option>
-      <option value="ポップス" {% if genre == "ポップス" %}selected{% endif %}>ポップス</option>
-      <option value="ロック" {% if genre == "ロック" %}selected{% endif %}>ロック</option>
-      <option value="バラード" {% if genre == "バラード" %}selected{% endif %}>バラード</option>
-      <option value="ミュージカル" {% if genre == "ミュージカル" %}selected{% endif %}>ミュージカル</option>
+      <option value="">すべて</option>
+      {% for value, label in genre_choices %}
+        <option value="{{ value }}" {% if genre == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
     </select>
   </form>
 
@@ -51,7 +50,7 @@
         <span class="tl-text">
           <span class="tl-name">{{ trainer.name }}</span>
           <span class="tl-genres">
-            {{ trainer.get_speciality_genre_display }}
+            <span class="tl-tag">{{ trainer.get_speciality_genre_display }}</span>
           </span>
           <span class="tl-rating">
             <span class="tl-stars" aria-hidden="true"><span class="on">★★★★</span><span class="off">☆</span></span>
@@ -65,6 +64,10 @@
   </ul>
   {% else %}
   <p class="tl-empty">該当するトレーナーはいません。</p>
+  {% endif %}
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}&trainer_name={{ trainer_name|urlencode }}&genre={{ genre|urlencode }}">次へ</a>
   {% endif %}
 
   <a class="tl-back" href="{% url 'student_home' %}">
