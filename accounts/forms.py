@@ -67,7 +67,7 @@ class AccountCreationForm(UserCreationForm):
 class AccountAuthenticationForm(AuthenticationForm):
     error_messages = {
         "invalid_login": (
-            "ユーザー名、パスワード、または利用者の種類が正しくありません。"
+            "メールアドレス、パスワード、または利用者の種類が正しくありません。"
         ),
         "inactive": "このアカウントは無効になっています。",
     }
