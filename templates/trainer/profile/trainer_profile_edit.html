@@ -85,10 +85,16 @@
       </div>
     </div>
 
-    <div class="pe-actions">
-      <a class="pe-cancel" href="{% if profile %}{% url 'trainer_profile' %}{% else %}{% url 'trainer_home' %}{% endif %}">キャンセル</a>
-      <button type="submit" class="pe-submit">{% if profile %}保存{% else %}プロフィールを作成{% endif %}</button>
-    </div>
+    {% if profile %}
+      <div class="pe-actions">
+        <a class="pe-cancel" href="{% url 'trainer_profile' %}">キャンセル</a>
+        <button type="submit" class="pe-submit">{% if profile %}保存{% else %}プロフィールを作成{% endif %}</button>
+      </div>
+    {% else %}
+      <div class="pe-actions-2">
+        <button type="submit" class="pe-submit">{% if profile %}保存{% else %}プロフィールを作成{% endif %}</button>
+      </div>
+    {% endif %}
   </form>
 </section>
 {% endblock %}

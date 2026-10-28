@@ -39,6 +39,7 @@
 
 /* キャンセルと保存を横並び */
 .pe-actions{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:4px}
+.pe-actions-2{display:grid;gap:10px;margin-top:4px}
 .pe-cancel,.pe-submit{
   display:flex;align-items:center;justify-content:center;
   min-height:54px;border-radius:18px;

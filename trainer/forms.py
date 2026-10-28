@@ -17,3 +17,13 @@ class TrainerInfoForm(forms.ModelForm):
             "feedback_fee": forms.NumberInput(attrs={"class": "pe-input", "min": 0, "step": 1, "placeholder": "例：1000", "oninput": "validity.valid||(value='');"}),
             "lesson_fee": forms.NumberInput(attrs={"class": "pe-input", "min": 0, "step": 1, "placeholder": "例：5000", "oninput": "validity.valid||(value='');"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        field = self.fields["speciality_genre"]
+
+        choices = [c for c in field.choices if c[0] != ""]
+        field.choices = [("", "選択してください")] + choices
+
+        if not self.instance.pk:
+            self.initial["speciality_genre"] = ""
