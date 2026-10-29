@@ -1,0 +1,29 @@
+from django.db import models
+from django.conf import settings
+
+class StudentInfo(models.Model):
+    GENDER = [
+        ("male", "男性"),
+        ("female", "女性"),
+        ("other", "その他"),
+        ("none", "回答しない"),
+    ]
+
+    GENRE = [
+        ("pop", "ポップス"),
+        ("rock", "ロック"),
+        ("ballad", "バラード"),
+        ("musical", "ミュージカル"),
+    ]
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="student_profile",
+    )
+    
+    name = models.TextField(max_length=30)
+    age = models.IntegerField()
+    sex = models.CharField(max_length=6, choices=GENDER, default="none")
+    speciality_genre = models.CharField(max_length=7, choices=GENRE, default="pop")
+    goal = models.TextField()

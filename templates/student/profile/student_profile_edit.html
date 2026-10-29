@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if profile %}
+    プロファイル編集
+  {% else %}
+    プロファイル作成
+  {% endif %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/trainer_profile_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="pe">
+  {% if profile %}
+    <h1>プロファイル編集</h1>
+  {% else %}
+    <h1>プロファイル作成</h1>
+  {% endif %}
+
+  <form class="pe-form" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="pe-panel">
+      <div class="pe-item">
+        <label class="pe-label" for="id_name">名前</label>
+        {{ form.name.errors }}
+        {{ form.name }}
+      </div>
+
+      <div class="pe-item">
+        <label class="pe-label" for="id_age">年齢</label>
+        {{ form.age.errors }}
+        {{ form.age }}
+      </div>
+
+      <div class="pe-item">
+        <label class="pe-label" for="id_sex">性別</label>
+        {{ form.sex.errors }}
+        {{ form.sex }}
+      </div>
+
+      <div class="pe-item">
+        <label class="pe-label" for="id_speciality_genre">得意ジャンル</label>
+        {{ form.speciality_genre.errors }}
+        {{ form.speciality_genre }}
+      </div>
+
+      <div class="pe-item">
+        <label class="pe-label" for="id_goal">目標</label>
+        {{ form.goal.errors }}
+        {{ form.goal }}
+      </div>
+    </div>
+
+    {% if profile %}
+      <div class="pe-actions">
+        <a class="pe-cancel" href="{% url 'student_profile' %}">キャンセル</a>
+        <button type="submit" class="pe-submit">{% if profile %}保存{% else %}プロフィールを作成{% endif %}</button>
+      </div>
+    {% else %}
+      <div class="pe-actions-2">
+        <button type="submit" class="pe-submit">{% if profile %}保存{% else %}プロフィールを作成{% endif %}</button>
+      </div>
+    {% endif %}
+  </form>
+</section>
+{% endblock %}

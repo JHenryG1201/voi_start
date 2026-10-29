@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.models import AccountType
 from trainer.models import TrainerInfo
+from student.models import StudentInfo
 
 class HomePageView(TemplateView):
     template_name = 'common/index.html'
@@ -34,6 +35,8 @@ class StudentHomeView(AccountHomeView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.account_type != AccountType.STUDENT:
             return redirect('trainer_home')
+        if request.user.is_authenticated and not StudentInfo.objects.filter(user=request.user).exists():
+            return redirect('student_profile_create')
         return super().dispatch(request, *args, **kwargs)
 
 

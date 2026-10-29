@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}トレーナープロフィール{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/trainer_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="pf">
+  <h1>プロフィール</h1>
+
+  <div class="pf-hero">
+    <div class="pf-avatar" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </div>
+    <p class="pf-name">{{ profile.name }}</p>
+    <p class="pf-meta">
+      <span>{{ profile.age }}歳</span>
+      <span>{{ profile.get_sex_display }}</span>
+    </p>
+  </div>
+
+  <div class="pf-card">
+    <dl class="pf-list">
+      <div class="pf-item">
+        <dt>得意ジャンル</dt>
+        <dd>{{ profile.get_speciality_genre_display }}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="pf-card">
+    <dl class="pf-list">
+      <div class="pf-item">
+        <dt>目標</dt>
+        <dd>{{ profile.goal }}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="pf-actions">
+    <a class="pf-btn primary" href="{% url 'student_profile_edit' %}">編集</a>
+    <a class="pf-back" href="{% url 'student_home' %}">ホームに戻る</a>
+  </div>
+</section>
+{% endblock %}
