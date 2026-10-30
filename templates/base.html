@@ -18,17 +18,17 @@
       <div class="logo">
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 13v6M10.5 8v16M16 4v24M21.5 9v14M27 13v6"/></svg>
         voistart
-        {% if login_required %}
+        {% if user %}
         <span class="role">
-          {% if user_role == 'trainer' %}トレーナー用{% else %}生徒用{% endif %}
+          {% if user.account_type == 'trainer' %}トレーナー用{% else %}生徒用{% endif %}
         </span>
         {% endif %}
       </div>
 
-      {% if login_required %}
+      {% if user %}
       <div class="user">
-        <span class="avatar" aria-hidden="true">{{ user_initial }}</span>
-        <span class="name">{{ user_name }}</span>
+        <span class="avatar" aria-hidden="true">{{ user.username|slice:":1" }}</span>
+        <span class="name">{{ user.username }}</span>
       </div>
       <button class="burger" id="burger" aria-label="メニューを開く" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -48,15 +48,19 @@
   </div>
 
 
-{% if login_required %}
+{% if user %}
 <div class="scrim" id="scrim"></div>
 <nav class="drawer" id="drawer" aria-label="メニュー">
-  {% if user_role == 'student' %}
+  {% if user.account_type == 'student' %}
   <a href="/home_student">ホーム</a>
   {% else %}
   <a href="/home_trainer">ホーム</a>
   {% endif %}
-  <a href="{% if user_role == 'trainer' %}{% url 'trainer_profile' %}{% else %}{% url 'student_profile' %}{% endif %}">プロフィール</a>
+  {% if user.account_type == 'student' %}
+    <a href="{% url 'student_profile' %}">生徒プロフィール</a>
+  {% else %}
+    <a href="{% url 'trainer_profile' %}">トレーナープロフィール</a>
+  {% endif %}
   <a href="/settings">設定</a>
   <a href="/notifications">お知らせ</a>
   <form action="{% url 'logout' %}" method="post" onsubmit="return confirm('ログアウトしてもよろしいでしょうか');">
