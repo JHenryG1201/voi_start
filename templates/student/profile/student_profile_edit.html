@@ -51,6 +51,18 @@
       </div>
 
       <div class="pe-item">
+        <label class="pe-label" for="id_low_note">低音</label>
+        {{ form.low_note.errors }}
+        {{ form.low_note }}
+      </div>
+
+      <div class="pe-item">
+        <label class="pe-label" for="id_high_note">高音</label>
+        {{ form.high_note.errors }}
+        {{ form.high_note }}
+      </div>
+
+      <div class="pe-item">
         <label class="pe-label" for="id_goal">目標</label>
         {{ form.goal.errors }}
         {{ form.goal }}

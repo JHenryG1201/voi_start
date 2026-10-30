@@ -27,3 +27,5 @@ class StudentInfo(models.Model):
     sex = models.CharField(max_length=6, choices=GENDER, default="none")
     speciality_genre = models.CharField(max_length=7, choices=GENRE, default="pop")
     goal = models.TextField()
+    low_note = models.CharField(max_length=32, blank=True)
+    high_note = models.CharField(max_length=32, blank=True)

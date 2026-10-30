@@ -34,6 +34,27 @@
   <div class="pf-card">
     <dl class="pf-list">
       <div class="pf-item">
+        <dt>音域</dt>
+        <dd>
+          {% if profile.low_note %}
+            {{ profile.low_note }}
+          {% else %}
+            不明
+          {% endif %}
+           ~ 
+          {% if profile.high_note %}
+            {{ profile.high_note }}
+          {% else %}
+            不明
+          {% endif %}
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="pf-card">
+    <dl class="pf-list">
+      <div class="pf-item">
         <dt>目標</dt>
         <dd>{{ profile.goal }}</dd>
       </div>
