@@ -8,3 +8,10 @@ class TrainingListView(ListView):
     context_object_name = "trainings"
     paginate_by = 10
     ordering = ["title"]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["trainings"] = Training.objects.filter(
+            user=self.request.user,
+        )
+        return context
