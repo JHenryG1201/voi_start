@@ -1,42 +1,60 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}空き枠一覧{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/available_slots.css' %}">
+<link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="as">
+  <h1>空き枠一覧</h1>
+  <p class="as-lead">登録済みの予約枠を変更・削除できます。</p>
+  {% if slots %}
+  <ul class="as-list">
+    {% for slot in slots %}
+      <li class="as-card">
+        <div class="as-info">
+          <span class="as-date">{{ slot.lesson_date }}</span>
+          <span class="as-time">{{ slot.lesson_start_time }}～{{ slot.lesson_end_time }}</span>
+          <span class="as-type">{{ slot.get_lesson_type_display }}</span>
+        </div>
+        <div class="as-actions">
+          <a class="as-edit" href="{% url 'available_slot_edit' slot.id %}">変更</a>
+          <a class="as-delete" href="{% url 'available_slot_delete' slot.id %}">削除</a>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
 
-    <h1>空き枠一覧</h1>
+  <div class="pagination">
+      {% if is_paginated %}
 
-    <ul>
-        <li>
-            2026/10/20 14:00～15:00
-            <br>
-            オンライン
-            <br>
-            <a href="/available_slot_edit/1">変更</a>
-            <a href="/available_slot_delete/1">削除</a>
-        </li>
+          {% if page_obj.has_previous %}
+              <a href="?page=1">First</a>
+              <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
 
-        <li>
-            2026/10/22 13:00～14:00
-            <br>
-            オフライン
-            <br>
-            <a href="/available_slot_edit/2">変更</a>
-            <a href="/available_slot_delete/2">削除</a>
-        </li>
+          <span>
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+          </span>
 
-        <li>
-            2026/10/25 16:00～17:00
-            <br>
-            どちらでも可
-            <br>
-            <a href="/available_slot_edit/3">変更</a>
-            <a href="/available_slot_delete/3">削除</a>
-        </li>
-    </ul>
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">Next</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          {% endif %}
 
-    <p>
-        <a href="/reservation_management">予約管理に戻る</a>
-    </p>
+      {% endif %}
+  </div>
+  {% else %}
+    <p>予約枠がありません。</p>
+  {% endif %}
 
+  <a class="as-back" href="{% url 'reservation_management' %}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    予約管理に戻る
+  </a>
+</section>
 {% endblock %}

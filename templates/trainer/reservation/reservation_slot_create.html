@@ -1,68 +1,60 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}予約枠作成{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/reservation_slot_create.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="rsc">
+  <h1>予約枠作成</h1>
 
-    <h1>予約枠作成</h1>
+  <form class="rsc-form" method="post">
+    {% csrf_token %}
 
-    <p>
-        <label>
-            日付
-            <input type="date">
+    <div class="rsc-card">
+      <h2 class="rsc-legend">日時</h2>
+
+      <div class="rsc-field">
+        <label class="rsc-label" for="date">日付</label>
+        {{ form.lesson_date.errors }}
+        {{ form.lesson_date }}
+      </div>
+
+      <div class="rsc-row">
+        <div class="rsc-field">
+          <label class="rsc-label" for="start">開始時刻</label>
+          {{ form.lesson_start_time }}
+        </div>
+        <div class="rsc-field">
+          <label class="rsc-label" for="end">終了時刻</label>
+          {{ form.lesson_end_time }}
+        </div>
+      </div>
+      {{ form.lesson_start_time.errors }}
+      {{ form.lesson_end_time.errors }}
+    </div>
+    <fieldset class="rsc-card">
+      <legend class="rsc-legend">レッスン形式</legend>
+
+      {% for radio in form.lesson_type %}
+        <label class="rsc-choice">
+            {{ radio.tag }}
+            <span class="rsc-box">{{ radio.choice_label }}</span>
         </label>
-    </p>
+      {% endfor %}
 
-    <p>
-        <label>
-            開始時刻
-            <input type="time">
-        </label>
-    </p>
+      {{ form.lesson_type.errors }}
+    </fieldset>
 
-    <p>
-        <label>
-            終了時刻
-            <input type="time">
-        </label>
-    </p>
+    <button type="submit" class="rsc-submit">予約枠を作成</button>
+  </form>
 
-    <p>
-        レッスン形式
-    </p>
-
-    <p>
-        <label>
-            <input type="radio" name="lesson_type" value="online">
-            オンライン
-        </label>
-    </p>
-
-    <p>
-        <label>
-            <input type="radio" name="lesson_type" value="offline">
-            オフライン
-        </label>
-    </p>
-
-        </p>
-
-    <p>
-        <label>
-            <input type="radio" name="lesson_type" value="online">
-            どちらも対応可能
-        </label>
-    </p>
-
-
-    <p>
-        <a href="/reservation_slot_create_done">
-            <button type="button">予約枠を作成</button>
-        </a>
-    </p>
-
-    <p>
-        <a href="/reservation_management">予約管理に戻る</a>
-    </p>
-
+  <a class="rsc-back" href="{% url 'reservation_management' %}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    予約管理に戻る
+  </a>
+</section>
 {% endblock %}

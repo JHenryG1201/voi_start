@@ -2,22 +2,28 @@
 
 {% block title %}予約詳細{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reservation_detail.css') }}">
+{% endblock %}
+
 {% block content %}
+<section class="rsv">
+  <h1>予約詳細</h1>
 
-    <h1>予約詳細</h1>
+  <div class="rsv-hero">
+    <span class="rsv-badge">予約済み</span>
+    <p class="rsv-name">生徒A</p>
+  </div>
 
-    <p>生徒名：生徒A</p>
+  <div class="rsv-card">
+    <dl class="rsv-list">
+      <div class="rsv-item"><dt>日付</dt><dd>2026/10/10</dd></div>
+      <div class="rsv-item"><dt>時間</dt><dd>14:00～15:00</dd></div>
+      <div class="rsv-item"><dt>レッスン形式</dt><dd>オンライン</dd></div>
+      <div class="rsv-item"><dt>予約状況</dt><dd>予約済み</dd></div>
+    </dl>
+  </div>
 
-    <p>日付：2026/10/10</p>
-
-    <p>時間：14:00～15:00</p>
-
-    <p>レッスン形式：オンライン</p>
-
-    <p>予約状況：予約済み</p>
-
-    <p>
-        <a href="/reservation_list">予約一覧に戻る</a>
-    </p>
-
+  <a class="rsv-btn" href="{{ url_for('reservation_list') }}">予約一覧に戻る</a>
+</section>
 {% endblock %}

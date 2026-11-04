@@ -1,0 +1,52 @@
+.rcc{
+  --rcc-danger:#D92D4A;
+  --rcc-danger-soft:#FDEBEE;
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;text-align:center;padding:12px 4px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .rcc{--rcc-danger:#FF6B81;--rcc-danger-soft:#3A1F2A}
+}
+:root[data-theme="dark"] .rcc{--rcc-danger:#FF6B81;--rcc-danger-soft:#3A1F2A}
+
+.rcc-visual{
+  width:88px;height:88px;border-radius:50%;
+  display:grid;place-items:center;
+  color:var(--rcc-danger);background:var(--rcc-danger-soft);
+  border:2px solid var(--rcc-danger);
+}
+.rcc-visual svg{width:44px;height:44px}
+.rcc h1{margin:0;font-size:24px;font-weight:700}
+.rcc-question{margin:0;font-size:16px;font-weight:700}
+
+.rcc-card{
+  width:100%;margin:0;padding:4px 18px;border-radius:20px;text-align:left;
+  background:var(--surface);border:1px solid var(--line);
+}
+.rcc-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0}
+.rcc-item + .rcc-item{border-top:1px solid var(--line)}
+.rcc-item dt{margin:0;font-size:13px;font-weight:700;color:var(--muted)}
+.rcc-item dd{margin:0;font-size:14.5px;font-weight:700;text-align:right;overflow-wrap:anywhere}
+.rcc-note{margin:0;font-size:13px;color:var(--muted);line-height:1.7}
+
+.rcc-actions{width:100%;display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.rcc-back,.rcc-submit{
+  display:flex;align-items:center;justify-content:center;
+  border-radius:18px;font-weight:700;text-decoration:none;
+  transition:transform .12s ease,background .12s;
+}
+.rcc-back{
+  min-height:56px;font-size:16px;color:var(--on-brand);
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+}
+.rcc-submit{
+  min-height:52px;font-size:15px;
+  color:var(--rcc-danger);background:transparent;border:2px solid var(--rcc-danger);
+}
+.rcc-back:active,.rcc-submit:active{transform:scale(.97)}
+.rcc-submit:hover{background:var(--rcc-danger-soft)}
+.rcc-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.rcc-submit:focus-visible{outline:3px solid var(--rcc-danger);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){.rcc-back,.rcc-submit{transition:none}}

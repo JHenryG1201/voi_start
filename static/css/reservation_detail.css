@@ -1,0 +1,42 @@
+.rsv{display:flex;flex-direction:column;gap:14px}
+.rsv h1{margin:0;font-size:26px;font-weight:700}
+
+.rsv-hero{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:8px;
+  padding:22px 20px;border-radius:24px;color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.rsv-hero::after{
+  content:"";position:absolute;right:-40px;top:-50px;
+  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.14);
+}
+.rsv-hero > *{position:relative;z-index:1}
+.rsv-badge{
+  align-self:flex-start;font-size:12px;font-weight:700;
+  padding:3px 12px;border-radius:999px;background:rgba(255,255,255,.22);
+}
+.rsv-name{margin:0;font-size:24px;font-weight:700;overflow-wrap:anywhere}
+
+.rsv-card{
+  padding:4px 18px;border-radius:22px;
+  background:var(--surface);border:1px solid var(--line);
+}
+.rsv-list{margin:0}
+.rsv-item{display:flex;justify-content:space-between;gap:12px;padding:14px 0}
+.rsv-item + .rsv-item{border-top:1px solid var(--line)}
+.rsv-item dt{margin:0;font-size:13px;font-weight:700;color:var(--muted)}
+.rsv-item dd{margin:0;font-size:15px;font-weight:700;text-align:right;overflow-wrap:anywhere}
+
+.rsv-btn{
+  display:flex;align-items:center;justify-content:center;
+  min-height:54px;border-radius:18px;
+  font-size:16px;font-weight:700;text-decoration:none;
+  color:var(--on-brand);
+  background:linear-gradient(120deg,var(--brand),var(--brand-2));
+  transition:transform .12s ease;
+}
+.rsv-btn:active{transform:scale(.97)}
+.rsv-btn:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){.rsv-btn{transition:none}}

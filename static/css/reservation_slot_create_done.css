@@ -1,0 +1,46 @@
+.sc{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;text-align:center;padding:12px 4px;
+}
+
+.sc-visual{
+  position:relative;
+  width:96px;height:96px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:var(--on-brand);margin-bottom:12px;
+  box-shadow:0 12px 28px rgba(47,75,255,.28);
+  animation:sc-pop .45s cubic-bezier(.2,1.4,.4,1) both;
+}
+.sc-visual::before{
+  content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:2px solid var(--brand);opacity:.18;
+}
+.sc-visual svg{width:48px;height:48px}
+
+.sc h1{margin:0;font-size:26px;font-weight:700;letter-spacing:.04em}
+.sc-lead{margin:0 0 20px;font-size:14px;color:var(--muted);line-height:1.8}
+
+.sc-links{width:100%;display:flex;flex-direction:column;gap:10px}
+.sc-btn,.sc-sub{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:56px;padding:0 20px;border-radius:18px;
+  font-size:16px;font-weight:700;text-decoration:none;
+  transition:transform .12s ease;
+}
+.sc-btn{color:var(--on-brand);background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+.sc-btn svg{width:20px;height:20px}
+.sc-sub{color:var(--brand);background:var(--surface);border:2px solid var(--brand)}
+.sc-btn:active,.sc-sub:active{transform:scale(.97)}
+.sc-btn:focus-visible,.sc-sub:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+@keyframes sc-pop{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sc-visual{animation:none}
+  .sc-btn,.sc-sub{transition:none}
+}

@@ -1,21 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}空き枠削除{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/available_slot_delete.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="sl">
+  <div class="sl-visual" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg>
+  </div>
 
-    <h1>空き枠削除</h1>
+  <h1>空き枠削除</h1>
 
-    <p>この予約枠を削除しますか？</p>
+  <div class="sl-notice" role="alert">
+    <p class="sl-question">この予約枠を削除しますか？</p>
+  </div>
 
-    <p>
-        <a href="/available_slot_delete_done">
-            <button type="button">削除する</button>
-        </a>
-    </p>
+  <div class="sl-actions">
+    <a class="sl-cancel" href="{% url 'available_slots' %}">キャンセル</a>
+    <form method="post">
+      {% csrf_token %}
+    <button class="sl-submit" type="submit">削除する</button>
+    </form>
+  </div>
 
-    <p>
-        <a href="/available_slots">キャンセル</a>
-    </p>
-
+</section>
 {% endblock %}

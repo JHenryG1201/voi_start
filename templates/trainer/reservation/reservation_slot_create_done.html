@@ -1,19 +1,27 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}予約枠作成完了{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/reservation_slot_create_done.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="sc">
+  <div class="sc-visual" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+  </div>
 
-    <h1>予約枠作成完了</h1>
+  <h1>予約枠作成完了</h1>
+  <p class="sc-lead">予約枠を作成しました。</p>
 
-    <p>予約枠を作成しました。</p>
-
-    <p>
-        <a href="/available_slots">空き枠一覧を見る</a>
-    </p>
-
-    <p>
-        <a href="/reservation_management">予約管理に戻る</a>
-    </p>
-
+  <div class="sc-links">
+    <a class="sc-btn" href="{% url 'available_slots' %}">
+      空き枠一覧を見る
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+    <a class="sc-sub" href="{% url 'reservation_management' %}">予約管理に戻る</a>
+  </div>
+</section>
 {% endblock %}

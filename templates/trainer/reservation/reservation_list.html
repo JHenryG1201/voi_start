@@ -2,22 +2,34 @@
 
 {% block title %}予約一覧{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reservation_list.css') }}">
+{% endblock %}
+
 {% block content %}
+<section class="rl">
+  <h1>予約一覧</h1>
+  <p class="rl-lead">入っている予約を確認できます。</p>
 
-    <h1>予約一覧</h1>
+  <ul class="rl-list">
+    <li>
+      <a class="rl-card" href="{{ url_for('reservation_detail', reservation_id=1) }}">
+        <span class="rl-text">
+          <span class="rl-date">2026/10/10</span>
+          <span class="rl-time">14:00～15:00</span>
+          <span class="rl-meta">
+            <span class="rl-name">生徒A</span>
+            <span class="rl-tag">オンライン</span>
+          </span>
+        </span>
+        <svg class="rl-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    </li>
+  </ul>
 
-    <ul>
-        <li>
-            2026/10/10 14:00～15:00
-            <br>
-            生徒A　オンライン
-            <br> 
-            <a href="/reservation_detail/1">詳細</a>
-        </li>
-    </ul>
-
-    <p>
-        <a href="/reservation_management">予約管理に戻る</a>
-    </p>
-
+  <a class="rl-back" href="{{ url_for('reservation_management') }}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    予約管理に戻る
+  </a>
+</section>
 {% endblock %}
