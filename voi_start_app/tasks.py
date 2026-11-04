@@ -3,7 +3,7 @@ from celery import shared_task
 
 from .audio_analysis import analyze_audio
 from .voice_coach import generate_voice_coaching_report
-from student.models import VoiceAnalysisRecord
+from student.models import VoiceAnalysisRecord, Training
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +25,17 @@ def run_voice_analysis(record_id):
         record.recommended_trainings = report["training_plan"]
         record.status = "complete"
         record.save()
+
+        for training in report["training_plan"]:
+            Training.objects.create(
+                title = training["exercise"],
+                purpose = training["purpose"],
+                warning = training["warning"],
+                duration = training["duration_minutes"],
+                instructions = training["instructions"],
+                user = record.user,
+            )
+
     except Exception as exc:
         logger.exception("Voice analysis failed")
         record.status = "failed"

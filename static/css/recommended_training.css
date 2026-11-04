@@ -1,0 +1,35 @@
+.tr{display:flex;flex-direction:column;gap:6px}
+.tr h1{margin:0;font-size:24px;font-weight:700}
+.tr-lead{margin:0 0 14px;font-size:13.5px;color:var(--muted);line-height:1.6}
+
+.tr-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+
+.tr-card{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 16px 16px 14px;border-radius:20px;
+  text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  transition:transform .12s ease;
+}
+.tr-card:active{transform:scale(.97)}
+.tr-card:focus-visible,.tr-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+.tr-num{
+  flex:none;width:40px;height:40px;border-radius:14px;
+  display:grid;place-items:center;font-size:17px;font-weight:700;
+  color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.tr-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.tr-title{font-size:17px;font-weight:700}
+.tr-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+.tr-go{flex:none;width:22px;height:22px;color:var(--muted)}
+
+.tr-back{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  margin-top:18px;padding:12px;border-radius:12px;
+  font-size:14px;color:var(--muted);text-decoration:none;
+}
+.tr-back svg{width:18px;height:18px}
+
+@media (prefers-reduced-motion:reduce){.tr-card{transition:none}}

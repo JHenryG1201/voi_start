@@ -38,8 +38,9 @@ REPORT_SCHEMA = {
                     "duration_minutes": {"type": "integer"},
                     "instructions": {"type": "array", "items": {"type": "string"}},
                     "purpose": {"type": "string"},
+                    "warning": {"type": "string"},
                 },
-                "required": ["exercise", "duration_minutes", "instructions", "purpose"],
+                "required": ["exercise", "duration_minutes", "instructions", "purpose", "warning"],
             },
         },
     },
@@ -102,7 +103,7 @@ def generate_voice_coaching_report(analysis_data):
 
 ## 出力
 JSONのみを返してください（説明やコードブロックは不要）。形式は次のとおりです。
-{{"tone_quality": {{"observations": ["声質の観察（2文以内）"]}}, "song_recommendations": [{{"title": "曲名", "artist": "アーティスト名", "reason": "理由（1文）"}}], "training_plan": [{{"exercise": "練習名", "duration_minutes": 5, "instructions": ["手順1", "手順2"], "purpose": "目的（1文）"}}]}}
+{{"tone_quality": {{"observations": ["声質の観察（2文以内）"]}}, "song_recommendations": [{{"title": "曲名", "artist": "アーティスト名", "reason": "理由（1文）"}}], "training_plan": [{{"exercise": "練習名", "duration_minutes": 5, "instructions": ["手順1", "手順2"], "purpose": "目的（1文）", "warning": "注意ポイント(1文)"}}]}}
 
 - song_recommendationsは3件、training_planは3件。
 - instructionsは各2手順まで。各文は短くする。

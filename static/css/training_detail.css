@@ -1,0 +1,60 @@
+.td{display:flex;flex-direction:column;gap:16px}
+.td-page{
+  margin:0;display:flex;align-items:center;gap:10px;
+  font-size:22px;font-weight:700;
+}
+.td-page::before{content:"";width:4px;height:20px;border-radius:2px;background:var(--brand)}
+
+/* 名前と目的のヒーローカード */
+.td-hero{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:8px;
+  padding:24px 20px;border-radius:24px;color:var(--on-brand);
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.td-hero::after{
+  content:"";position:absolute;right:-40px;top:-50px;
+  width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.14);
+}
+.td-hero > *{position:relative;z-index:1}
+.td-label{
+  align-self:flex-start;font-size:12px;font-weight:700;
+  padding:3px 12px;border-radius:999px;background:rgba(255,255,255,.22);
+}
+.td-name{margin:0;font-size:26px;font-weight:700}
+.td-purpose{margin:0;font-size:14px;line-height:1.8;opacity:.95}
+
+/* やり方と注意点を1枚に */
+.td-panel{
+  padding:6px 18px;border-radius:22px;
+  background:var(--surface);border:1px solid var(--line);
+}
+.td-item{padding:16px 0}
+.td-item + .td-item{border-top:1px solid var(--line)}
+.td-title{
+  display:flex;align-items:center;gap:8px;margin:0 0 10px;
+  font-size:15px;font-weight:700;
+}
+.td-title::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--brand-2)}
+.td-body{margin:0;font-size:14.5px;line-height:1.8}
+
+.td-steps{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.7}
+.td-steps li::marker{color:var(--brand);font-weight:700}
+
+.td-actions{display:flex;flex-direction:column}
+.td-btn,.td-sub{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:54px;padding:0 16px;border-radius:18px;
+  font-size:15px;font-weight:700;text-decoration:none;
+  transition:transform .12s ease;
+}
+.td-btn{color:var(--on-brand);background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+.td-sub{color:var(--brand);background:var(--surface);border:2px solid var(--brand)}
+.td-btn:active,.td-sub:active{transform:scale(.97)}
+.td-btn:focus-visible,.td-sub:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.td-btn{color:var(--on-brand);background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+.td-sub{color:var(--brand);background:var(--surface);border:2px solid var(--brand)}
+.td-btn:active,.td-sub:active{transform:scale(.97)}
+.td-btn:focus-visible,.td-sub:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){.td-btn,.td-sub{transition:none}}

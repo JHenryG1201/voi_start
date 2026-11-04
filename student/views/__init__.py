@@ -8,6 +8,8 @@ from .trainer_detail_views import TrainerDetailView
 from .student_profile_edit_done_views import StudentProfileEditDoneView
 from .student_profile_edit_views import StudentInfoCreateView, StudentProfileEditView
 from .student_profile_views import StudentProfileView
+from .training_list_views import TrainingListView
+from .training_detail_views import TrainingDetailView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -23,4 +25,6 @@ __all__ = [
     "StudentProfileEditView",
     "StudentInfoCreateView",
     "StudentProfileView",
+    "TrainingListView",
+    "TrainingDetailView",
 ]

@@ -1,33 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}トレーニング詳細{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/training_detail.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="td">
+  <h1 class="td-page">トレーニング詳細</h1>
 
-    <h1>トレーニング詳細</h1>
+  <div class="td-hero">
+    <span class="td-label">目的</span>
+    <h2 class="td-name">{{ training.title }}</h2>
+    <p class="td-purpose">{{ training.purpose }}</p>
+  </div>
 
-    <h2>{{ training.name }}</h2>
-
-    <h3>目的</h3>
-    <p>{{ training.purpose }}</p>
-
-    <h3>やり方</h3>
-
-    <ol>
-        {% for step in training.how_to %}
-            <li>{{ step }}</li>
+  <div class="td-panel">
+    <section class="td-item">
+      <h3 class="td-title">やり方</h3>
+      <ol class="td-steps">
+        {% for step in training.instructions %}
+        <li>{{ step }}</li>
         {% endfor %}
-    </ol>
+      </ol>
+    </section>
+    <section class="td-item">
+      <h3 class="td-title">注意点</h3>
+      <p class="td-body">{{ training.warning }}</p>
+    </section>
+  </div>
 
-    <h3>注意点</h3>
-    <p>{{ training.caution }}</p>
-
-    <p>
-        <a href="/recommended_training">AIおすすめトレーニングに戻る</a>
-    </p>
-
-    <p>
-        <a href="/training">トレーニングに戻る</a>
-    </p>
-
+    <div class="td-actions">
+    <a class="td-sub" href="{% url 'training_list' %}">AIおすすめトレーニングに戻る</a>
+  </div>
+</section>
 {% endblock %}
