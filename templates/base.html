@@ -76,6 +76,10 @@
   b.addEventListener('click',function(){t(!document.body.classList.contains('open'))});
   s.addEventListener('click',function(){t(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')t(false)});
+
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) location.reload();
+  });
 </script>
 {% endif %}
 </body>

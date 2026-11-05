@@ -92,9 +92,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'voi_start.middleware.NoCacheForAuthenticatedMiddleware', 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'homepage'  
 
 ROOT_URLCONF = 'voi_start.urls'
 
