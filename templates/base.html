@@ -48,7 +48,7 @@
   </div>
 
 
-{% if user %}
+{% if user.is_authenticated %}
 <div class="scrim" id="scrim"></div>
 <nav class="drawer" id="drawer" aria-label="メニュー">
   {% if user.account_type == 'student' %}
