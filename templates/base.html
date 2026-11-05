@@ -18,14 +18,14 @@
       <div class="logo">
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 13v6M10.5 8v16M16 4v24M21.5 9v14M27 13v6"/></svg>
         voistart
-        {% if user %}
+        {% if user.is_authenticated %}
         <span class="role">
           {% if user.account_type == 'trainer' %}トレーナー用{% else %}生徒用{% endif %}
         </span>
         {% endif %}
       </div>
 
-      {% if user %}
+      {% if user.is_authenticated %}
       <div class="user">
         <span class="avatar" aria-hidden="true">{{ user.username|slice:":1" }}</span>
         <span class="name">{{ user.username }}</span>
