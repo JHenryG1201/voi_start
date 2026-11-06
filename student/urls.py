@@ -18,4 +18,5 @@ urlpatterns = [
     path("profile/edit/done", views.StudentProfileEditDoneView.as_view(), name="student_profile_edit_done"),
     path('training_list/', views.TrainingListView.as_view(), name='training_list'),
     path("trainings/<int:pk>/", views.TrainingDetailView.as_view(), name="training_detail"),
+    path("trainers/<int:pk>/reservation/", views.ReservationSelectView.as_view(), name="reservation_select"),
 ]

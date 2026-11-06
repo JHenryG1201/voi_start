@@ -10,6 +10,7 @@ from .student_profile_edit_views import StudentInfoCreateView, StudentProfileEdi
 from .student_profile_views import StudentProfileView
 from .training_list_views import TrainingListView
 from .training_detail_views import TrainingDetailView
+from .reservation_select_views import ReservationSelectView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -27,4 +28,5 @@ __all__ = [
     "StudentProfileView",
     "TrainingListView",
     "TrainingDetailView",
+    "ReservationSelectView",
 ]
