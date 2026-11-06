@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}トレーナープロフィール{% endblock %}
 
@@ -51,12 +52,12 @@
   <div class="pf-prices">
     <div class="pf-price">
       <span class="pf-price-label">フィードバック</span>
-      <span class="pf-price-value">{{ profile.feedback_fee }}<small>円</small></span>
+      <span class="pf-price-value">{{ profile.feedback_fee | intcomma }}<small>円</small></span>
       <span class="pf-price-unit">1回</span>
     </div>
     <div class="pf-price">
       <span class="pf-price-label">レッスン</span>
-      <span class="pf-price-value">{{ profile.lesson_fee }}<small>円</small></span>
+      <span class="pf-price-value">{{ profile.lesson_fee | intcomma }}<small>円</small></span>
       <span class="pf-price-unit">1回</span>
     </div>
   </div>

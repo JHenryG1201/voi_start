@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}トレーナープロフィール{% endblock %}
 
@@ -41,12 +42,12 @@
   <div class="tp-prices">
     <div class="tp-price">
       <span class="tp-price-label">フィードバック依頼</span>
-      <span class="tp-price-value">{{ trainer.feedback_fee }}<small>円</small></span>
+      <span class="tp-price-value">{{ trainer.feedback_fee | intcomma }}<small>円</small></span>
       <span class="tp-price-unit">1回</span>
     </div>
     <div class="tp-price">
       <span class="tp-price-label">レッスン</span>
-      <span class="tp-price-value">{{ trainer.lesson_fee }}<small>円</small></span>
+      <span class="tp-price-value">{{ trainer.lesson_fee | intcomma }}<small>円</small></span>
       <span class="tp-price-unit">1回</span>
     </div>
   </div>
