@@ -25,4 +25,6 @@ urlpatterns = [
     path("history", views.HistoryView.as_view(), name="history"),
     path("history/reservation_history", views.ReservationHistoryView.as_view(), name="reservation_history"),
     path("history/reservation_history/<int:pk>", views.ReservationHistoryDetailView.as_view(), name="reservation_history_detail"),
+    path("history/reservation_history/<int:pk>/cancel/", views.ReservationCancelConfirmView.as_view(), name="reservation_cancel_confirm"),
+    path("history/reservation_history/cancel/done/", views.ReservationCancelDoneView.as_view(), name="reservation_cancel_done"),
 ]

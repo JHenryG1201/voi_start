@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}予約キャンセル確認{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/reservation_cancel_confirm.css') }}">
+<link rel="stylesheet" href="{% static 'css/reservation_cancel_confirm.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,19 +16,22 @@
 
   <h1>予約キャンセル確認</h1>
   <p class="rcc-question" role="alert">以下の予約をキャンセルしますか？</p>
-
+  
   <dl class="rcc-card">
-    <div class="rcc-item"><dt>予約日時</dt><dd>{{ reservation_data.date }}</dd></div>
-    <div class="rcc-item"><dt>トレーナー</dt><dd>{{ reservation_data.trainer_name }}</dd></div>
-    <div class="rcc-item"><dt>受講方法</dt><dd>{{ reservation_data.method }}</dd></div>
-    <div class="rcc-item"><dt>料金</dt><dd>{{ "{:,}".format(reservation_data.price) }}円</dd></div>
+    <div class="rcc-item"><dt>予約日時</dt><dd>{{ lesson.lesson_date }}</dd></div>
+    <div class="rcc-item"><dt>トレーナー</dt><dd>{{ trainer_name }}</dd></div>
+    <div class="rcc-item"><dt>受講方法</dt><dd>{{ lesson.get_lesson_type_display }}</dd></div>
+    <div class="rcc-item"><dt>料金</dt><dd>{{ lesson.trainer.trainer_profile.lesson_fee | intcomma }}円</dd></div>
   </dl>
 
   <p class="rcc-note">キャンセルすると、予約履歴から確認できなくなります。</p>
 
-  <div class="rcc-actions">
-    <a class="rcc-back" href="{{ url_for('reservation_history_detail', reservation_id=reservation_id) }}">戻る</a>
-    <a class="rcc-submit" href="{{ url_for('reservation_cancel_done', reservation_id=reservation_id) }}">キャンセルする</a>
-  </div>
+  <form class="rcc-form" method="post" action="{% url 'reservation_cancel_confirm' lesson.id %}">
+    {% csrf_token %}
+    <div class="rcc-actions">
+      <a class="rcc-back" href="{% url 'reservation_history_detail' lesson.id %}">戻る</a>
+      <button class="rcc-submit" type="submit">キャンセルする</button>
+    </div>
+  </form>
 </section>
 {% endblock %}

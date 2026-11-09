@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}予約キャンセル完了{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/request_review_done.css') }}">
+<link rel="stylesheet" href="{% static 'css/request_review_done.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,11 +17,11 @@
   <p class="rd-lead">予約のキャンセルが完了しました。</p>
 
   <div class="rd-links">
-    <a class="rd-btn" href="{{ url_for('reservation_history') }}">
+    <a class="rd-btn" href="{% url 'reservation_history' %}">
       予約履歴に戻る
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
     </a>
-    <a class="rd-sub" href="{{ url_for('home_student') }}">ホームに戻る</a>
+    <a class="rd-sub" href="{% url 'student_home' %}">ホームに戻る</a>
   </div>
 </section>
 {% endblock %}

@@ -38,8 +38,7 @@
   {% if lesson.lesson_status == "reserved" %}
   <div class="rhd-danger">
     <p class="rhd-danger-text">予約をキャンセルする場合はこちら</p>
-    {% comment %} <a class="rhd-cancel" href="{{ url_for('reservation_cancel', reservation_id=reservation_id) }}">予約をキャンセルする</a> {% endcomment %}
-    <a class="rhd-cancel" href="">予約をキャンセルする</a>
+    <a class="rhd-cancel" href="{% url 'reservation_cancel_confirm' lesson.id %}">予約をキャンセルする</a>
   </div>
   {% endif %}
 

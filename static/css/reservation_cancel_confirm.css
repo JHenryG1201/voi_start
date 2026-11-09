@@ -24,6 +24,11 @@
   width:100%;margin:0;padding:4px 18px;border-radius:20px;text-align:left;
   background:var(--surface);border:1px solid var(--line);
 }
+
+.rcc-form{
+  width: 100%;
+}
+
 .rcc-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0}
 .rcc-item + .rcc-item{border-top:1px solid var(--line)}
 .rcc-item dt{margin:0;font-size:13px;font-weight:700;color:var(--muted)}
