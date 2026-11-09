@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}トレーナー評価{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/request_review.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="rv">
+  <h1>トレーナー評価</h1>
+
+  <div class="rv-trainer">
+    <span class="rv-avatar" aria-hidden="true">{{ trainer_name[:1] }}</span>
+    <div class="rv-trainer-text">
+      <span class="rv-label">トレーナー</span>
+      <span class="rv-name">{{ trainer_name }}</span>
+    </div>
+  </div>
+
+  <form class="rv-form" action="{{ url_for('request_review_confirm', request_id=request_id) }}" method="get">
+
+    <fieldset class="rv-card">
+      <legend class="rv-legend">評価</legend>
+      <p class="rv-hint">星をタップして、5段階で評価してください。</p>
+
+      <div class="rv-stars">
+        <input type="radio" id="star5" name="rating" value="5" required>
+        <label for="star5" title="5"><span class="rv-sr">5</span>★</label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4" title="4"><span class="rv-sr">4</span>★</label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3" title="3"><span class="rv-sr">3</span>★</label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2" title="2"><span class="rv-sr">2</span>★</label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1" title="1"><span class="rv-sr">1</span>★</label>
+      </div>
+      <p class="rv-scale"><span>低い</span><span>高い</span></p>
+    </fieldset>
+
+    <div class="rv-card">
+      <label class="rv-legend" for="comment">評価コメント</label>
+      <textarea class="rv-area" id="comment" name="comment" rows="5"
+                placeholder="感想やコメントを入力してください"></textarea>
+    </div>
+
+    <button type="submit" class="rv-submit">確認する</button>
+  </form>
+
+  <a class="rv-back" href="{{ url_for('request_history_detail', request_id=request_id) }}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    依頼詳細に戻る
+  </a>
+</section>
+{% endblock %}

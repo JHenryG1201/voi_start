@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}評価完了{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/request_review_done.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="rd">
+  <div class="rd-visual" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+  </div>
+
+  <h1>トレーナー評価</h1>
+  <p class="rd-lead">
+    評価を送信しました。<br>
+    ご協力ありがとうございました。
+  </p>
+
+  <div class="rd-links">
+    <a class="rd-btn" href="{{ url_for('request_history') }}">
+      依頼履歴に戻る
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+    <a class="rd-sub" href="{{ url_for('home_student') }}">ホームに戻る</a>
+  </div>
+</section>
+{% endblock %}

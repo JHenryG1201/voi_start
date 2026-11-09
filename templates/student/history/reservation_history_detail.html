@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}予約詳細{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/reservation_history_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="rhd">
+  <h1 class="rhd-page">予約詳細</h1>
+
+  <div class="rhd-hero {% if lesson.lesson_status == "done" %} done {% else %} plan {% endif %}">
+    <span class="rhd-badge">{{ lesson.get_lesson_status_display }}</span>
+    <p class="rhd-hero-date">{{ lesson.lesson_date }}</p>
+    <p class="rhd-hero-sub">{{ lesson.trainer.trainer_profile.name }}　／　{{ lesson.get_lesson_type_display }}</p>
+  </div>
+
+  <dl class="rhd-panel">
+    <div class="rhd-row"><dt>予約日時</dt><dd>{{ lesson.lesson_date }}</dd></div>
+    <div class="rhd-row"><dt>トレーナー</dt><dd>{{  lesson.trainer.trainer_profile.name }}</dd></div>
+    <div class="rhd-row"><dt>受講方法</dt><dd>{{ lesson.get_lesson_type_display }}</dd></div>
+    <div class="rhd-row"><dt>予約状況</dt><dd>{{ lesson.get_lesson_status_display }}</dd></div>
+    <div class="rhd-row"><dt>料金</dt><dd>{{ lesson.trainer.trainer_profile.lesson_fee | intcomma }}円</dd></div>
+  </dl>
+
+  <div class="rhd-note">
+    <h2 class="rhd-title">レッスンについて</h2>
+    {% if lesson.lesson_status == "done" %}
+      <p>レッスンは終了しています。</p>
+    {% else %}
+      <p>予約した日時にレッスンを受講してください。</p>
+    {% endif %}
+  </div>
+
+  {% if lesson.lesson_status == "reserved" %}
+  <div class="rhd-danger">
+    <p class="rhd-danger-text">予約をキャンセルする場合はこちら</p>
+    {% comment %} <a class="rhd-cancel" href="{{ url_for('reservation_cancel', reservation_id=reservation_id) }}">予約をキャンセルする</a> {% endcomment %}
+    <a class="rhd-cancel" href="">予約をキャンセルする</a>
+  </div>
+  {% endif %}
+
+  <div class="rhd-actions">
+    {% if lesson.lesson_status == "done" %}
+    {% comment %} <a class="rhd-btn" href="{{ url_for('reservation_review', reservation_id=reservation_id) }}">トレーナーを評価する</a> {% endcomment %}
+    <a class="rhd-btn" href="">トレーナーを評価する</a>
+    {% endif %}
+    <a class="rhd-sub" href="{% url 'reservation_history' %}">予約履歴に戻る</a>
+    <a class="rhd-back" href="{% url 'student_home' %}">ホームに戻る</a>
+  </div>
+</section>
+{% endblock %}

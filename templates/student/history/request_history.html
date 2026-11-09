@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}依頼履歴{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/request_history.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="rq">
+  <h1>依頼履歴</h1>
+
+  <ul class="rq-list">
+    <li>
+      <a class="rq-row" href="{{ url_for('request_history_detail', request_id=1) }}">
+        <span class="rq-text">
+          <span class="rq-date">2026年10月10日 14:30</span>
+          <span class="rq-meta">山田 太郎</span>
+        </span>
+        <span class="rq-status done">受取済み</span>
+      </a>
+    </li>
+    <li>
+      <a class="rq-row" href="{{ url_for('request_history_detail', request_id=2) }}">
+        <span class="rq-text">
+          <span class="rq-date">2026年10月8日 16:00</span>
+          <span class="rq-meta">佐藤 花子</span>
+        </span>
+        <span class="rq-status wait">未受取</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="rq-actions">
+    <a class="rq-cancel" href="{{ url_for('history') }}">履歴に戻る</a>
+    <a class="rq-btn" href="{{ url_for('home_student') }}">ホームに戻る</a>
+  </div>
+</section>
+{% endblock %}

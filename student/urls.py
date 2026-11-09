@@ -22,4 +22,7 @@ urlpatterns = [
     path("reservation/payment/", views.ReservationPaymentView.as_view(), name="reservation_payment"),
     path("reservation/confirm/", views.ReservationConfirmView.as_view(), name="reservation_confirm"),
     path("reservation/done/", views.ReservationDoneView.as_view(), name="reservation_done"),
+    path("history", views.HistoryView.as_view(), name="history"),
+    path("history/reservation_history", views.ReservationHistoryView.as_view(), name="reservation_history"),
+    path("history/reservation_history/<int:pk>", views.ReservationHistoryDetailView.as_view(), name="reservation_history_detail"),
 ]

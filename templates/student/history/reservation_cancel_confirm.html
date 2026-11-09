@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}予約キャンセル確認{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reservation_cancel_confirm.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="rcc">
+  <div class="rcc-visual" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+  </div>
+
+  <h1>予約キャンセル確認</h1>
+  <p class="rcc-question" role="alert">以下の予約をキャンセルしますか？</p>
+
+  <dl class="rcc-card">
+    <div class="rcc-item"><dt>予約日時</dt><dd>{{ reservation_data.date }}</dd></div>
+    <div class="rcc-item"><dt>トレーナー</dt><dd>{{ reservation_data.trainer_name }}</dd></div>
+    <div class="rcc-item"><dt>受講方法</dt><dd>{{ reservation_data.method }}</dd></div>
+    <div class="rcc-item"><dt>料金</dt><dd>{{ "{:,}".format(reservation_data.price) }}円</dd></div>
+  </dl>
+
+  <p class="rcc-note">キャンセルすると、予約履歴から確認できなくなります。</p>
+
+  <div class="rcc-actions">
+    <a class="rcc-back" href="{{ url_for('reservation_history_detail', reservation_id=reservation_id) }}">戻る</a>
+    <a class="rcc-submit" href="{{ url_for('reservation_cancel_done', reservation_id=reservation_id) }}">キャンセルする</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}予約履歴{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/reservation_history.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="rhl">
+  <h1>予約履歴</h1>
+
+  <h2 class="rhl-heading">予約中</h2>
+  {% if reserved %}
+    <ul class="rhl-list">
+      {% for lesson in reserved  %}
+        <li>
+          <a class="rhl-row" href="{% url 'reservation_history_detail' lesson.id %}">
+            <span class="rhl-text">
+              <span class="rhl-date">{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}~{{ lesson.lesson_end_time }}</span>
+              <span class="rhl-meta">{{ lesson.trainer.trainer_profile.name }}　／　{{ lesson.get_reserved_lesson_type_display }}</span>
+            </span>
+            <span class="rhl-status plan">予約確定</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>予約中のレッスンがございません。</p>
+  {% endif %}
+
+  <h2 class="rhl-heading">受講済み</h2>
+  {% if done %}
+    <ul class="rhl-list">
+      {% for lesson in done  %}
+        <li>
+          {% comment %} <a class="rhl-row" href="{% url 'reservation_history_detail' reservation_id %}"> {% endcomment %}
+          <a class="rhl-row" href="">
+            <span class="rhl-text">
+              <span class="rhl-date">{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}~{{ lesson.lesson_end_time }}</span>
+              <span class="rhl-meta">{{ lesson.trainer.trainer_profile.name }}　／　{{ lesson.get_reserved_lesson_type_display }}</span>
+            </span>
+            <span class="rhl-status plan">予約確定</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>受講済みのレッスンがございません。</p>
+  {% endif %}
+
+  <div class="rhl-actions">
+    <a class="rhl-cancel" href="{% url 'history' %}">履歴に戻る</a>
+    <a class="rhl-btn" href="{% url 'student_home' %}">ホームに戻る</a>
+  </div>
+</section>
+{% endblock %}

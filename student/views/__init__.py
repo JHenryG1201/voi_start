@@ -14,6 +14,9 @@ from .reservation_select_views import ReservationSelectView
 from .reservation_payment_views import ReservationPaymentView
 from .reservation_confirm_views import ReservationConfirmView
 from .reservation_done_views import ReservationDoneView
+from .history_views import HistoryView
+from .reservation_history_views import ReservationHistoryView
+from .reservation_history_detail_views import ReservationHistoryDetailView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -35,4 +38,7 @@ __all__ = [
     "ReservationPaymentView",
     "ReservationConfirmView",
     "ReservationDoneView",
+    "HistoryView",
+    "ReservationHistoryView",
+    "ReservationHistoryDetailView",
 ]
