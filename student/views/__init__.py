@@ -11,6 +11,9 @@ from .student_profile_views import StudentProfileView
 from .training_list_views import TrainingListView
 from .training_detail_views import TrainingDetailView
 from .reservation_select_views import ReservationSelectView
+from .reservation_payment_views import ReservationPaymentView
+from .reservation_confirm_views import ReservationConfirmView
+from .reservation_done_views import ReservationDoneView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -29,4 +32,7 @@ __all__ = [
     "TrainingListView",
     "TrainingDetailView",
     "ReservationSelectView",
+    "ReservationPaymentView",
+    "ReservationConfirmView",
+    "ReservationDoneView",
 ]

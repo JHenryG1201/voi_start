@@ -19,4 +19,7 @@ urlpatterns = [
     path('training_list/', views.TrainingListView.as_view(), name='training_list'),
     path("trainings/<int:pk>/", views.TrainingDetailView.as_view(), name="training_detail"),
     path("trainers/<int:pk>/reservation/", views.ReservationSelectView.as_view(), name="reservation_select"),
+    path("reservation/payment/", views.ReservationPaymentView.as_view(), name="reservation_payment"),
+    path("reservation/confirm/", views.ReservationConfirmView.as_view(), name="reservation_confirm"),
+    path("reservation/done/", views.ReservationDoneView.as_view(), name="reservation_done"),
 ]

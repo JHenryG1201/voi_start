@@ -21,6 +21,7 @@ class Lesson(models.Model):
     lesson_place = models.TextField(null=True)
     lesson_type = models.CharField(max_length=7, choices=LESSON_TYPE, default="both")
     lesson_status = models.CharField(max_length=9, choices=LESSON_STATUS, default="available")
+    reserved_lesson_type = models.CharField(max_length=7, choices=[("online", "オンライン"), ("offline", "対面")], blank=True, default="",)
 
     trainer = models.ForeignKey(
         settings.AUTH_USER_MODEL,

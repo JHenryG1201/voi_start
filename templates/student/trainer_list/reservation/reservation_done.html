@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}予約完了{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback_done.css') }}">
+<link rel="stylesheet" href="{% static 'css/feedback_done.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -15,20 +17,22 @@
   <h1>レッスン予約完了</h1>
   <p class="fdn-lead">
     レッスンの予約が完了しました。<br>
-    当日は予約した日時にレッスンを受講してください。
+    {{ lesson.lesson_date|date:"Y年n月j日" }}
+    {{ lesson.lesson_start_time|time:"H:i" }}〜{{ lesson.lesson_end_time|time:"H:i" }}
+    にレッスンを受講してください。
   </p>
 
   <p class="fdn-price">
     <span class="fdn-price-label">{{ trainer_name }}</span>
-    <span class="fdn-price-value">{{ "{:,}".format(lesson_price) }}<small>円</small></span>
+    <span class="fdn-price-value">{{ lesson_price|intcomma }}<small>円</small></span>
   </p>
 
   <div class="fdn-links">
-    <a class="fdn-btn" href="{{ url_for('home_student') }}">
+    <a class="fdn-btn" href="{% url 'student_home' %}">
       ホームに戻る
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
     </a>
-    <a class="fdn-sub" href="{{ url_for('trainer_detail', trainer_id=trainer_id) }}">トレーナープロフィールに戻る</a>
+    <a class="fdn-sub" href="{% url 'trainer_detail' pk=trainer_pk %}">トレーナープロフィールに戻る</a>
   </div>
 </section>
 {% endblock %}

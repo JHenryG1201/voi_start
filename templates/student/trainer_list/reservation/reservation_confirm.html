@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}予約内容確認{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback_confirm.css') }}">
+<link rel="stylesheet" href="{% static 'css/feedback_confirm.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -24,12 +26,15 @@
 
   <div class="fcf-price">
     <span class="fcf-price-label">予約料金</span>
-    <span class="fcf-price-value">{{ "{:,}".format(lesson_price) }}<small>円</small></span>
+    <span class="fcf-price-value">{{ lesson_price | intcomma }}<small>円</small></span>
   </div>
 
   <div class="fcf-actions">
-    <a class="fcf-btn" href="{{ url_for('reservation_done', trainer_id=trainer_id) }}">予約を確定する</a>
-    <a class="fcf-back" href="{{ url_for('reservation_payment', trainer_id=trainer_id) }}">
+    <form action="{% url 'reservation_confirm' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="fcf-btn fcf-btn-btn">予約を確定する</button>
+    </form>
+    <a class="fcf-back" href="{% url 'reservation_payment' %}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
       戻る
     </a>

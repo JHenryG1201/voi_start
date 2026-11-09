@@ -23,20 +23,21 @@
     </div>
   </div>
 
-  <form class="rs-form" method="get">
+  <form class="rs-form" method="post">
+    {% csrf_token %}
     <div class="rs-card">
       <h2 class="rs-legend">予約日時を選択してください</h2>
 
       <div class="rs-field">
         <label class="rs-field-label" for="reservation_date">予約日</label>
-        <select class="rs-input" id="reservation_date" name="reservation_date" required>
+        <select class="rs-input" id="reservation_date" required>
           <option value="">選択してください</option>
         </select>
       </div>
 
       <div class="rs-field">
         <label class="rs-field-label" for="reservation_time">予約時間</label>
-        <select class="rs-input" id="reservation_time" name="reservation_time">
+        <select class="rs-input" id="reservation_time" name="lesson_id" required>
           <option value="">先に予約日を選択してください</option>
         </select>
       </div>
@@ -63,7 +64,6 @@
     トレーナープロフィールに戻る
   </a>
 </section>
-{{ slot_data|json_script:"reservation-slots"}}
 {{ slot_data|json_script:"reservation-slots" }}
 <script>
 (function () {

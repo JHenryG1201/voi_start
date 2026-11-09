@@ -1,0 +1,55 @@
+.fdn{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;text-align:center;padding:12px 4px;
+}
+
+.fdn-visual{
+  position:relative;
+  width:96px;height:96px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:var(--on-brand);margin-bottom:12px;
+  box-shadow:0 12px 28px rgba(47,75,255,.28);
+  animation:fdn-pop .45s cubic-bezier(.2,1.4,.4,1) both;
+}
+.fdn-visual::before{
+  content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:2px solid var(--brand);opacity:.18;
+}
+.fdn-visual svg{width:48px;height:48px}
+
+.fdn h1{margin:0;font-size:24px;font-weight:700;letter-spacing:.04em}
+.fdn-lead{margin:0;font-size:14px;color:var(--muted);line-height:1.8}
+
+.fdn-price{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  width:100%;margin:8px 0 12px;padding:14px 20px;border-radius:18px;
+  background:var(--soft);border:1px solid var(--line);
+}
+.fdn-price-label{font-size:13.5px;font-weight:700;color:var(--muted)}
+.fdn-price-value{font-size:22px;font-weight:700;color:var(--brand)}
+.fdn-price-value small{margin-left:2px;font-size:13px}
+
+.fdn-links{width:100%;display:flex;flex-direction:column;gap:10px}
+.fdn-btn,.fdn-sub{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:56px;padding:0 20px;border-radius:18px;
+  font-size:16px;font-weight:700;text-decoration:none;
+  transition:transform .12s ease;
+}
+.fdn-btn{color:var(--on-brand);background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+.fdn-btn svg{width:20px;height:20px}
+.fdn-sub{color:var(--brand);background:var(--surface);border:2px solid var(--brand);font-size:15px}
+.fdn-btn:active,.fdn-sub:active{transform:scale(.97)}
+.fdn-btn:focus-visible,.fdn-sub:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+@keyframes fdn-pop{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .fdn-visual{animation:none}
+  .fdn-btn,.fdn-sub{transition:none}
+}

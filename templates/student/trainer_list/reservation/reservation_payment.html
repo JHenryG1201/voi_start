@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}お支払い情報入力{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,12 +14,12 @@
 
   <div class="pay-hero">
     <span class="pay-badge">レッスン料金</span>
-    <p class="pay-hero-price">{{ "{:,}".format(lesson_price) }}<small>円</small></p>
+    <p class="pay-hero-price">{{ lesson_price | intcomma }}<small>円</small></p>
     <p class="pay-hero-sub">トレーナー：{{ trainer_name }}</p>
   </div>
 
-  <form class="pay-form" action="{{ url_for('reservation_confirm', trainer_id=trainer_id) }}" method="get">
-
+  <form class="pay-form" action="{% url 'reservation_payment' %}" method="post">
+    {% csrf_token %}
     <div class="pay-panel">
       <h2 class="pay-title">クレジットカード情報</h2>
 
@@ -39,7 +41,7 @@
     </div>
 
     <div class="pay-actions">
-      <a class="pay-cancel" href="{{ url_for('reservation_select', trainer_id=trainer_id) }}">戻る</a>
+      <a class="pay-cancel" href="{% url 'reservation_select' pk=trainer_pk %}">戻る</a>
       <button type="submit" class="pay-submit">次へ</button>
     </div>
   </form>
