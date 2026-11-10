@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}予約詳細{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/reservation_detail.css') }}">
+<link rel="stylesheet" href="{% static 'css/reservation_detail.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,19 +12,19 @@
   <h1>予約詳細</h1>
 
   <div class="rsv-hero">
-    <span class="rsv-badge">予約済み</span>
-    <p class="rsv-name">生徒A</p>
+    <span class="rsv-badge">{{ lesson.get_lesson_status_display }}</span>
+    <p class="rsv-name">{{ lesson.student.student_profile.name }}</p>
   </div>
 
   <div class="rsv-card">
     <dl class="rsv-list">
-      <div class="rsv-item"><dt>日付</dt><dd>2026/10/10</dd></div>
-      <div class="rsv-item"><dt>時間</dt><dd>14:00～15:00</dd></div>
-      <div class="rsv-item"><dt>レッスン形式</dt><dd>オンライン</dd></div>
-      <div class="rsv-item"><dt>予約状況</dt><dd>予約済み</dd></div>
+      <div class="rsv-item"><dt>日付</dt><dd>{{ lesson.lesson_date }}</dd></div>
+      <div class="rsv-item"><dt>時間</dt><dd>{{ lesson.lesson_start_time }}～{{ lesson.lesson_end_time }}</dd></div>
+      <div class="rsv-item"><dt>レッスン形式</dt><dd>{{ lesson.get_reserved_lesson_type_display }}</dd></div>
+      <div class="rsv-item"><dt>予約状況</dt><dd>{{ lesson.get_lesson_status_display }}</dd></div>
     </dl>
   </div>
 
-  <a class="rsv-btn" href="{{ url_for('reservation_list') }}">予約一覧に戻る</a>
+  <a class="rsv-btn" href="{% url 'reservation_list' %}">予約一覧に戻る</a>
 </section>
 {% endblock %}

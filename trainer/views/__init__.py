@@ -9,6 +9,8 @@ from .available_slot_edit_views import AvailableSlotEditView
 from .available_slot_edit_done_views import AvailabeSlotEditDoneView
 from .available_slot_delete_views import AvailabeSlotDeleteView
 from .available_slot_delete_done_views import AvailabeSlotDeleteDoneView
+from .reservation_list_views import ReservationListView
+from .reservation_detail_views import ReservationDetailView
 
 __all__ = [
     'TrainerProfileEditView',
@@ -23,4 +25,6 @@ __all__ = [
     'AvailabeSlotEditDoneView',
     'AvailabeSlotDeleteView',
     'AvailabeSlotDeleteDoneView',
+    'ReservationListView',
+    'ReservationDetailView',
 ]

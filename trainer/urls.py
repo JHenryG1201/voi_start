@@ -15,4 +15,6 @@ urlpatterns = [
     path("available_slot_edit_done", views.AvailabeSlotEditDoneView.as_view(), name="available_slot_edit_done"),
     path("available_slot_delete/<int:pk>", views.AvailabeSlotDeleteView.as_view(), name="available_slot_delete"),
     path("available_slot_delete_done", views.AvailabeSlotDeleteDoneView.as_view(), name="available_slot_delete_done"),
+    path("reservation_list", views.ReservationListView.as_view(), name="reservation_list"),
+    path("reservation_list/<int:pk>", views.ReservationDetailView.as_view(), name="reservation_detail"),
 ]

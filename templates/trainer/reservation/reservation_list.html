@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}予約一覧{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/reservation_list.css') }}">
+<link rel="stylesheet" href="{% static 'css/reservation_list.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,23 +12,28 @@
   <h1>予約一覧</h1>
   <p class="rl-lead">入っている予約を確認できます。</p>
 
-  <ul class="rl-list">
-    <li>
-      <a class="rl-card" href="{{ url_for('reservation_detail', reservation_id=1) }}">
-        <span class="rl-text">
-          <span class="rl-date">2026/10/10</span>
-          <span class="rl-time">14:00～15:00</span>
-          <span class="rl-meta">
-            <span class="rl-name">生徒A</span>
-            <span class="rl-tag">オンライン</span>
-          </span>
-        </span>
-        <svg class="rl-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a>
-    </li>
-  </ul>
-
-  <a class="rl-back" href="{{ url_for('reservation_management') }}">
+  {% if lessons %}
+    <ul class="rl-list">
+      {% for lesson in lessons %}
+        <li>
+          <a class="rl-card" href="{% url 'reservation_detail' pk=lesson.id %}">
+            <span class="rl-text">
+              <span class="rl-date">{{ lesson.lesson_date }}</span>
+              <span class="rl-time">{{ lesson.lesson_start_time }}~{{ lesson.lesson_end_time }}</span>
+              <span class="rl-meta">
+                <span class="rl-name">{{ lesson.student.student_profile.name }}</span>
+                <span class="rl-tag">{{ lesson.get_reserved_lesson_type_display }}</span>
+              </span>
+            </span>
+            <svg class="rl-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>予約済みのレッスンがございません。</p>
+  {% endif %}
+  <a class="rl-back" href="{% url 'reservation_management' %}">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
     予約管理に戻る
   </a>
