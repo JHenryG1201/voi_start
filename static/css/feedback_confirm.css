@@ -27,15 +27,13 @@
 
 .fcf-actions{display:flex;flex-direction:column;gap:6px;margin-top:6px}
 .fcf-btn{
+  width: 100%;
   display:flex;align-items:center;justify-content:center;
   min-height:56px;border-radius:18px;
   font-size:16px;font-weight:700;text-decoration:none;
   color:var(--on-brand);
   background:linear-gradient(120deg,var(--brand),var(--brand-2));
   transition:transform .12s ease;
-}
-.fcf-btn-btn{
-  width: 100%;
 }
 .fcf-btn:active{transform:scale(.97)}
 .fcf-back{

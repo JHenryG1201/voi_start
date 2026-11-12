@@ -1,5 +1,8 @@
 from django import forms
-from .models import StudentInfo
+
+from .models import StudentInfo, Feedback
+
+MAX_AUDIO_MB = 20
 
 class StudentInfoForm(forms.ModelForm):
     class Meta:
@@ -24,3 +27,18 @@ class StudentInfoForm(forms.ModelForm):
 
         if not self.instance.pk:
             self.initial["speciality_genre"] = ""
+
+class FeedbackRequestForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ["audio"]
+        widgets = {
+            "audio": forms.ClearableFileInput(attrs={"accept": "audio/*", "class": "fu-file-input"}),
+            # "content": forms.Textarea(attrs={"rows": 6, "placeholder": "フィードバック依頼内容を書いてください"}),
+        }
+
+    def clean_audio(self):
+        audio = self.cleaned_data["audio"]
+        if audio.size > MAX_AUDIO_MB * 1024 * 1024:
+            raise forms.ValidationError(f"Audio must be {MAX_AUDIO_MB}MB or smaller.")
+        return audio

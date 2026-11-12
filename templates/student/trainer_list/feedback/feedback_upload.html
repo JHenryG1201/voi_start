@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}フィードバック依頼{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback_upload.css') }}">
+<link rel="stylesheet" href="{% static 'css/feedback_upload.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,21 +14,31 @@
 
   <div class="fu-hero">
     <span class="fu-badge">トレーナー</span>
-    <p class="fu-hero-name">{{ trainer_name }}</p>
-    <p class="fu-hero-price">ワンコーラス：<strong>1,000円</strong></p>
+    <p class="fu-hero-name">{{ trainer.name }}</p>
+    <p class="fu-hero-price">ワンコーラス：<strong>{{ trainer.feedback_fee | intcomma}}円</strong></p>
   </div>
 
-  <form class="fu-form" action="{{ url_for('feedback_payment', trainer_id=trainer_id) }}" method="get">
+  <form class="fu-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.errors }}
+
+    {% if form.non_field_errors %}
+      <div class="fu-error">{{ form.non_field_errors }}</div>
+    {% endif %}
 
     <div class="fu-panel">
       <h2 class="fu-title">音声ファイルのアップロード</h2>
       <label class="fu-label-b" for="audio_file">音声ファイル</label>
-      <input class="fu-file-input" type="file" id="audio_file" name="audio_file" accept=".mp3,.mp4">
-      <p class="fu-note">アップロードできるファイル形式：mp3・mp4</p>
+      {{ form.audio }}
+      {% if form.audio.errors %}
+        <div class="fu-error">{{ form.audio.errors }}</div>
+      {% endif %}
+      <p class="fu-note">アップロードできるファイル形式："mp3", "wav", "m4a", "ogg", "webm"</p>
     </div>
 
     <div class="fu-actions">
-      <a class="fu-cancel" href="{{ url_for('trainer_detail', trainer_id=trainer_id) }}">戻る</a>
+      <a class="fu-cancel" href="{% url 'trainer_detail' trainer.pk %}">戻る</a>
       <button type="submit" class="fu-submit">次へ</button>
     </div>
   </form>

@@ -27,4 +27,8 @@ urlpatterns = [
     path("history/reservation_history/<int:pk>", views.ReservationHistoryDetailView.as_view(), name="reservation_history_detail"),
     path("history/reservation_history/<int:pk>/cancel/", views.ReservationCancelConfirmView.as_view(), name="reservation_cancel_confirm"),
     path("history/reservation_history/cancel/done/", views.ReservationCancelDoneView.as_view(), name="reservation_cancel_done"),
+    path("trainers/<int:pk>/feedback/", views.FeedbackUploadView.as_view(), name="feedback_upload"),
+    path("feedback/payment", views.FeedbackPaymentView.as_view(), name="feedback_payment"),
+    path("feedback/confirm", views.FeedbackConfirmView.as_view(), name="feedback_confirm"),
+    path("feedback/<int:pk>/done", views.FeedbackDoneView.as_view(), name="feedback_done"),
 ]
