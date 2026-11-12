@@ -31,4 +31,7 @@ urlpatterns = [
     path("feedback/payment", views.FeedbackPaymentView.as_view(), name="feedback_payment"),
     path("feedback/confirm", views.FeedbackConfirmView.as_view(), name="feedback_confirm"),
     path("feedback/<int:pk>/done", views.FeedbackDoneView.as_view(), name="feedback_done"),
+    path("/history/request_history", views.RequestHistoryView.as_view(), name="request_history"),
+    path("history/request_history/<int:pk>", views.RequestHistoryDetailView.as_view(), name="request_history_detail"),
+
 ]

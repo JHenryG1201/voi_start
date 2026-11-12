@@ -23,6 +23,8 @@ from .feedback_upload_views import FeedbackUploadView
 from .feedback_payment_views import FeedbackPaymentView
 from .feedback_confirm_views import FeedbackConfirmView
 from .feedback_done_views import FeedbackDoneView
+from .request_history_views import RequestHistoryView
+from .request_history_detail_views import RequestHistoryDetailView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -53,4 +55,6 @@ __all__ = [
     "FeedbackPaymentView",
     "FeedbackConfirmView",
     "FeedbackDoneView",
+    "RequestHistoryView",
+    "RequestHistoryDetailView",
 ]

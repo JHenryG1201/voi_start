@@ -1,29 +1,30 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}依頼詳細{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/request_history_detail.css') }}">
+<link rel="stylesheet" href="{% static 'css/request_history_detail.css' %}">
 {% endblock %}
 
 {% block content %}
 <section class="rh">
   <h1 class="rh-page">依頼詳細</h1>
 
-  <div class="rh-hero {{ 'done' if request_data.status == '受取済み' else 'wait' }}">
+  <div class="rh-hero {% if feedback.status == 'done' %} done {% else %} wait {% endif %}">
     <span class="rh-badge">フィードバック状況</span>
-    <p class="rh-hero-status">{{ request_data.status }}</p>
-    <p class="rh-hero-sub">{{ request_data.trainer_name }}　／　{{ request_data.date }}</p>
+    <p class="rh-hero-status">{{ feedback.get_status_display }}</p>
+    <p class="rh-hero-sub">{{ feedback.trainer.trainer_profile.name }}　／　{{ feedback.created_at | date:"Y年n月j日 H:i" }}</p>
   </div>
 
   <div class="rh-panel">
     <section class="rh-block">
       <h2 class="rh-title">提出した音声</h2>
-      <p class="rh-filename">sample_song.mp3</p>
+      <p class="rh-filename">{{ feedback.audio_filename }}</p>
     </section>
     <section class="rh-block">
       <h2 class="rh-title">トレーナーからのフィードバック</h2>
-      {% if request_data.status == "受取済み" %}
+      {% if feedback.status == "done" %}
         <p class="rh-body">音程が安定しています。次は高音部分の発声を意識してみましょう。</p>
       {% else %}
         <p class="rh-empty">まだフィードバックは届いていません。</p>
@@ -32,9 +33,10 @@
   </div>
 
   <div class="rh-actions">
-    <a class="rh-back-b" href="{{ url_for('request_history') }}">依頼履歴に戻る</a>
-    {% if request_data.status == "受取済み" %}
-    <a class="rh-btn" href="{{ url_for('request_review', request_id=request_id) }}">トレーナーを評価する</a>
+    <a class="rh-back-b" href="{% url 'request_history' %}">依頼履歴に戻る</a>
+    {% if feedback.status == "done" %}
+    {% comment %} <a class="rh-btn" href="{{ url_for('request_review', request_id=request_id) }}">トレーナーを評価する</a> {% endcomment %}
+    <a class="rh-btn" href="">トレーナーを評価する</a>
     {% endif %}
   </div>
 </section>

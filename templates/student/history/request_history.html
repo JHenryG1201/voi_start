@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}依頼履歴{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/request_history.css') }}">
+<link rel="stylesheet" href="{% static 'css/request_history.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,29 +12,28 @@
   <h1>依頼履歴</h1>
 
   <ul class="rq-list">
-    <li>
-      <a class="rq-row" href="{{ url_for('request_history_detail', request_id=1) }}">
-        <span class="rq-text">
-          <span class="rq-date">2026年10月10日 14:30</span>
-          <span class="rq-meta">山田 太郎</span>
-        </span>
-        <span class="rq-status done">受取済み</span>
-      </a>
-    </li>
-    <li>
-      <a class="rq-row" href="{{ url_for('request_history_detail', request_id=2) }}">
-        <span class="rq-text">
-          <span class="rq-date">2026年10月8日 16:00</span>
-          <span class="rq-meta">佐藤 花子</span>
-        </span>
-        <span class="rq-status wait">未受取</span>
-      </a>
-    </li>
+    {% for feedback in feedbacks %}
+      <li>
+        <a class="rq-row" href="{% url 'request_history_detail' feedback.pk %}">
+          <span class="rq-text">
+            <span class="rq-date">{{ feedback.created_at | date:"Y年n月j日 H:i" }}</span>
+            <span class="rq-meta">{{ feedback.trainer.trainer_profile.name }}</span>
+          </span>
+          {% if feedback.status == "done" %}
+            <span class="rq-status done">受取済み</span>
+          {% else %}
+            <span class="rq-status wait">未受取</span>
+          {% endif %}
+        </a>
+      </li>
+    {% empty %}
+      <p>依頼履歴がございません。</p>
+    {% endfor %}
   </ul>
 
   <div class="rq-actions">
-    <a class="rq-cancel" href="{{ url_for('history') }}">履歴に戻る</a>
-    <a class="rq-btn" href="{{ url_for('home_student') }}">ホームに戻る</a>
+    <a class="rq-cancel" href="{% url 'history' %}">履歴に戻る</a>
+    <a class="rq-btn" href="{% url 'student_home' %}">ホームに戻る</a>
   </div>
 </section>
 {% endblock %}

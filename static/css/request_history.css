@@ -1,0 +1,48 @@
+.rq{
+  --rq-warn:#B26A00;
+  --rq-warn-soft:#FFF3DC;
+  display:flex;flex-direction:column;gap:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .rq{--rq-warn:#FFC266;--rq-warn-soft:#3A2D12}
+}
+:root[data-theme="dark"] .rq{--rq-warn:#FFC266;--rq-warn-soft:#3A2D12}
+
+.rq h1{
+  margin:0;display:flex;align-items:center;gap:10px;
+  font-size:22px;font-weight:700;
+}
+.rq h1::before{content:"";width:4px;height:20px;border-radius:2px;background:var(--brand)}
+
+.rq-list{
+  list-style:none;margin:0;padding:6px;
+  background:var(--surface);border:1px solid var(--line);border-radius:22px;
+}
+.rq-list li + li{border-top:1px solid var(--line)}
+.rq-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 12px;border-radius:16px;
+  text-decoration:none;color:var(--ink);
+}
+.rq-row:active{background:var(--bg)}
+.rq-row:focus-visible,.rq-cancel:focus-visible,.rq-btn:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+.rq-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rq-date{font-size:15px;font-weight:700}
+.rq-meta{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.rq-status{flex:none;font-size:11.5px;font-weight:700;border-radius:999px;padding:4px 12px}
+.rq-status.done{color:var(--on-brand);background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+.rq-status.wait{color:var(--rq-warn);background:var(--rq-warn-soft)}
+
+.rq-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rq-cancel,.rq-btn{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:54px;padding:0 8px;border-radius:18px;
+  font-size:15px;font-weight:700;text-decoration:none;
+  transition:transform .12s ease;
+}
+.rq-cancel{color:var(--brand);background:var(--surface);border:2px solid var(--brand)}
+.rq-btn{color:var(--on-brand);background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+.rq-cancel:active,.rq-btn:active{transform:scale(.97)}
+
+@media (prefers-reduced-motion:reduce){.rq-cancel,.rq-btn{transition:none}}

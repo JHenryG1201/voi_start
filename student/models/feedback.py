@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
+import os
 
 from trainer.models import TrainerInfo
 
@@ -9,8 +10,8 @@ def audio_upload_path(instance, filename):
 
 class Feedback(models.Model):
     STATUS = [
-        ("pending", "Pending"),
-        ("done", "Done"),
+        ("pending", "未受取"),
+        ("done", "受取済み"),
     ]
 
     student = models.ForeignKey(
@@ -36,3 +37,7 @@ class Feedback(models.Model):
     status = models.CharField(max_length=7, choices=STATUS, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     feedback_time = models.DateTimeField(null=True)
+
+    @property
+    def audio_filename(self):
+        return os.path.basename(self.audio.name)
