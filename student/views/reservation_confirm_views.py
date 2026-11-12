@@ -24,6 +24,8 @@ class ReservationConfirmView(LoginRequiredMixin, View):
         data = request.session.get("reservation")
         if not data or not data.get("paid"):
             return redirect("trainer_list")
+        lesson = get_object_or_404(Lesson, pk=data["lesson_id"])
+        trainer_info = get_object_or_404(TrainerInfo, user=lesson.trainer)
 
         with transaction.atomic():
             updated = Lesson.objects.filter(
@@ -33,6 +35,7 @@ class ReservationConfirmView(LoginRequiredMixin, View):
                 student=request.user,
                 lesson_status="reserved",
                 reserved_lesson_type=data["lesson_type"],
+                price=trainer_info.lesson_fee,
             )
 
         if updated == 0:

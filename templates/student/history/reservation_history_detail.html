@@ -23,7 +23,7 @@
     <div class="rhd-row"><dt>トレーナー</dt><dd>{{  lesson.trainer.trainer_profile.name }}</dd></div>
     <div class="rhd-row"><dt>受講方法</dt><dd>{{ lesson.get_lesson_type_display }}</dd></div>
     <div class="rhd-row"><dt>予約状況</dt><dd>{{ lesson.get_lesson_status_display }}</dd></div>
-    <div class="rhd-row"><dt>料金</dt><dd>{{ lesson.trainer.trainer_profile.lesson_fee | intcomma }}円</dd></div>
+    <div class="rhd-row"><dt>料金</dt><dd>{{ lesson.price | intcomma }}円</dd></div>
   </dl>
 
   <div class="rhd-note">

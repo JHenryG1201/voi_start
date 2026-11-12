@@ -15,6 +15,7 @@ class Lesson(models.Model):
         ("done", "実施済み"),
     ]
 
+    price = models.IntegerField(default=0)
     lesson_date = models.DateField(null=True)
     lesson_start_time = models.TimeField(null=True)
     lesson_end_time = models.TimeField(null=True)
