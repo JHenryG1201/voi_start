@@ -19,4 +19,5 @@ urlpatterns = [
     path("reservation_list/<int:pk>", views.ReservationDetailView.as_view(), name="reservation_detail"),
     path("feedback_requests", views.FeedbackRequestsView.as_view(), name="feedback_requests"),
     path("feedback_request_detail/<int:pk>", views.FeedbackRequestDetailView.as_view(), name="feedback_request_detail"),
+    path("feedback_sent", views.FeedbackSentView.as_view(), name="feedback_sent"),
 ]

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}フィードバック送信完了{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback_sent.css') }}">
+<link rel="stylesheet" href="{% static 'css/feedback_sent.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,11 +17,11 @@
   <p class="fs-lead">フィードバックを送信しました。</p>
 
   <div class="fs-links">
-    <a class="fs-btn" href="{{ url_for('feedback_requests') }}">
+    <a class="fs-btn" href="{% url 'feedback_requests' %}">
       依頼一覧に戻る
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
     </a>
-    <a class="fs-sub" href="{{ url_for('home_trainer') }}">トレーナーホームに戻る</a>
+    <a class="fs-sub" href="{% url 'trainer_home' %}">トレーナーホームに戻る</a>
   </div>
 </section>
 {% endblock %}

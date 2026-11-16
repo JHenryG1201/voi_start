@@ -28,6 +28,7 @@
     </section>
 
     <form class="fb-item" id="fbForm" method="post">
+      {% csrf_token %}
       <h2 class="fb-title"><label for="feedback">フィードバック</label></h2>
       <textarea class="fb-area" id="feedback" name="feedback" rows="8" placeholder="フィードバックを入力してください"></textarea>
     </form>
