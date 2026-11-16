@@ -29,6 +29,28 @@
     {% endfor %}
   </ul>
 
+  <br>
+
+  <h1>フィードバック済み依頼一覧</h1>
+  <p class="fr-lead"></p>
+
+  <ul class="fr-list">
+    {% for feedback in done %}
+      <li>
+        <a class="fr-card" href="{% url 'feedback_request_detail' feedback.pk %}">
+          <span class="fr-avatar" aria-hidden="true">{{ feedback.student.student_profile.name|slice:":1" }}</span>
+          <span class="fr-text">
+            <span class="fr-name">{{ feedback.student.student_profile.name }}</span>
+            <span class="fr-date">{{ feedback.created_at | date:"Y年n月j日 H:i" }}</span>
+          </span>
+          <svg class="fr-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+    {% empty %}
+      <p>フィードバック済みの依頼はございません</p>
+    {% endfor %}
+  </ul>
+
   <a class="fr-back" href="{% url 'trainer_home' %}">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
     トレーナーホームに戻る

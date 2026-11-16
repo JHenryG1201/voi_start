@@ -30,13 +30,19 @@
     <form class="fb-item" id="fbForm" method="post">
       {% csrf_token %}
       <h2 class="fb-title"><label for="feedback">フィードバック</label></h2>
-      <textarea class="fb-area" id="feedback" name="feedback" rows="8" placeholder="フィードバックを入力してください"></textarea>
+      {% if feedback.status == "pending" %}
+        <textarea class="fb-area" id="feedback" name="feedback" rows="8" placeholder="フィードバックを入力してください"></textarea>
+      {% else %}
+        <p>{{ feedback.feedback }}</p>
+      {% endif %}
     </form>
   </div>
 
   <div class="fb-actions">
-    <a class="fb-cancel" href="{% url 'feedback_requests' %}">戻る</a>
-    <button type="submit" class="fb-submit" form="fbForm">送信</button>
+    <a class="fb-cancel" href="{% url 'feedback_requests' %}" {% if feedback.status == "done" %} style="grid-column: 1 / -1;" {% endif %}>戻る</a>
+    {% if feedback.status == "pending" %}
+      <button type="submit" class="fb-submit" form="fbForm">送信</button>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

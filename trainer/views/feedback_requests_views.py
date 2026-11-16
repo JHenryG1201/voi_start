@@ -15,3 +15,12 @@ class FeedbackRequestsView(LoginRequiredMixin, ListView):
             .filter(trainer = self.request.user, status = "pending")
             .order_by("created_at")
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["done"] = (
+            Feedback.objects
+            .filter(trainer = self.request.user, status = "done")
+            .order_by("created_at")
+        )
+        return context
