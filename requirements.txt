@@ -12,3 +12,5 @@ requests
 gunicorn
 celery
 redis
+django-storages
+boto3

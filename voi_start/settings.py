@@ -191,9 +191,28 @@ if "test" in sys.argv:
     STORAGES["staticfiles"]["BACKEND"] = "django.contrib.staticfiles.storage.StaticFilesStorage"
     CELERY_TASK_ALWAYS_EAGER = True
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-TEMP_UPLOAD_ROOT = BASE_DIR / "private_tmp"
+USE_S3 = os.environ.get("USE_S3", "False") == "True"
+
+if USE_S3:
+    INSTALLED_APPS += ["storages"]
+
+    AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+    AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME", "ap-southeast-2")
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_QUERYSTRING_AUTH = True          # signed URLs
+    AWS_QUERYSTRING_EXPIRE = 3600        # URL valid for 1 hour
+    AWS_S3_FILE_OVERWRITE = False        # don't overwrite same-named files
+    AWS_DEFAULT_ACL = None
+
+    STORAGES = {
+        "default": {"BACKEND": "storages.backends.s3.S3Storage"},
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    }
+else:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+
+TEMP_UPLOAD_ROOT = os.environ.get("TEMP_UPLOAD_ROOT", str(BASE_DIR / "tmp_uploads"))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

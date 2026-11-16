@@ -1,33 +1,37 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}フィードバック依頼一覧{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/feedback_requests.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="fr">
+  <h1>フィードバック依頼一覧</h1>
+  <p class="fr-lead">届いている依頼を確認できます。</p>
 
-    <h1>フィードバック依頼一覧</h1>
+  <ul class="fr-list">
+    {% for feedback in feedbacks %}
+      <li>
+        <a class="fr-card" href="{% url 'feedback_request_detail' feedback.pk %}">
+          <span class="fr-avatar" aria-hidden="true">{{ feedback.student.student_profile.name|slice:":1" }}</span>
+          <span class="fr-text">
+            <span class="fr-name">{{ feedback.student.student_profile.name }}</span>
+            <span class="fr-date">{{ feedback.created_at | date:"Y年n月j日 H:i" }}</span>
+          </span>
+          <svg class="fr-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+    {% empty %}
+      <p>依頼はございません</p>
+    {% endfor %}
+  </ul>
 
-    <ul>
-        <li>
-            <a href="/feedback_request/1">
-                2026/10/05 10:30　生徒A
-            </a>
-        </li>
-
-        <li>
-            <a href="/feedback_request/2">
-                2026/10/06 14:00　生徒B
-            </a>
-        </li>
-
-        <li>
-            <a href="/feedback_request/3">
-                2026/10/07 16:20　生徒C
-            </a>
-        </li>
-    </ul>
-
-    <p>
-        <a href="/home_trainer">トレーナーホームに戻る</a>
-    </p>
-
+  <a class="fr-back" href="{% url 'trainer_home' %}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    トレーナーホームに戻る
+  </a>
+</section>
 {% endblock %}

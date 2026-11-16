@@ -1,36 +1,41 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}フィードバック依頼{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/feedback_request_detail.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="fb">
+  <h1 class="fb-page">フィードバック依頼</h1>
 
-    <h1>フィードバック依頼</h1>
+  <div class="fb-hero">
+    <span class="fb-label">生徒名</span>
+    <p class="fb-name">{{ feedback.student.student_profile.name }}</p>
+    <p class="fb-date">依頼日時：{{ feedback.created_at | date:"Y年n月j日 H:i" }}</p>
+  </div>
 
-    <h2>生徒情報</h2>
-    <p>生徒名：{{ request_data.student }}</p>
-    <p>依頼日時：{{ request_data.date }}</p>
-
-    <h2>音声ファイル</h2>
-    <p>{{ request_data.file }}</p>
-
-    <audio controls>
-        <source src="" type="audio/mpeg">
+  <div class="fb-panel">
+    <section class="fb-item">
+      <h2 class="fb-title">音声ファイル</h2>
+      <p class="fb-file">{{ feedback.audio_filename }}</p>
+      <audio class="fb-audio" controls>
+        <source src="{{ feedback.audio.url }}" type="audio/mpeg">
         お使いのブラウザでは音声を再生できません。
-    </audio>
+      </audio>
+    </section>
 
-    <h2>フィードバック</h2>
+    <form class="fb-item" id="fbForm" method="post">
+      <h2 class="fb-title"><label for="feedback">フィードバック</label></h2>
+      <textarea class="fb-area" id="feedback" name="feedback" rows="8" placeholder="フィードバックを入力してください"></textarea>
+    </form>
+  </div>
 
-    <textarea rows="8" cols="50"
-        placeholder="フィードバックを入力してください"></textarea>
-
-    <p>
-        <a href="/feedback_sent">
-            <button type="button">送信</button>
-        </a>
-    </p>
-    
-    <p>
-        <a href="/feedback_requests">依頼一覧に戻る</a>
-    </p>
-
+  <div class="fb-actions">
+    <a class="fb-cancel" href="{% url 'feedback_requests' %}">戻る</a>
+    <button type="submit" class="fb-submit" form="fbForm">送信</button>
+  </div>
+</section>
 {% endblock %}
