@@ -203,6 +203,9 @@ if USE_S3:
     AWS_QUERYSTRING_EXPIRE = 3600        # URL valid for 1 hour
     AWS_S3_FILE_OVERWRITE = False        # don't overwrite same-named files
     AWS_DEFAULT_ACL = None
+    
+    AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+    AWS_S3_ADDRESSING_STYLE = "virtual"
 
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3.S3Storage"},
