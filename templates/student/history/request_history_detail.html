@@ -25,7 +25,7 @@
     <section class="rh-block">
       <h2 class="rh-title">トレーナーからのフィードバック</h2>
       {% if feedback.status == "done" %}
-        <p class="rh-body">音程が安定しています。次は高音部分の発声を意識してみましょう。</p>
+        <p class="rh-body">{{ feedback.feedback }}</p>
       {% else %}
         <p class="rh-empty">まだフィードバックは届いていません。</p>
       {% endif %}
