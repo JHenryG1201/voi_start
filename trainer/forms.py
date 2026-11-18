@@ -2,7 +2,7 @@ from django import forms
 from django.utils import timezone
 import logging
 
-from .models import TrainerInfo, Lesson
+from .models import TrainerInfo, Lesson, LessonReview, FeedbackReview
 
 logger = logging.getLogger(__name__)
 
@@ -87,3 +87,47 @@ class ReservationSlotCreateForm(forms.ModelForm):
                 )
 
         return cleaned_data
+
+class LessonReviewCreateForm(forms.ModelForm):
+    class Meta:
+        model = LessonReview
+        fields = ["rating", "review_comment"]
+        widgets = {
+            "rating": forms.RadioSelect(
+                choices=[(i, str(i)) for i in range(1, 6)],
+                attrs={"class": "rv-star"},
+            ),
+            "review_comment": forms.Textarea(
+                attrs={
+                    "rows": 6,
+                    "placeholder": "レッスンの感想を入力してください",
+                    "class": "rv-area",
+                }
+            ),
+        }
+        labels = {
+            "rating": "評価",
+            "review_comment": "評価コメント",
+        }
+
+class FeedbackReviewCreateForm(forms.ModelForm):
+    class Meta:
+        model = FeedbackReview
+        fields = ["rating", "review_comment"]
+        widgets = {
+            "rating": forms.RadioSelect(
+                choices=[(i, str(i)) for i in range(1, 6)],
+                attrs={"class": "rv-star"},
+            ),
+            "review_comment": forms.Textarea(
+                attrs={
+                    "rows": 6,
+                    "placeholder": "音声フィードバックの感想を入力してください",
+                    "class": "rv-area",
+                }
+            ),
+        }
+        labels = {
+            "rating": "評価",
+            "review_comment": "評価コメント",
+        }

@@ -35,8 +35,7 @@
   <div class="rh-actions">
     <a class="rh-back-b" href="{% url 'request_history' %}">依頼履歴に戻る</a>
     {% if feedback.status == "done" %}
-    {% comment %} <a class="rh-btn" href="{{ url_for('request_review', request_id=request_id) }}">トレーナーを評価する</a> {% endcomment %}
-    <a class="rh-btn" href="">トレーナーを評価する</a>
+    <a class="rh-btn" href="{% url 'feedback_review' feedback.id %}">トレーナーを評価する</a>
     {% endif %}
   </div>
 </section>

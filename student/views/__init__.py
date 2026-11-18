@@ -25,6 +25,12 @@ from .feedback_confirm_views import FeedbackConfirmView
 from .feedback_done_views import FeedbackDoneView
 from .request_history_views import RequestHistoryView
 from .request_history_detail_views import RequestHistoryDetailView
+from .lesson_review_views import LessonReviewView
+from .lesson_review_confirm_views import LessonReviewConfirmView
+from .lesson_review_done_views import LessonReviewDoneView
+from .feedback_review_views import FeedbackReviewView
+from .feedback_review_confirm_views import FeedbackReviewConfirmView
+from .feedback_review_done_views import FeedbackReviewDoneView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -57,4 +63,10 @@ __all__ = [
     "FeedbackDoneView",
     "RequestHistoryView",
     "RequestHistoryDetailView",
+    "LessonReviewView",
+    "LessonReviewConfirmView",
+    "LessonReviewDoneView",
+    "FeedbackReviewView",
+    "FeedbackReviewConfirmView",
+    "FeedbackReviewDoneView",
 ]

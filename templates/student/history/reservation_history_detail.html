@@ -44,8 +44,7 @@
 
   <div class="rhd-actions">
     {% if lesson.lesson_status == "done" %}
-    {% comment %} <a class="rhd-btn" href="{{ url_for('reservation_review', reservation_id=reservation_id) }}">トレーナーを評価する</a> {% endcomment %}
-    <a class="rhd-btn" href="">トレーナーを評価する</a>
+    <a class="rhd-btn" href="{% url 'lesson_review' lesson.id %}">トレーナーを評価する</a>
     {% endif %}
     <a class="rhd-sub" href="{% url 'reservation_history' %}">予約履歴に戻る</a>
     <a class="rhd-back" href="{% url 'student_home' %}">ホームに戻る</a>

@@ -35,13 +35,12 @@
     <ul class="rhl-list">
       {% for lesson in done  %}
         <li>
-          {% comment %} <a class="rhl-row" href="{% url 'reservation_history_detail' reservation_id %}"> {% endcomment %}
-          <a class="rhl-row" href="">
+          <a class="rhl-row" href="{% url 'reservation_history_detail' lesson.id %}">
             <span class="rhl-text">
               <span class="rhl-date">{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}~{{ lesson.lesson_end_time }}</span>
               <span class="rhl-meta">{{ lesson.trainer.trainer_profile.name }}　／　{{ lesson.get_reserved_lesson_type_display }}</span>
             </span>
-            <span class="rhl-status plan">予約確定</span>
+            <span class="rhl-status done">受講済み</span>
           </a>
         </li>
       {% endfor %}

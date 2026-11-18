@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}トレーナー評価{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/request_review.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="rv">
+  <h1>トレーナー評価</h1>
+
+  <div class="rv-trainer">
+    <span class="rv-avatar" aria-hidden="true">{{ trainer.trainer_profile.name|slice:":1" }}</span>
+    <div class="rv-trainer-text">
+      <span class="rv-label">トレーナー</span>
+      <span class="rv-name">{{ trainer.trainer_profile.name }}</span>
+    </div>
+  </div>
+
+  <form class="rv-form" method="post">
+    {% csrf_token %}
+    <fieldset class="rv-card">
+      <legend class="rv-legend">評価</legend>
+      <p class="rv-hint">星をタップして、5段階で評価してください。</p>
+
+      <div class="rv-stars">
+        {% for radio in form.rating reversed %}
+          {{ radio.tag }}
+          <label for="{{ radio.id_for_label }}" title="{{ radio.choice_label }}">★</label>
+        {% endfor %}
+      </div>
+      <p class="rv-scale"><span>低い</span><span>高い</span></p>
+    </fieldset>
+    {{ form.rating.errors }}
+
+    <div class="rv-card">
+      <label class="rv-legend" for="comment">評価コメント</label>
+      {{ form.review_comment }}
+       {{ form.review_comment.errors }}
+    </div>
+
+    <button type="submit" class="rv-submit">確認する</button>
+  </form>
+
+  <a class="rv-back" href="{% url 'reservation_history_detail' lesson.id %}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColsor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    予約詳細に戻る
+  </a>
+</section>
+{% endblock %}

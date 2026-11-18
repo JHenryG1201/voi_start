@@ -3,8 +3,6 @@ from django.conf import settings
 from django.core.validators import FileExtensionValidator
 import os
 
-from trainer.models import TrainerInfo
-
 def audio_upload_path(instance, filename):
     return f"feedback_audio/{instance.student.id}/{filename}"
 
