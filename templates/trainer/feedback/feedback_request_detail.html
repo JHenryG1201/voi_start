@@ -31,7 +31,7 @@
       {% csrf_token %}
       <h2 class="fb-title"><label for="feedback">フィードバック</label></h2>
       {% if feedback.status == "pending" %}
-        <textarea class="fb-area" id="feedback" name="feedback" rows="8" placeholder="フィードバックを入力してください"></textarea>
+        <textarea class="fb-area" id="feedback" name="feedback" rows="8" placeholder="フィードバックを入力してください" required></textarea>
       {% else %}
         <p>{{ feedback.feedback }}</p>
       {% endif %}
