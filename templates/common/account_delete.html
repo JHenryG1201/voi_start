@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}退会{% endblock %}
+{% block title %}退会確認{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/withdraw.css' %}">
 {% endblock %}
 
 {% block content %}
-<section class="withdraw">
+<section class="wd">
 
-    <h1>退会</h1>
+    <div class="wd-visual" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+    </div>
 
-    <p class="withdraw-lead">
-        退会するとアカウントと関連データが削除されます。
-        よろしいですか。
-    </p>
+    <h1>退会確認</h1>
 
-    <form method="post" class="withdraw-form">
+    <div class="wd-notice" role="alert">
+        <p class="wd-question">退会してもよろしいですか？</p>
+        <p class="wd-text">退会すると、サービスを利用できなくなります。</p>
+    </div>
+
+    <form method="post" class="wd-form">
         {% csrf_token %}
 
         {% if form.non_field_errors %}
@@ -26,9 +30,9 @@
             </div>
         {% endif %}
 
-        <div class="withdraw-field">
+        <div class="wd-field">
             <label for="{{ form.password.id_for_label }}"
-                   class="withdraw-label">
+                   class="wd-label">
                 {{ form.password.label }}
             </label>
 
@@ -36,22 +40,23 @@
                 type="password"
                 name="{{ form.password.html_name }}"
                 id="{{ form.password.id_for_label }}"
-                class="withdraw-input"
+                class="wd-input"
                 autocomplete="current-password"
+                placeholder="パスワードを入力"
                 required
             >
 
             {{ form.password.errors }}
         </div>
 
-        <button type="submit" class="withdraw-submit">
+        <a href="javascript:history.back()" class="wd-cancel">
+            キャンセル
+        </a>
+
+        <button type="submit" class="wd-submit">
             アカウントを削除する
         </button>
     </form>
-
-    <a href="javascript:history.back()" class="withdraw-back">
-        キャンセル
-    </a>
 
 </section>
 {% endblock %}

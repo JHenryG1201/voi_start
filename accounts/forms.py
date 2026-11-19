@@ -115,8 +115,8 @@ class AccountAuthenticationForm(AuthenticationForm):
 
 class AccountDeletionForm(forms.Form):
     password = forms.CharField(
-        label='現在のパスワード',
-        widget=forms.PasswordInput,
+        label='パスワード',
+        widget=forms.PasswordInput(attrs={"placeholder": "パスワードを入力", "class": "wd-input"}),
     )
 
     def __init__(self, user, *args, **kwargs):
