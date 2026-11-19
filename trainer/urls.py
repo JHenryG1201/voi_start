@@ -20,4 +20,5 @@ urlpatterns = [
     path("feedback_requests", views.FeedbackRequestsView.as_view(), name="feedback_requests"),
     path("feedback_request_detail/<int:pk>", views.FeedbackRequestDetailView.as_view(), name="feedback_request_detail"),
     path("feedback_sent", views.FeedbackSentView.as_view(), name="feedback_sent"),
+    path("evaluation", views.EvaluationView.as_view(), name="evaluation"),
 ]

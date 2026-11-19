@@ -14,6 +14,7 @@ from .reservation_detail_views import ReservationDetailView
 from .feedback_requests_views import FeedbackRequestsView
 from .feedback_request_detail_views import FeedbackRequestDetailView
 from .feedback_sent_views import FeedbackSentView
+from .evaluation_views import EvaluationView
 
 __all__ = [
     'TrainerProfileEditView',
@@ -33,4 +34,5 @@ __all__ = [
     'FeedbackRequestsView',
     'FeedbackRequestDetailView',
     'FeedbackSentView',
+    'EvaluationView',
 ]
