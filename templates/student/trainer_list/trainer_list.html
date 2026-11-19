@@ -53,7 +53,26 @@
             <span class="tl-tag">{{ trainer.get_speciality_genre_display }}</span>
           </span>
           <span class="tl-rating">
-            <span class="tl-stars" aria-hidden="true"><span class="on">★★★★</span><span class="off">☆</span></span>
+            <span class="tl-stars" aria-hidden="true">
+              {% if trainer.avg_rating %}
+                {% if trainer.avg_rating >= 5 %}
+                  <span class="on">★★★★★</span>
+                  <span class="off"></span>
+                {% elif trainer.avg_rating >= 4 %}
+                  <span class="on">★★★★</span>
+                  <span class="off">☆</span>
+                {% elif trainer.avg_rating >= 3 %}
+                  <span class="on">★★★</span>
+                  <span class="off">☆☆</span>
+                {% elif trainer.avg_rating >= 2 %}
+                  <span class="on">★★</span>
+                  <span class="off">☆☆☆</span>
+                {% elif trainer.avg_rating >= 1 %}
+                  <span class="on">★</span>
+                  <span class="off">☆☆☆☆</span>
+                {% endif %} 
+              {% endif %}  
+            </span>
             <span class="tl-score">{{ trainer.rating }}</span>
           </span>
         </span>
