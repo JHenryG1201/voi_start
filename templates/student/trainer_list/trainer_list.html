@@ -56,20 +56,15 @@
             <span class="tl-stars" aria-hidden="true">
               {% if trainer.avg_rating %}
                 {% if trainer.avg_rating >= 5 %}
-                  <span class="on">★★★★★</span>
-                  <span class="off"></span>
+                  <span class="on">★★★★★</span><span class="off"></span>
                 {% elif trainer.avg_rating >= 4 %}
-                  <span class="on">★★★★</span>
-                  <span class="off">☆</span>
+                  <span class="on">★★★★</span><span class="off">☆</span>
                 {% elif trainer.avg_rating >= 3 %}
-                  <span class="on">★★★</span>
-                  <span class="off">☆☆</span>
+                  <span class="on">★★★</span><span class="off">☆☆</span>
                 {% elif trainer.avg_rating >= 2 %}
-                  <span class="on">★★</span>
-                  <span class="off">☆☆☆</span>
+                  <span class="on">★★</span><span class="off">☆☆☆</span>
                 {% elif trainer.avg_rating >= 1 %}
-                  <span class="on">★</span>
-                  <span class="off">☆☆☆☆</span>
+                  <span class="on">★</span><span class="off">☆☆☆☆</span>
                 {% endif %} 
               {% endif %}  
             </span>

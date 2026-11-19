@@ -16,20 +16,15 @@
     <p class="ev-score">{{ average }}</p>
     <p class="ev-stars" aria-label="5点中{{ average }}点">
       {% if average >= 5 %}
-        <span class="on">★★★★★</span>
-        <span class="off"></span>
+        <span class="on">★★★★★</span><span class="off"></span>
       {% elif average >= 4 %}
-        <span class="on">★★★★</span>
-        <span class="off">☆</span>
+        <span class="on">★★★★</span><span class="off">☆</span>
       {% elif average >= 3 %}
-        <span class="on">★★★</span>
-        <span class="off">☆☆</span>
+        <span class="on">★★★</span><span class="off">☆☆</span>
       {% elif average >= 2 %}
-        <span class="on">★★</span>
-        <span class="off">☆☆☆</span>
+        <span class="on">★★</span><span class="off">☆☆☆</span>
       {% elif average >= 1 %}
-        <span class="on">★</span>
-        <span class="off">☆☆☆☆</span>
+        <span class="on">★</span><span class="off">☆☆☆☆</span>
       {% endif %}
     </p>
     <p class="ev-count">評価件数：{{ total }}件</p>
@@ -42,20 +37,15 @@
       <li class="ev-card">
         <p class="ev-stars small" aria-label="5点中{{ review.rating }}点">
           {% if review.rating >= 5 %}
-            <span class="on">★★★★★</span>
-            <span class="off"></span>
+            <span class="on">★★★★★</span><span class="off"></span>
           {% elif review.rating >= 4 %}
-            <span class="on">★★★★</span>
-            <span class="off">☆</span>
+            <span class="on">★★★★</span><span class="off">☆</span>
           {% elif review.rating >= 3 %}
-            <span class="on">★★★</span>
-            <span class="off">☆☆</span>
+            <span class="on">★★★</span><span class="off">☆☆</span>
           {% elif review.rating >= 2 %}
-            <span class="on">★★</span>
-            <span class="off">☆☆☆</span>
+            <span class="on">★★</span><span class="off">☆☆☆</span>
           {% elif review.rating >= 1 %}
-            <span class="on">★</span>
-            <span class="off">☆☆☆☆</span>
+            <span class="on">★</span><span class="off">☆☆☆☆</span>
           {% endif %}
         </p>
         <p class="ev-comment">{{ review.review_comment }}</p>
@@ -65,20 +55,15 @@
       <li class="ev-card">
         <p class="ev-stars small" aria-label="5点中{{ review.rating }}点">
           {% if review.rating >= 5 %}
-            <span class="on">★★★★★</span>
-            <span class="off"></span>
+            <span class="on">★★★★★</span><span class="off"></span>
           {% elif review.rating >= 4 %}
-            <span class="on">★★★★</span>
-            <span class="off">☆</span>
+            <span class="on">★★★★</span><span class="off">☆</span>
           {% elif review.rating >= 3 %}
-            <span class="on">★★★</span>
-            <span class="off">☆☆</span>
+            <span class="on">★★★</span><span class="off">☆☆</span>
           {% elif review.rating >= 2 %}
-            <span class="on">★★</span>
-            <span class="off">☆☆☆</span>
+            <span class="on">★★</span><span class="off">☆☆☆</span>
           {% elif review.rating >= 1 %}
-            <span class="on">★</span>
-            <span class="off">☆☆☆☆</span>
+            <span class="on">★</span><span class="off">☆☆☆☆</span>
           {% endif %}
         </p>
         <p class="ev-comment">{{ review.review_comment }}</p>
