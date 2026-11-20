@@ -12,4 +12,5 @@ class AvailableSlotsView(ListView):
     def get_queryset(self):
         return Lesson.objects.filter(
             trainer=self.request.user,
+            lesson_status="available",
         ).order_by("lesson_date", "lesson_start_time")
