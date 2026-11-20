@@ -8,32 +8,20 @@
 /* 中央のステージ */
 .meas-stage{
   display:flex;flex-direction:column;align-items:center;gap:14px;
-  padding:28px 16px 20px;text-align:center;
+  padding:32px 16px 20px;text-align:center;
   border-radius:24px;background:var(--surface);border:1px solid var(--line);
 }
-.meas-mic{
-  position:relative;width:96px;height:96px;border-radius:50%;
-  display:grid;place-items:center;color:var(--on-brand);
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  box-shadow:0 12px 28px rgba(47,75,255,.28);
-}
-.meas-mic::before{
-  content:"";position:absolute;inset:-12px;border-radius:50%;
-  border:2px solid var(--brand);opacity:.18;
-}
-.meas-mic svg{width:46px;height:46px}
 
+/* 状態表示と説明 */
 .meas-status{
   margin:0;padding:6px 16px;border-radius:999px;
   font-size:14px;font-weight:700;color:var(--brand);background:var(--soft);
 }
 .meas-hint{margin:0;font-size:12.5px;color:var(--muted);line-height:1.7}
 
-.meas-row{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-.meas-sub{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
+/* ボタン共通 */
 .meas-btn{
-  min-height:52px;padding:0 16px;border-radius:16px;cursor:pointer;
+  min-height:52px;padding:0 24px;border-radius:16px;cursor:pointer;
   font-family:inherit;font-size:15px;font-weight:700;
   color:var(--brand);background:var(--surface);border:2px solid var(--brand);
   transition:transform .12s ease;
@@ -49,6 +37,17 @@
 }
 .meas-btn:focus-visible,.meas-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 
+/* 再生・分析開始（横並び） */
+.meas-sub{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.meas-sub .meas-btn{width:100%}
+
+.meas-btn.danger{
+  color:#D92D4A;border-color:#D92D4A;background:var(--surface);
+}
+.meas-btn.danger:disabled{
+  color:var(--muted);border-color:var(--line);background:var(--bg);
+}
+
 .meas-note{margin:0;text-align:center;font-size:13.5px;font-weight:700;color:var(--brand-2)}
 .meas-note:empty{display:none}
 
@@ -58,5 +57,72 @@
   font-size:14px;color:var(--muted);text-decoration:none;
 }
 .meas-back svg{width:18px;height:18px}
+.meas-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.meas-mic-btn.recorded svg path{fill:currentColor}
 
-@media (prefers-reduced-motion:reduce){.meas-btn{transition:none}}
+
+.meas-mic {
+  /* reset the default button look */
+  appearance: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+
+  width: 124px;
+  height: 124px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, #3b4cff, #6a45ff);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  /* outer rings + glow */
+  box-shadow:
+    0 0 0 8px #fff,
+    0 0 0 9px #d9ddff,
+    0 12px 28px rgba(80, 70, 255, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.meas-mic:hover:not(:disabled) { transform: scale(1.03); }
+.meas-mic:active:not(:disabled) { transform: scale(0.97); }
+.meas-mic:disabled { opacity: 0.6; cursor: default; }
+
+.meas-mic svg {
+  width: 40px;
+  height: 40px;
+  flex: none;
+}
+
+.meas-mic-label {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* recording: red + pulse */
+.meas-mic.recording {
+  background: linear-gradient(135deg, #ff4d6d, #ff2d55);
+  animation: meas-pulse 1.4s ease-out infinite;
+}
+
+@keyframes meas-pulse {
+  0%   { box-shadow: 0 0 0 8px #fff, 0 0 0 9px #ffd0d8, 0 0 0 9px rgba(255, 45, 85, 0.45); }
+  100% { box-shadow: 0 0 0 8px #fff, 0 0 0 9px #ffd0d8, 0 0 0 28px rgba(255, 45, 85, 0); }
+}
+
+/* recorded / playing: keep the blue, play and pause icons are filled shapes */
+.meas-mic.recorded svg { fill: currentColor; }
+
+/* 録音済み（再生ボタン）: 緑 */
+.meas-mic.recorded{
+  background:linear-gradient(135deg,#1E9E62,#3CCB8A);
+  box-shadow:0 12px 28px rgba(30,158,98,.35);
+}
+.meas-mic.recorded::before{border-color:#1E9E62}

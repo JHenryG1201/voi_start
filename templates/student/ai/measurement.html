@@ -50,7 +50,7 @@
         <a href="/ai_analysis">AI分析に戻る</a>
     </p> {% endcomment %}
 
-    <section class="meas">
+    {% comment %} <section class="meas">
         <h1>測定</h1>
 
         <span id="csrfToken" hidden>{% csrf_token %}</span>
@@ -78,9 +78,40 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
             AI分析に戻る
         </a>
-        </section>
+        </section> {% endcomment %}
 
-    <script>
+    <section class="meas" data-analyze-url="{% url 'analyze_voice' %}">
+        <h1>測定</h1>
+
+        <span id="csrfToken" hidden>{% csrf_token %}</span>
+
+        <div class="meas-stage">
+            <button type="button" id="micButton" class="meas-mic" aria-label="録音開始">
+                <svg id="micIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+                <span id="micLabel" class="meas-mic-label">録音開始</span>
+            </button>
+
+            <p id="recordingStatus" class="meas-status" aria-live="polite">録音待機中</p>
+            <p class="meas-hint">
+                音を聞きながら、出せる範囲で声を出してください。<br>
+                無理に高い声や低い声は出さなくて大丈夫です。<br>
+                もう一度マイクを押すと録音が止まります。
+            </p>
+        </div>
+
+        <div class="meas-sub">
+            <button type="button" id="deleteButton" class="meas-btn" disabled>削除</button>
+            <button type="button" id="analysisButton" class="meas-btn primary" disabled>分析開始</button>
+        </div>
+        <p id="analysisStatus" class="meas-note" aria-live="polite"></p>
+
+        <a class="meas-back" href="/student/ai_analysis">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            AI分析に戻る
+        </a>
+    </section>
+
+    {% comment %} <script>
         const startButton = document.getElementById("startButton");
         const stopButton = document.getElementById("stopButton");
         const playButton = document.getElementById("playButton");
@@ -156,7 +187,7 @@
                 stopButton.disabled = false;
                 recordingStatus.textContent = "録音中です";
             } catch (error) {
-                recordingStatus.textContent = "マイクを利用できません。ブラウザの権限を確認してください。";
+                recordingStatus.textContent = "マイクを利用できません。\nブラウザの権限を確認してください。";
             }
         });
 
@@ -208,7 +239,7 @@
                 microphone?.getTracks().forEach(track => track.stop());
 
                 recordingStatus.textContent =
-                    "マイクを利用できません。ブラウザの権限を確認してください。";
+                    "マイクを利用できません。\nブラウザの権限を確認してください。";
             }
         });
 
@@ -252,6 +283,226 @@
                 startButton.disabled = false;
             }
         });
-    </script>
+    </script> {% endcomment %}
+
+    <script>
+        const root = document.querySelector(".meas");
+        const micButton = document.getElementById("micButton");
+        const micIcon = document.getElementById("micIcon");
+        const micLabel = document.getElementById("micLabel");
+        const deleteButton = document.getElementById("deleteButton");
+        const analysisButton = document.getElementById("analysisButton");
+        const recordingStatus = document.getElementById("recordingStatus");
+        const analysisStatus = document.getElementById("analysisStatus");
+
+        const ICON_MIC = '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>';
+        const ICON_PLAY = '<path d="M8 5v14l11-7z"/>';
+        const ICON_PAUSE = '<path d="M8 5v14M16 5v14"/>';
+
+        // idle -> recording -> recorded <-> playing -> analyzing
+        let state = "idle";
+        let recorder = null;
+        let microphone = null;
+        let chunks = [];
+        let recordingBlob = null;
+        let audio = null;
+        let audioUrl = null;
+
+        function csrfToken() {
+            return document.querySelector("#csrfToken input[name=csrfmiddlewaretoken]").value;
+        }
+
+        function fileExtension(mimeType) {
+            if (mimeType.includes("mp4")) return "m4a";   // Safari
+            if (mimeType.includes("ogg")) return "ogg";
+            if (mimeType.includes("wav")) return "wav";
+            return "webm";                                // Chrome / Firefox / Edge
+        }
+
+        function render() {
+            micButton.classList.remove("recording", "recorded");
+            micButton.disabled = false;
+
+            if (state === "idle") {
+                micIcon.innerHTML = ICON_MIC;
+                micLabel.textContent = "録音開始";
+                micButton.setAttribute("aria-label", "録音開始");
+                deleteButton.disabled = true;
+                analysisButton.disabled = true;
+                recordingStatus.textContent = "録音待機中";
+            } else if (state === "recording") {
+                micButton.classList.add("recording");
+                micIcon.innerHTML = ICON_MIC;
+                micLabel.textContent = "録音停止";
+                micButton.setAttribute("aria-label", "録音停止");
+                deleteButton.disabled = true;
+                analysisButton.disabled = true;
+                recordingStatus.textContent = "録音中です（もう一度押すと停止）";
+            } else if (state === "recorded") {
+                micButton.classList.add("recorded");
+                micIcon.innerHTML = ICON_PLAY;
+                micLabel.textContent = "再生";
+                micButton.setAttribute("aria-label", "再生");
+                deleteButton.disabled = false;
+                analysisButton.disabled = false;
+                recordingStatus.textContent = "録音が完了しました";
+            } else if (state === "playing") {
+                micButton.classList.add("recorded");
+                micIcon.innerHTML = ICON_PAUSE;
+                micLabel.textContent = "一時停止";
+                micButton.setAttribute("aria-label", "一時停止");
+                deleteButton.disabled = false;
+                analysisButton.disabled = false;
+                recordingStatus.textContent = "録音した音声を再生しています";
+            } else if (state === "analyzing") {
+                micButton.classList.add("recorded");
+                micButton.disabled = true;
+                deleteButton.disabled = true;
+                analysisButton.disabled = true;
+            }
+        }
+
+        function releaseAudio() {
+            if (audio) {
+                audio.pause();
+                audio = null;
+            }
+            if (audioUrl) {
+                URL.revokeObjectURL(audioUrl);
+                audioUrl = null;
+            }
+        }
+
+        function releaseMicrophone() {
+            if (microphone) {
+                microphone.getTracks().forEach((track) => track.stop());
+                microphone = null;
+            }
+        }
+
+        async function startRecording() {
+            try {
+                microphone = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                recorder = new MediaRecorder(microphone);
+                chunks = [];
+
+                recorder.addEventListener("dataavailable", (event) => {
+                    if (event.data.size > 0) chunks.push(event.data);
+                });
+
+                recorder.addEventListener("stop", () => {
+                    recordingBlob = new Blob(chunks, {
+                        type: recorder.mimeType || "audio/webm",
+                    });
+                    releaseMicrophone();
+
+                    releaseAudio();
+                    audioUrl = URL.createObjectURL(recordingBlob);
+                    audio = new Audio(audioUrl);
+                    audio.addEventListener("ended", () => {
+                        audio.currentTime = 0;
+                        state = "recorded";
+                        render();
+                    });
+
+                    state = "recorded";
+                    render();
+                });
+
+                recorder.start();
+                state = "recording";
+                render();
+            } catch (error) {
+                releaseMicrophone();
+                state = "idle";
+                render();
+                //recordingStatus.textContent =
+                //    "マイクを利用できません。ブラウザの権限を確認してください。";
+                recordingStatus.innerHTML =
+                     "マイクを利用できません。<br>ブラウザの権限を確認してください。";
+            }
+        }
+
+        async function pollStatus(url, { intervalMs = 1500, timeoutMs = 430000 } = {}) {
+            const started = Date.now();
+            while (Date.now() - started < timeoutMs) {
+                await new Promise((resolve) => setTimeout(resolve, intervalMs));
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("状態の取得に失敗しました。");
+                const s = await res.json();
+                if (s.state === "done") return s;
+                if (s.state === "failed") throw new Error(s.error || "音声分析に失敗しました。");
+            }
+            throw new Error("分析に時間がかかっています。しばらくしてから分析履歴をご確認ください。");
+        }
+
+        micButton.addEventListener("click", function () {
+            if (state === "idle") {
+                startRecording();
+            } else if (state === "recording") {
+                if (recorder && recorder.state === "recording") {
+                    recorder.stop();   // the "stop" handler switches state to "recorded"
+                }
+            } else if (state === "recorded") {
+                audio.play();
+                state = "playing";
+                render();
+            } else if (state === "playing") {
+                audio.pause();
+                state = "recorded";
+                render();
+            }
+        });
+
+        deleteButton.addEventListener("click", function () {
+            releaseAudio();
+            recordingBlob = null;
+            chunks = [];
+            analysisStatus.textContent = "";
+            state = "idle";
+            render();
+        });
+
+        analysisButton.addEventListener("click", async function () {
+            if (!recordingBlob) return;
+
+            if (audio) audio.pause();
+            state = "analyzing";
+            render();
+            analysisStatus.textContent = "AIが音声を分析しています";
+
+            const formData = new FormData();
+            formData.append(
+                "audio",
+                recordingBlob,
+                "voice-recording." + fileExtension(recordingBlob.type)
+            );
+
+            try {
+                const response = await fetch(root.dataset.analyzeUrl, {
+                    method: "POST",
+                    headers: { "X-CSRFToken": csrfToken() },
+                    body: formData,
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error);
+
+                const done = await pollStatus(result.status_url);
+                window.location.href = done.redirect_url;
+            } catch (error) {
+                analysisStatus.textContent = error.message || "音声分析に失敗しました。";
+                state = "recorded";
+                render();
+            }
+        });
+
+        window.addEventListener("beforeunload", function () {
+            releaseMicrophone();
+            releaseAudio();
+        });
+
+        render();
+</script>
 
 {% endblock %}
