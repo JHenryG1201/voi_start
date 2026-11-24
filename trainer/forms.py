@@ -58,6 +58,16 @@ class ReservationSlotCreateForm(forms.ModelForm):
         start_time = cleaned_data.get("lesson_start_time")
         end_time = cleaned_data.get("lesson_end_time")
 
+        now = timezone.localtime()
+        if lesson_date:
+            if lesson_date < now.date():
+                self.add_error("lesson_date", "過去の日付は選択できません。")
+            elif lesson_date == now.date() and start_time and start_time <= now.time():
+                self.add_error(
+                    "lesson_start_time",
+                    "開始時間は現在時刻より後に設定してください。"
+                )
+
         if start_time and end_time:
             if end_time <= start_time:
                 self.add_error(

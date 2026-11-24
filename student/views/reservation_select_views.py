@@ -3,6 +3,7 @@ from django.views.generic import DetailView
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.db.models import Q
 
 from trainer.models import TrainerInfo, Lesson
 
@@ -16,6 +17,20 @@ class ReservationSelectView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        now = timezone.localtime()
+        today = now.date()
+        current_time = now.time()
+
+        (
+            Lesson.objects
+            .filter(trainer=self.request.user, lesson_status="available")
+            .filter(
+                Q(lesson_date__lt=today) |
+                Q(lesson_date=today, lesson_start_time__lte=current_time)
+            )
+            .delete()
+        )
 
         slots = Lesson.objects.filter(
             trainer=self.object.user, lesson_status="available",
