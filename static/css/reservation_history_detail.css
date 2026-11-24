@@ -90,4 +90,11 @@
 }
 .rhd-cancel:active{transform:scale(.97)}
 .rhd-cancel:focus-visible{outline:3px solid var(--rhd-danger);outline-offset:2px}
+.disabled-link {
+  color: white;
+  background: grey;
+  pointer-events: none; /* Prevents mouse clicks */
+  text-decoration: none;
+  cursor: default;
+}
 @media (prefers-reduced-motion:reduce){.rhd-btn,.rhd-sub{transition:none}}
