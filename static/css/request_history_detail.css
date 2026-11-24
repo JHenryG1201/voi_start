@@ -64,4 +64,12 @@
 .rh-btn:active,.rh-back-b:active{transform:scale(.97)}
 .rh-btn:focus-visible,.rh-back-b:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 
+.disabled-link {
+  color: white;
+  background: grey;
+  pointer-events: none; /* Prevents mouse clicks */
+  text-decoration: none;
+  cursor: default;
+}
+
 @media (prefers-reduced-motion:reduce){.rh-btn,.rh-back-b{transition:none}}
