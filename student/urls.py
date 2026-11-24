@@ -39,4 +39,6 @@ urlpatterns = [
     path("history/request_history/<int:pk>/review/", views.FeedbackReviewView.as_view(), name="feedback_review"),
     path("history/request_history/<int:pk>/confirm/", views.FeedbackReviewConfirmView.as_view(), name="feedback_review_confirm"),
     path("history/request_history/<int:pk>/success/", views.FeedbackReviewDoneView.as_view(), name="feedback_review_done"),
+    path("history/reservation_history/<int:pk>/review/detail", views.LessonReviewDetailView.as_view(), name="lesson_review_detail"),
+    path("history/request_history/<int:pk>/review/detail", views.FeedbackReviewDetailView.as_view(), name="feedback_review_detail"),
 ]

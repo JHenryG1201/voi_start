@@ -31,6 +31,8 @@ from .lesson_review_done_views import LessonReviewDoneView
 from .feedback_review_views import FeedbackReviewView
 from .feedback_review_confirm_views import FeedbackReviewConfirmView
 from .feedback_review_done_views import FeedbackReviewDoneView
+from .lesson_review_detail_views import LessonReviewDetailView
+from .feedback_review_detail_views import FeedbackReviewDetailView
 
 __all__ = [
     "VoiceMeasurementView",
@@ -69,4 +71,6 @@ __all__ = [
     "FeedbackReviewView",
     "FeedbackReviewConfirmView",
     "FeedbackReviewDoneView",
+    "LessonReviewDetailView",
+    "FeedbackReviewDetailView",
 ]

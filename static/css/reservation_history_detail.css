@@ -93,7 +93,6 @@
 .disabled-link {
   color: white;
   background: grey;
-  pointer-events: none; /* Prevents mouse clicks */
   text-decoration: none;
   cursor: default;
 }

@@ -38,7 +38,7 @@
       {% if reviewable %}
         <a class="rh-btn" href="{% url 'feedback_review' feedback.id %}">トレーナーを評価する</a>
       {% else %}
-        <a class="rh-btn disabled-link">トレーナーを評価済み</a>
+        <a class="rh-btn disabled-link" href="{% url 'feedback_review_detail' feedback.id %}">トレーナーを評価済み</a>
       {% endif %}
     {% endif %}
   </div>

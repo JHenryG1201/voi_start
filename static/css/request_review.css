@@ -79,4 +79,11 @@
 }
 .rv-back svg{width:18px;height:18px}
 
+.ev-stars{margin:0;font-size:24px;letter-spacing:.1em;line-height:1.2}
+.ev-stars .on{color:#FFD45C}
+.ev-stars .off{color:var(--line)}
+.ev-stars.small{font-size:18px}
+.ev-stars.small .on{color:#F5A623}
+.ev-stars.small .off{color:var(--line)}
+
 @media (prefers-reduced-motion:reduce){.rv-stars label,.rv-submit{transition:none}}

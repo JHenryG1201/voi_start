@@ -47,7 +47,7 @@
       {% if reviewable %}
         <a class="rhd-btn" href="{% url 'lesson_review' lesson.id %}">トレーナーを評価する</a>
       {% else %}
-        <a class="rhd-btn disabled-link">トレーナーを評価済み</a>
+        <a class="rhd-btn disabled-link" href="{% url 'lesson_review_detail' lesson.id %}">トレーナーを評価済み</a>
       {% endif %}
     {% endif %}
     <a class="rhd-sub" href="{% url 'reservation_history' %}">予約履歴に戻る</a>
