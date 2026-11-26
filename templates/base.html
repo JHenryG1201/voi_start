@@ -61,7 +61,7 @@
   {% else %}
     <a href="{% url 'trainer_profile' %}">トレーナープロフィール</a>
   {% endif %}
-  <a href="/settings">設定</a>
+  {% comment %} <a href="/settings">設定</a> {% endcomment %}
   <a href="/notifications">お知らせ</a>
   <form action="{% url 'logout' %}" method="post" onsubmit="return confirm('ログアウトしてもよろしいでしょうか');">
     {% csrf_token %}
